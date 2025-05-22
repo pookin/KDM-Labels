@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDM - All Labels View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #e0e0e0; /* Light grey background for the page */
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #34495e;
+            color: #ecf0f1;
+            border-radius: 8px;
+        }
+        header h1 { margin: 0; font-size: 1.5em; }
+        header p { margin: 5px 0 0; font-size: 0.9em; }
+
+        .all-labels-iframe-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Increased gap for better visual separation */
+            justify-content: center;
+            padding: 10px;
+        }
+        .iframe-label-wrapper {
+            border: 1px solid #aaa; /* Border for the physical label size */
+            background-color: #fff; /* Background for the physical label area */
+            overflow: hidden; 
+            page-break-inside: avoid; /* Helpful if printing this entire page */
+            box-shadow: 3px 3px 7px rgba(0,0,0,0.2);
+            display: flex; /* To make iframe fill it */
+            align-items: center; /* Center iframe if it's smaller (shouldn't be) */
+            justify-content: center; /* Center iframe if it's smaller (shouldn't be) */
+        }
+        .iframe-label-wrapper iframe {
+            border: none;
+            width: 100%;
+            height: 100%;
+            display: block; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>KDM - All Labels Visual Check</h1>
+        <p>This page displays all labels from your dataset. Each label is rendered in its own isolated frame using <code>label_render.html</code> and current settings from LocalStorage.</p>
+        <p id="loading-status"></p>
+    </header>
+    <div id="all-labels-iframe-container" class="all-labels-iframe-container">
+        </div>
+
+    <script src="./kdm-data.js"></script>
+    <script>
+        window.onload = function() {
+            const loadingStatus = document.getElementById('loading-status');
+            loadingStatus.textContent = "Loading settings and dataset...";
+
+            // 1. Load settings
+            let defaultSettings = {
+                width: 50.8, height: 25.4,
+                marginTop: 1, marginRight: 1, marginBottom: 1, marginLeft: 1,
+                unit: 'mm'
+            };
+            let loadedSettings = {};
+            try {
+                const settingsString = localStorage.getItem('labelSettings');
+                if (settingsString) {
+                    loadedSettings = JSON.parse(settingsString);
+                }
+            } catch(e) { console.warn("Could not parse labelSettings from localStorage", e); }
+            
+            const settings = { ...defaultSettings, ...loadedSettings };
+            if (loadedSettings.margin !== undefined && typeof loadedSettings.margin === 'number') {
+              const oldMargin = parseFloat(loadedSettings.margin);
+              settings.marginTop = oldMargin; settings.marginRight = oldMargin; 
+              settings.marginBottom = oldMargin; settings.marginLeft = oldMargin;
+            }
+            const unit = settings.unit || 'mm';
+
+            const mainContainer = document.getElementById('all-labels-iframe-container');
+            if (!mainContainer) {
+                loadingStatus.textContent = "Error: Main container not found.";
+                console.error("Main container 'all-labels-iframe-container' not found.");
+                return;
+            }
+            if (!window.dataset || !Array.isArray(window.dataset)) {
+                loadingStatus.textContent = "Error: Dataset (kdm-data.js) not loaded or is not an array.";
+                mainContainer.innerHTML = "<p>Error: Dataset not loaded. Make sure kdm-data.js is linked correctly and defines 'window.dataset'.</p>";
+                return;
+            }
+            if (window.dataset.length === 0) {
+                loadingStatus.textContent = "Dataset is empty. Nothing to display.";
+                return;
+            }
+
+            loadingStatus.textContent = `Preparing to render ${window.dataset.length} labels... (This might take a moment)`;
+            console.log(`[ViewAll] Attempting to render ${window.dataset.length} labels using settings:`, settings);
+
+            let iframeLoadPromises = [];
+
+            window.dataset.forEach((item, index) => {
+                if (!item || typeof item.name !== 'string') {
+                    console.warn("[ViewAll] Skipping invalid item in dataset at index", index, item);
+                    return; // Skip invalid items
+                }
+
+                const wrapperDiv = document.createElement('div');
+                wrapperDiv.className = 'iframe-label-wrapper';
+                wrapperDiv.style.width = settings.width + unit;
+                wrapperDiv.style.height = settings.height + unit;
+                wrapperDiv.title = `Label for: ${item.name} (${item.type})`;
+
+
+                const iframe = document.createElement('iframe');
+                iframe.id = `label-iframe-${item.id || index}`; // Unique ID
+                // iframe.sandbox = "allow-scripts allow-same-origin"; // Optional: for added security, but postMessage needs careful targetOrigin
+
+                mainContainer.appendChild(wrapperDiv); // Append wrapper first
+                
+                // The promise resolves when data is posted, or fails if iframe doesn't load
+                const loadPromise = new Promise((resolve, reject) => {
+                    iframe.onload = function() {
+                        let tenetKnowledgeItemData = null;
+                        if (item.type === 'Philosophy' && item.tenetKnowledge) {
+                            const baseKnowledgeName = item.tenetKnowledge;
+                            let knowledgeToFetchFullName = null;
+                            try {
+                                const lastPrintedFull = localStorage.getItem(`lastPrinted_${baseKnowledgeName}`);
+                                if (lastPrintedFull) {
+                                    const lpfItem = window.dataset.find(k => k.name === lastPrintedFull && k.type === 'Knowledge');
+                                    if (lpfItem) knowledgeToFetchFullName = lastPrintedFull;
+                                }
+                            } catch (e) { /* Silently ignore localStorage errors in this context */ }
+                            
+                            if (!knowledgeToFetchFullName) {
+                                const defaultLevelName = `${baseKnowledgeName} I`;
+                                const dliItem = window.dataset.find(k => k.name === defaultLevelName && k.type === 'Knowledge');
+                                if (dliItem) {
+                                    knowledgeToFetchFullName = defaultLevelName;
+                                } else {
+                                    const directItem = window.dataset.find(k => k.name === baseKnowledgeName && k.type === 'Knowledge');
+                                    if (directItem) knowledgeToFetchFullName = baseKnowledgeName;
+                                }
+                            }
+                            if (knowledgeToFetchFullName) {
+                                tenetKnowledgeItemData = window.dataset.find(k => k.name === knowledgeToFetchFullName && k.type === 'Knowledge');
+                            }
+                        }
+
+                        const dataForPostMessage = {
+                            item: JSON.parse(JSON.stringify(item)),
+                            settings: JSON.parse(JSON.stringify(settings)),
+                            tenetKnowledgeItem: tenetKnowledgeItemData ? JSON.parse(JSON.stringify(tenetKnowledgeItemData)) : null
+                        };
+                        // Determine targetOrigin carefully. '*' is okay for file:// but specific for http/https.
+                        const targetOrigin = (iframe.contentWindow.location.protocol === 'file:') ? '*' : iframe.contentWindow.location.origin;
+                        
+                        if (iframe.contentWindow) {
+                            iframe.contentWindow.postMessage(dataForPostMessage, targetOrigin);
+                            // console.log(`[ViewAll] Posted data to iframe for: ${item.name}`);
+                            resolve();
+                        } else {
+                            console.error(`[ViewAll] Failed to get contentWindow for iframe of ${item.name}`);
+                            reject(new Error(`No contentWindow for ${item.name}`));
+                        }
+                    };
+                    iframe.onerror = function() {
+                        console.error(`[ViewAll] Error loading iframe src for ${item.name}`);
+                        wrapperDiv.innerHTML = `<p style="color:red; font-size:8px; text-align:center; padding:5px;">Error loading<br>${item.name}</p>`;
+                        reject(new Error(`Iframe src error for ${item.name}`));
+                    }
+                    iframe.src = './label_render.html'; // Make sure path is correct relative to view_all_labels.html
+                    wrapperDiv.appendChild(iframe); // Append iframe after setting src and onload
+                });
+                iframeLoadPromises.push(loadPromise);
+            });
+
+            Promise.allSettled(iframeLoadPromises).then(results => {
+                const successfulLoads = results.filter(r => r.status === 'fulfilled').length;
+                const failedLoads = results.filter(r => r.status === 'rejected').length;
+                loadingStatus.textContent = `Finished processing labels. Successfully rendered: ${successfulLoads}. Failed: ${failedLoads}.`;
+                console.log(`[ViewAll] All iframe load/postMessage attempts settled. Success: ${successfulLoads}, Failures: ${failedLoads}`);
+            });
+        };
+    </script>
+</body>
+</html>

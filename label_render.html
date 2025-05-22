@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label</title>
+    <style>
+        html, body { 
+            height: 100%;
+            margin: 0;
+            box-sizing: border-box; 
+        }
+        body {
+            font: 6pt Arial, sans-serif; line-height: 1.05; color: #000; 
+            overflow-x: hidden; overflow-y: auto; background-color: white; 
+        }
+        div, span, strong { /* Added strong here for box-sizing */
+            box-sizing: border-box;
+            word-wrap: break-word;
+        }
+        #dynamic-page-style { display: none; }
+        #label-content-wrapper { display: flex; flex-direction: column; width: 100%; height: 100%; background-color: white; }
+        .label-page {
+            width: 100%; height: var(--page-content-height, auto); 
+            min-height: var(--page-content-height, auto);
+            padding: 1mm; margin-bottom: 3mm; overflow: hidden; 
+            display: flex; flex-direction: column; background-color: #fff; 
+            position: relative; 
+        }
+        .label-page:last-child { margin-bottom: 0; }
+
+        @media print { 
+            html, body { height: 100%; width: 100%; overflow: visible !important; background-color: white !important; }
+            body { padding: 0 !important; margin: 0 !important;  }
+            #label-content-wrapper { height: 100% !important; width: 100% !important; display: block; }
+            .label-page { height: 100%; min-height: unset; border: none !important; margin-bottom: 0 !important; padding: 1mm !important; page-break-after: always !important; overflow: hidden !important; }
+            .label-page:last-child { page-break-after: auto !important; }
+        }
+        
+        @font-face {
+            font-family: 'KDM Icon Font';
+            src: url('./kdm_icon.woff') format('woff'); /* UPDATED FILENAME */
+            font-weight: normal;
+            font-style: normal;
+        }
+        .kdm-icon { font-family: 'KDM Icon Font', sans-serif; }
+
+        .label-type-indicator { 
+            position: absolute;
+            bottom: 0.5mm; 
+            right: 1mm;   
+            font-size: 5pt; 
+            color: black; 
+            font-weight: bold;
+            opacity:0.75; 
+        }
+
+        /* --- PHILOSOPHY STYLES --- */
+        .philosophy-page-1 .philo-hunt-xp-track { display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; margin-bottom: 1mm; width: 100%; height: 3.5mm;}
+        .philosophy-page-1 .philo-xp-box { width: 2.6mm; height: 2.6mm; border: 0.5pt solid #000; margin: 0 0.15mm; background-color: #fff; flex-shrink: 0;}
+        .philosophy-page-1 .philo-xp-box.philo-milestone { border-width: 1.5pt; }
+        .philosophy-page-1 .philo-xp-box.philo-final-milestone { border-width: 2.5pt !important; }
+        .philosophy-page-1 .philo-main-content { display: flex; flex-direction: row; justify-content: space-between; align-items: stretch; width: 100%; margin-top: 0.5mm; flex-grow: 1;}
+        .philosophy-page-1 .philo-name-area { font-size: 11.5pt; font-weight: bold; text-align: left; flex-grow: 1; padding-right: 1.5mm; line-height: 1.2;} /* Philosophy main name remains larger */
+        .philosophy-page-1 .philo-rank-box-area { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; min-width: 10mm;}
+        .philosophy-page-1 .philo-rank-box { width: 9mm; flex-grow: 1; border: 0.5pt solid #000; background-color: #fff; min-height: 6mm;}
+        .philosophy-page-1 .philo-rank-label { font-size: 7pt; text-align: center; width: 100%; flex-shrink: 0; margin-top: 0.5mm;}
+        
+        .philosophy-page-2.nerosis-card { justify-content: flex-start; }
+        .philosophy-page-2 .nerosis-name { /* UPDATED */
+            font-weight: bold; font-size: 7pt; 
+            text-align: center; /* Centered */
+        }
+        .philosophy-page-2 .nerosis-description { font-size: 6pt; line-height: 1.15; text-align: left; flex-grow: 1; overflow: hidden; }
+        
+        .page-title { font-size: 7pt; font-weight: bold; text-align: center; margin-bottom: 0.5mm; border-bottom: 0.5pt solid #000; padding-bottom: 0.5mm;}
+
+		.LabelTitle{
+			font-weight:bold; 
+			text-align:center; 
+            font-size: 7pt; 
+			margin-bottom: 1px;
+		}
+		.LabelTitle .expansion-tag { font-weight: normal; font-size: 0.85em; font-style: italic; }
+		.LabelBody {
+			font-size: 6pt;
+			text-align:center; 
+		}
+		.LeftAligin {
+			text-align:left;
+			display: inline-block;
+		}
+		.TableRoll
+		{
+			font-size:5px;
+			padding:0px;
+		}
+		.RollValues{
+			white-space: nowrap;
+			vertical-align: top;
+		}
+        /* --- UNIFIED KNOWLEDGE CARD STYLES --- */
+        .knowledge-name, 
+        .philosophy-page-3 .knowledge-name { /* Unified */
+            font-weight:bold; text-align:center; 
+            font-size: 7pt; /* UPDATED FONT */
+        }
+        .philosophy-page-3 .knowledge-name { padding-top: 0.5mm; } /* Specific adjustment if needed */
+         
+        .knowledge-main-desc { line-height: 1.1; overflow:hidden; flex-grow:1; margin-bottom: 0.5mm; }
+        .philosophy-page-3 .knowledge-main-desc { font-size: 6pt; }
+        .label-page > .knowledge-main-desc, .label-page > div > .knowledge-main-desc { font-size: 6pt; } 
+        .knowledge-footer-content { margin-top: auto; padding-top: 0.5mm; }
+        .knowledge-observation-text { font-style:italic; text-align:center; margin-bottom: 0.5mm; line-height: 1.1; }
+        .philosophy-page-3 .knowledge-observation-text { font-size: 5.5pt; } 
+        .label-page > .knowledge-footer-content > .knowledge-observation-text, .label-page > div > .knowledge-footer-content > .knowledge-observation-text { font-size: 6pt; } 
+        .knowledge-to-rank-boxes-container { display:flex; justify-content:center; align-items:center; margin-top:0.5mm; margin-bottom:0.5mm;}
+        .knowledge-rank-checkbox { display:inline-block; width:2.5mm; height:2.5mm; border:0.5pt solid #000; margin:0 0.5mm;}
+        .knowledge-rankup-text { text-align: center; line-height: 1.1; padding-top:0.5mm; }
+        .philosophy-page-3 .knowledge-rankup-text { font-size: 5.5pt; } 
+        .label-page > .knowledge-footer-content > .knowledge-rankup-text, .label-page > div > .knowledge-footer-content > .knowledge-rankup-text { font-size: 6pt; } 
+        .philosophy-page-3 .missing-data-message {font-size:6pt; text-align:center; padding-top:5mm; flex-grow:1; display:flex; align-items:center; justify-content:center;}
+        
+        /* --- CHARACTER TRAIT STYLES --- */
+        .character-trait-name { font-weight: bold; font-size: 7pt; text-align: center; } /* UPDATED FONT/MARGIN */
+        .character-trait-description { font-size: 6pt; line-height: 1.15; flex-grow: 1; overflow: hidden; }
+        
+        /* --- NEW FORMAT: Name (Expansion) Description (Used by Disorder, FA, SFA, Ability, Default) --- */
+        .item-name-expansion { font-weight: bold; font-size: 8.5pt; text-align: center; margin-bottom: 0.75mm; line-height: 1.2; } /* UPDATED FONT/MARGIN */
+        .item-name-expansion .expansion-tag 
+        .item-main-description { font-size: 7pt; line-height: 1.15; flex-grow: 1; overflow: hidden; text-align: left; }
+        
+        /* --- GENERIC ITEM STYLES (Primarily for Weapon name) --- */
+        .generic-item-name { font-weight: bold; margin-bottom: 0.75mm; font-size: 8.5pt; } /* UPDATED FONT/MARGIN */
+        /* .generic-item-type removed from Weapon display */
+        .generic-item-desc { font-size: 7pt; line-height:1.15; flex-grow:1; overflow:hidden; } /* Used by default fallback */
+        .generic-item-sub-property { font-size: 6.5pt; margin-top: 0.5mm;}
+
+        /* --- CALIBRATION LABEL STYLES --- */
+        #calibration-pattern { width: 100%; height: 100%; border: 0.5pt dashed black; background-color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-size: 5.5pt; padding: 0.5mm; position: relative; }
+        #calibration-pattern .info { margin-bottom: 0.3mm; color: black; line-height: 1.1; }
+        #calibration-pattern .settings-info { font-size: 5pt; color: black; }
+        #calibration-pattern .corner-marker { position: absolute; background: black; color: white; padding: 0.25mm 0.5mm; font-size: 4.5pt; line-height: 1; }
+    </style>
+</head>
+<body> 
+    <div id="label-content-wrapper"></div>
+
+    <script>
+        function processSpecialFormatting(text) {
+            if (typeof text !== 'string') return text;
+            let processedText = text;
+            processedText = processedText.replace(/{([^}]+)}/g, '<span class="kdm-icon">$1</span>');
+            processedText = processedText.replace(/\*(.*?)\*/g, '<strong>$1</strong>'); // Single asterisk for bold
+			processedText = processedText.replace(/\n/g, '<br><br>');
+            return processedText;
+        }
+
+        function applyPageSettings(settings) {
+            const body = document.body; 
+            const unit = settings.unit || 'mm';
+            const marginTopVal = parseFloat(settings.marginTop) || 0;
+            const marginRightVal = parseFloat(settings.marginRight) || 0; 
+            const marginBottomVal = parseFloat(settings.marginBottom) || 0;
+            const marginLeftVal = parseFloat(settings.marginLeft) || 0;   
+            body.style.padding = `${marginTopVal}${unit} ${marginRightVal}${unit} ${marginBottomVal}${unit} ${marginLeftVal}${unit}`;
+            const totalLabelHeightForIframe = parseFloat(settings.height) || 25.4;
+            const pageContentHeightForPreview = totalLabelHeightForIframe - marginTopVal - marginBottomVal;
+            body.style.setProperty('--page-content-height', `${pageContentHeightForPreview}${unit}`);
+            const oldPageStyle = document.getElementById('dynamic-page-style-LBL');
+            if (oldPageStyle) { oldPageStyle.remove(); }
+            const pageStyle = document.createElement('style');
+            pageStyle.id = 'dynamic-page-style-LBL'; 
+            pageStyle.innerHTML = `@page { size: ${settings.width || 50.8}${unit} ${settings.height || 25.4}${unit}; margin-top: ${marginTopVal}${unit}; margin-right: ${marginRightVal}${unit}; margin-bottom: ${marginBottomVal}${unit}; margin-left: ${marginLeftVal}${unit}; }`;
+            document.head.appendChild(pageStyle);
+        }
+
+        function renderItemHTML(item, settings, tenetKnowledgeItem) {
+            let itemSpecificHTML = ''; 
+            const unit = settings.unit || 'mm';
+            let typeIndicatorText = ''; 
+
+            if (item.type === 'Philosophy') {
+                let allPhiloPagesHTML = '';
+                // Page 1
+                let page1HTML = '<div class="label-page philosophy-page-1">';
+                let philosophyBoxesHTML = '<div class="philo-hunt-xp-track">';
+                const milestones = item.milestoneNumbers || [];
+                for (let i = 1; i <= 16; i++) { let boxClass = "philo-xp-box"; if (milestones.includes(i)) boxClass += " philo-milestone"; if (i === 16) boxClass += " philo-final-milestone"; philosophyBoxesHTML += `<span class="${boxClass.trim()}">&nbsp;</span>`; }
+                philosophyBoxesHTML += '</div>';
+                page1HTML += `${philosophyBoxesHTML}<div class="philo-main-content"><div class="philo-name-area">${processSpecialFormatting(item.name)}</div><div class="philo-rank-box-area"><div class="philo-rank-box"></div><div class="philo-rank-label">Rank</div></div></div></div>`;
+                allPhiloPagesHTML += page1HTML;
+                // Page 2 (Nerosis) - UPDATED
+                let page2HTML = '<div class="label-page philosophy-page-2 nerosis-card">';
+                if (item.nerosis) { 
+                    page2HTML += `<div class="LabelTitle">${processSpecialFormatting(item.nerosis)}</div>`; // Colon removed
+                    page2HTML += `<div class="LabelBody">${processSpecialFormatting(item.description || '(No description provided)')}</div>`;
+                } else {
+                    page2HTML += `<div class="LabelTitle" style="border-bottom:none; margin-bottom:0;">${processSpecialFormatting(item.name)} - Nerosis</div>`;
+                    page2HTML += `<div class="LabelBody" style="padding-top:2mm;">Nerosis information not available.</div>`;
+                }
+                page2HTML += '<div class="label-type-indicator">N</div></div>'; 
+                allPhiloPagesHTML += page2HTML;
+                // Page 3 (Tenet Knowledge)
+                if (item.tenetKnowledge) { 
+                    let page3HTML = '<div class="label-page philosophy-page-3">';
+                    if (tenetKnowledgeItem && tenetKnowledgeItem.name) { 
+                        page3HTML += formatKnowledgeLabel(tenetKnowledgeItem);
+						
+						/*const tkRankCount = tenetKnowledgeItem.toRankCount || 0;
+                        let tkBoxes = ''; for (let i = 0; i < tkRankCount; i++) { tkBoxes += '<span class="knowledge-rank-checkbox"></span>'; }
+                        let tkFooterContentHTML = '';
+                        if (tenetKnowledgeItem.observationText) { tkFooterContentHTML += `<div class="knowledge-observation-text"><em>${processSpecialFormatting(tenetKnowledgeItem.observationText)}</em></div>`; }
+                        if (tkRankCount > 0) { tkFooterContentHTML += `<div class="knowledge-to-rank-boxes-container">${tkBoxes}</div>`; }
+                        if (tenetKnowledgeItem.rankUpText) { tkFooterContentHTML += `<div class="knowledge-rankup-text">${processSpecialFormatting(tenetKnowledgeItem.rankUpText)}</div>`; }
+                        page3HTML += `<div class="knowledge-name">${processSpecialFormatting(tenetKnowledgeItem.name)}</div><div class="knowledge-main-desc">${processSpecialFormatting(tenetKnowledgeItem.mainDesc || '')}</div>${tkFooterContentHTML ? `<div class="knowledge-footer-content">${tkFooterContentHTML}</div>` : ''}`;*/
+						
+                    } else { page3HTML += `<div class="missing-data-message">Tenet Knowledge linked: "${processSpecialFormatting(item.tenetKnowledge)}"<br>However, specific level details could not be loaded.</div>`; }
+                    page3HTML += '<div class="label-type-indicator">TK</div></div>'; 
+                    allPhiloPagesHTML += page3HTML;
+                }
+                return allPhiloPagesHTML; 
+            }
+            
+            // For other single-page types
+            switch (item.type) {
+                case 'Weapon': // UPDATED
+                    itemSpecificHTML = `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div>${item.spec ? `<div class="LabelBody"><strong>Spec:</strong> ${processSpecialFormatting(item.spec)}</div>` : ''}${item.mastery ? `<div class="LabelBody"><strong>Mastery:</strong> ${processSpecialFormatting(item.mastery)}</div>` : ''}`;
+                    typeIndicatorText = 'W';
+                    break;
+                case 'Knowledge': 
+                    itemSpecificHTML = formatKnowledgeLabel(item);
+                    typeIndicatorText = 'K';
+                    break;
+                case 'Character Trait': 
+                    typeIndicatorText = 'C'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Disorder':
+                    typeIndicatorText = 'D'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Fighting Art':
+                    typeIndicatorText = 'FA'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Secret Fighting Art':
+                    typeIndicatorText = 'SF'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Ability':
+                    typeIndicatorText = 'A'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Calibration': 
+                     return `<div id="calibration-pattern"><div class="info" style="font-weight: bold; font-size: 6pt;">PRINT CALIBRATION LABEL</div><div class="info settings-info">Label (WxH): ${settings.width}${unit} x ${settings.height}${unit}</div><div class="info settings-info" style="margin-top: 0.25mm;">Margins (T|R|B|L):</div><div class="info settings-info" style="font-weight:bold;">${settings.marginTop}${unit}|${settings.marginRight}${unit}|${settings.marginBottom}${unit}|${settings.marginLeft}${unit}</div><div class="info" style="margin-top:0.5mm;">The <strong>BLACK DASHED BORDER</strong> is content area.</div><div class="info">The <strong>BLACK AREA</strong> around this is your margin.</div><div class="info" style="margin-top:0.5mm; font-weight:bold;">Print & measure. Adjust in Settings.</div><div class="corner-marker" style="top: 0; left: 0;">TL</div><div class="corner-marker" style="top: 0; right: 0;">TR</div><div class="corner-marker" style="bottom: 0; left: 0;">BL</div><div class="corner-marker" style="bottom: 0; right: 0;">BR</div></div>`;
+                default: // Fallback for any other unhandled types
+                    let defItemName = item.name || 'Unknown Item';
+                    let defItemExpansionHTML = item.expansion ? ` <span class="expansion-tag">(${processSpecialFormatting(item.expansion)})</span>` : '';
+                    let defItemDescription = item.description || item.description || item.mainDesc || 'No description available.';
+                    // Using item-name-expansion and item-main-description for default too
+                    itemSpecificHTML = `<div class="item-name-expansion">${processSpecialFormatting(defItemName)}${defItemExpansionHTML}</div><div class="item-main-description">${processSpecialFormatting(defItemDescription)}</div>`;
+                    // Add a small type indicator for truly unknown types if they get here
+                    if(item.type && !['Weapon', 'Knowledge', 'Character Trait', 'Disorder', 'Fighting Art', 'Secret Fighting Art', 'Ability'].includes(item.type) ){
+                         itemSpecificHTML = `<div style="font-size:5pt; opacity:0.6; text-align:right; position:absolute; top:0.5mm; right:0.5mm;">${processSpecialFormatting(item.type)}</div>` + itemSpecificHTML;
+                    }
+                    break;
+            }
+            
+            let finalPageContent = itemSpecificHTML;
+            if (typeIndicatorText) {
+                finalPageContent += `<div class="label-type-indicator">${typeIndicatorText}</div>`;
+            }
+            return `<div class="label-page">${finalPageContent}</div>`;
+        }
+        function formatKnowledgeLabel(item){
+			const rankCount = item.toRankCount || 0; let boxes = ''; for (let i = 0; i < rankCount; i++) { boxes += '<span class="knowledge-rank-checkbox"></span>';}
+				let footerContentHTML = '';
+				if (item.observationText) { footerContentHTML += `<div class="knowledge-observation-text"><em>${processSpecialFormatting(item.observationText)}</em></div>`; }
+				if (rankCount > 0) { footerContentHTML += `<div class="knowledge-to-rank-boxes-container">${boxes}</div>`; }
+				if (item.rankUpText) { footerContentHTML += `<div class="knowledge-rankup-text">${processSpecialFormatting(item.rankUpText)}</div>`; }
+				return `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div><div class="LabelBody">${processSpecialFormatting(item.mainDesc || '')}</div>${footerContentHTML ? `<div class="knowledge-footer-content">${footerContentHTML}</div>` : ''}`;
+		}
+		
+        function formatNameExpansionDesc(item) { // Helper for the new Name (Expansion) Description format
+            let itemName = item.name || 'Unknown Item';
+            let itemExpansionHTML = item.expansion ? ` <span class="expansion-tag">(${processSpecialFormatting(item.expansion)})</span>` : '';
+            let itemDescription = item.description || '(No description provided)'; // These types usually have 'description'
+            return `<div class="LabelTitle">${processSpecialFormatting(itemName)}${itemExpansionHTML}</div><div class="LabelBody">${processSpecialFormatting(itemDescription)}</div>`;
+        }
+
+        window.addEventListener('message', function(event) {
+            // ... (message listener remains the same) ...
+            if (event.data && typeof event.data === 'object' && event.data.item && event.data.settings) {
+                const item = event.data.item;
+                const settings = event.data.settings;
+                const tenetKnowledgeItem = event.data.tenetKnowledgeItem || null; 
+                applyPageSettings(settings); 
+                if (item.type === 'Calibration') { document.body.style.backgroundColor = 'black'; } 
+                else { document.body.style.backgroundColor = 'white'; }
+                document.getElementById('label-content-wrapper').innerHTML = renderItemHTML(item, settings, tenetKnowledgeItem);  
+            } else { 
+                document.getElementById('label-content-wrapper').innerHTML = '<p style="color:black; font-size:7pt;">Error: Invalid data from parent.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
