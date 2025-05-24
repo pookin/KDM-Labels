@@ -8,12 +8,204 @@
     /* Base Mobile Styles */
     body { 
       margin: 0; 
-      padding: 10px; /* Reduced padding for mobile */
+      /* padding: 10px; Replaced by padding-top and padding-bottom */
       font-family: Arial, sans-serif; 
       background: #2c3e50; 
       color: #ecf0f1; 
       font-size: 16px; /* Base font size for mobile */
+      padding-top: 50px; /* For fixed header */
+      padding-bottom: 50px; /* For fixed footer */
     }
+
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #1c2b3a; /* Darker header background */
+      color: #ecf0f1;
+      padding: 10px 20px;
+      box-sizing: border-box;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 50px; /* Fixed height */
+    }
+    .fixed-header h1 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+    #hamburgerMenuBtn {
+      background: none;
+      border: none;
+      color: #ecf0f1;
+      font-size: 1.8em; /* Larger hamburger icon */
+      cursor: pointer;
+    }
+
+    #mainMenu {
+      position: fixed;
+      top: 0; 
+      left: -280px; /* Start off-screen */
+      width: 250px;
+      height: 100%;
+      background: #34495e;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+      z-index: 1001; 
+      transition: left 0.3s ease;
+      color: #ecf0f1;
+      /* display: none; will be controlled by JS by toggling a class or style.left */
+    }
+    #mainMenu h3 {
+      margin-top: 0;
+      color: #ecf0f1;
+      border-bottom: 1px solid #4a6fa5;
+      padding-bottom: 10px;
+    }
+    #mainMenu a, #mainMenu button.menu-item { /* Added button.menu-item for non-link items */
+      display: block;
+      color: #ecf0f1;
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid #4a6fa5;
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      width: 100%;
+      text-align: left;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    #mainMenu a:hover, #mainMenu button.menu-item:hover {
+      background-color: #4a6fa5;
+    }
+    #mainMenu .close-menu-btn {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1.5em;
+        background: none;
+        border: none;
+        color: #ecf0f1;
+        cursor: pointer;
+    }
+
+    .dialog-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #34495e;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+      z-index: 1002; /* Above overlay */
+      width: 90%;
+      max-width: 500px; /* Max width for modals */
+      box-sizing: border-box;
+      display: none; /* Initially hidden */
+    }
+    .dialog-modal h3 {
+      margin-top: 0;
+      border-bottom: 1px solid #4a6fa5;
+      padding-bottom: 10px;
+      color: #ecf0f1; /* Ensure heading color */
+    }
+    .dialog-modal .close-dialog-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.8em;
+      background: none;
+      border: none;
+      color: #ecf0f1;
+      cursor: pointer;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6); /* Semi-transparent black */
+      z-index: 1001; /* Below modals, above content */
+      display: none; /* Initially hidden */
+    }
+
+    .fixed-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #1c2b3a; /* Darker footer background */
+      padding: 10px 0; /* Centered content */
+      box-sizing: border-box;
+      z-index: 1000;
+      display: flex;
+      justify-content: center; /* Center button(s) */
+      align-items: center;
+      height: 50px; /* Fixed height */
+    }
+    .fixed-footer .btn {
+       width: auto; /* Allow button to size based on content */
+       padding: 10px 20px; /* Adjust padding as needed */
+    }
+
+    /* Styles for the content that will be moved from #settings */
+    .settings-content-area {
+      background: #4a6fa5; /* Copied from .settings */
+      padding: 15px; /* Copied from .settings */
+      border-radius: 6px; /* Copied from .settings */
+      /* margin-bottom: 20px; /* Copied from .settings - adjust as needed in dialog */
+      margin-top: 15px; /* Add some space below dialog title */
+    }
+    .settings-content-area label { 
+      display: block; /* Labels on their own line */
+      width: auto; /* Auto width */
+      margin-bottom: 8px; /* Space below label */
+    }
+    .settings-content-area input[type="number"] { 
+      margin-right: 5px; 
+      margin-bottom: 10px; 
+      padding: 8px; /* Increased padding */
+      border-radius: 4px; 
+      border: 1px solid #5d8aa8; 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      width: calc(25% - 10px); /* Adjust width for 4 inputs in a row, approximately */
+      box-sizing: border-box;
+    }
+    .settings-content-area .margin-group {
+      display: flex;
+      flex-wrap: wrap; /* Allow wrapping on small screens */
+      gap: 5px; /* Space between margin inputs */
+      align-items: center;
+    }
+    .settings-content-area .margin-group input[type="number"] {
+      width: calc(50% - 10px); /* Two inputs per row in margin group */
+      margin-right: 0;
+    }
+    .settings-content-area .margin-group span {
+      margin-right: 5px;
+      margin-bottom: 10px; /* Align with input margin */
+    }
+    .settings-content-area br { display: none; } /* Hide <br> tags if not needed */
+
+    .settings-content-area .settings-actions { 
+      margin-top: 10px; 
+      display: flex; 
+      flex-direction: column; /* Stack action buttons */
+      gap: 10px; 
+    }
+    .settings-content-area .settings-actions .btn {
+      width: 100%; /* Full width for settings action buttons */
+    }
+
     .container { 
       width: 100%; /* Full width for mobile */
       margin: 0 auto; 
@@ -148,48 +340,47 @@
     /* Tablet Styles */
     @media (min-width: 600px) {
       body {
-        padding: 20px; /* Restore padding */
+        /* padding: 20px; Is overridden by padding-top/bottom if they are static */
+        padding-top: 60px; /* Adjust for potentially taller header */
+        padding-bottom: 60px; /* Adjust for potentially taller footer */
       }
+      .fixed-header { height: 60px; }
+      .fixed-header h1 { font-size: 1.35em; }
+      .fixed-footer { height: 60px; }
+      
       .container {
         width: 90%; /* Slightly less than full width */
         padding: 20px;
         border-radius: 8px; /* Restore border radius */
         box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Restore shadow */
       }
-      h2, h3 {
-        font-size: 1.35em;
-      }
-      .buttons {
-        flex-direction: row; /* Buttons side-by-side */
-        justify-content: flex-end; /* Align to right */
-        gap: 10px;
-      }
-      .btn {
-        width: auto; /* Auto width for buttons */
-      }
-      .settings label {
+      /* General h2, h3 in container are fine */
+      /* .buttons styling will be removed/adjusted later */
+      /* .btn general styling is fine */
+
+      .settings-content-area label {
         display: inline-block; /* Labels inline with inputs */
         width: 150px; /* Adjusted width for labels */
         margin-bottom: 5px;
       }
-      .settings input[type="number"] {
+      .settings-content-area input[type="number"] {
         width: 70px; /* Slightly larger inputs */
       }
-      .settings .margin-group {
+      .settings-content-area .margin-group {
         display: inline-block; /* Keep margin inputs inline */
       }
-      .settings .margin-group input[type="number"] {
+      .settings-content-area .margin-group input[type="number"] {
         width: 60px; /* Adjust width for margin inputs */
         margin-right: 1px;
       }
-      .settings br { display: block; } /* Restore <br> visibility */
+      .settings-content-area br { display: block; } /* Restore <br> visibility */
 
-      .settings .settings-actions {
+      .settings-content-area .settings-actions {
         flex-direction: row; /* Action buttons side-by-side */
         justify-content: flex-start;
         gap: 10px;
       }
-      .settings .settings-actions .btn {
+      .settings-content-area .settings-actions .btn {
         width: auto; /* Auto width for settings action buttons */
       }
       .iframe-preview {
@@ -202,16 +393,17 @@
       .container {
         max-width: 900px; /* Original max-width */
       }
-      h2, h3 {
-        font-size: 1.5em;
-      }
-      .settings label {
+      .fixed-header h1 { font-size: 1.5em; }
+      /* General h2, h3 in container are fine */
+      .dialog-modal h3 { font-size: 1.3em; } /* Example specific style for dialog titles */
+
+      .settings-content-area label {
         width: 120px; /* Original label width */
       }
-      .settings input[type="number"] {
+      .settings-content-area input[type="number"] {
         width: 60px; /* Original input width */
       }
-      .settings .margin-group input[type="number"] {
+      .settings-content-area .margin-group input[type="number"] {
         width: 50px; /* Original margin input width */
       }
       .iframe-preview {

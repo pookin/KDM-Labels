@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDM Label Printer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="fixed-header">
+    <h1>KDM Label Printer</h1>
+    <button id="hamburgerMenuBtn">☰</button>
+  </div>
+
+  <div id="mainMenu" style="display:none;">
+    <h3>Menu</h3>
+    <a href="#" id="menuLabelSettings" class="menu-item">Label Settings</a>
+    <a href="#" id="menuContentFilters" class="menu-item">Content Filters</a>
+    <!-- Future menu items will go here -->
+  </div>
+
+  <div id="dialogOverlay" class="overlay" style="display:none;"></div>
+
+  <div id="labelSettingsDialog" class="dialog-modal" style="display:none;">
+    <button class="close-dialog-btn" aria-label="Close">&times;</button>
+    <h3>Label Settings</h3>
+    <div class="dialog-content-area">
+      <!-- Content will be loaded here by script.js -->
+    </div>
+  </div>
+
+  <div id="contentFiltersDialog" class="dialog-modal" style="display:none;">
+    <button class="close-dialog-btn" aria-label="Close">&times;</button>
+    <h3>Content Filters</h3>
+    <div class="dialog-content-area">
+      <!-- Content will be loaded here by script.js -->
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="search-box">
+      <h3>Search</h3>
+      <input id="search" type="text" placeholder="Type item name..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      <div id="list" class="suggestions"></div>
+    </div>
+
+    <div class="preview-container">
+      <h3>Label Preview</h3>
+      <iframe id="preview" class="iframe-preview"></iframe>
+    </div>
+  </div>
+
+  <div class="fixed-footer">
+    <button id="print" class="btn">Print</button>
+  </div>
+
+    <script src="./kdm-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
