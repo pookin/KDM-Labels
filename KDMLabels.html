@@ -555,12 +555,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const mainMenu = document.getElementById('mainMenu'); // This is the panel with menu item links
 
   // Dialog related elements (for future use in next step, ensure IDs are correct in HTML)
-  // const openLabelSettingsBtn = document.getElementById('openLabelSettingsBtn');
-  // const openContentFiltersBtn = document.getElementById('openContentFiltersBtn');
-  // const labelSettingsDialog = document.getElementById('labelSettingsDialog');
-  // const contentFiltersDialog = document.getElementById('contentFiltersDialog');
-  // const dialogOverlay = document.getElementById('dialogOverlay');
-  // const closeDialogBtns = document.querySelectorAll('.dialog-close-btn');
+  const openLabelSettingsBtn = document.getElementById('openLabelSettingsBtn');
+  const openContentFiltersBtn = document.getElementById('openContentFiltersBtn');
+  const labelSettingsDialog = document.getElementById('labelSettingsDialog');
+  const contentFiltersDialog = document.getElementById('contentFiltersDialog');
+  const dialogOverlay = document.getElementById('dialogOverlay');
+  const closeDialogBtns = document.querySelectorAll('.dialog-close-btn');
 
   // Assign DOM elements for filter containers here (these are inside contentFiltersDialog)
   expansionCheckboxesContainer = document.getElementById('expansionCheckboxes');
@@ -988,6 +988,53 @@ document.addEventListener('DOMContentLoaded', function() {
       // It's possible these elements are not in the DOM if this script runs before dialog HTML is injected
       // or if the dialogs are not yet part of the main page structure this script expects.
       // console.error("Filter checkbox containers not found during DOMContentLoaded. Ensure HTML is correct.");
+  }
+
+  // Event listeners for opening dialogs from menu
+  if (openLabelSettingsBtn && labelSettingsDialog && dialogOverlay && mainMenu) {
+    openLabelSettingsBtn.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent default anchor behavior
+      labelSettingsDialog.classList.remove('hidden');
+      dialogOverlay.classList.remove('hidden');
+      mainMenu.classList.add('hidden');
+    });
+  }
+
+  if (openContentFiltersBtn && contentFiltersDialog && dialogOverlay && mainMenu) {
+    openContentFiltersBtn.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent default anchor behavior
+      contentFiltersDialog.classList.remove('hidden');
+      dialogOverlay.classList.remove('hidden');
+      mainMenu.classList.add('hidden');
+    });
+  }
+
+  // Event listeners for closing dialogs
+  if (closeDialogBtns && dialogOverlay) {
+    closeDialogBtns.forEach(button => {
+      button.addEventListener('click', function() {
+        const dialogId = this.getAttribute('data-dialog-id');
+        if (dialogId) {
+          const dialogElement = document.getElementById(dialogId);
+          if (dialogElement) {
+            dialogElement.classList.add('hidden');
+          }
+        }
+        dialogOverlay.classList.add('hidden');
+      });
+    });
+  }
+
+  // Event listener for clicking on the dialog overlay
+  if (dialogOverlay && labelSettingsDialog && contentFiltersDialog) {
+    dialogOverlay.addEventListener('click', function() {
+      // Check if the click is directly on the overlay and not on a dialog child
+      if (event.target === dialogOverlay) {
+        labelSettingsDialog.classList.add('hidden');
+        contentFiltersDialog.classList.add('hidden');
+        dialogOverlay.classList.add('hidden');
+      }
+    });
   }
 
   updatePreviewSize(); // Initial call
