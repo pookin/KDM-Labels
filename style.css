@@ -1,0 +1,419 @@
+    /* Base Mobile Styles */
+    body { 
+      margin: 0; 
+      padding-top: 60px; 
+      padding-bottom: 70px; 
+      font-family: Arial, sans-serif; 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      font-size: 16px; 
+    }
+
+    #appHeader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #34495e;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #4a6fa5;
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+    #appTitle {
+      font-size: 1.5em; 
+      font-weight: bold;
+    }
+    #menuBtn { /* This is a .btn class styled button */
+      padding: 8px 12px;
+    }
+
+    .menu-panel {
+      position: fixed; 
+      top: 50px; 
+      right: 15px; 
+      background: #3e5770; 
+      padding: 10px; /* Reduced padding for list items */
+      border-radius: 6px;
+      border: 1px solid #4a6fa5;
+      z-index: 1010; 
+      width: calc(100% - 50px); 
+      max-width: 320px; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .menu-panel.hidden {
+      display: none;
+    }
+    
+    /* New Menu Item List Styles */
+    .menu-panel .menu-item-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .menu-panel .menu-item-list li {
+      /* Optional: border-bottom: 1px solid #4a6fa5; */ /* Can add if separators are desired */
+    }
+    .menu-panel .menu-item-list li:last-child {
+      border-bottom: none;
+    }
+    .menu-panel .menu-item-list .menu-link-item {
+      display: block;
+      padding: 10px 5px; 
+      color: #ecf0f1; 
+      text-decoration: none;
+      background-color: transparent; 
+      border: none; 
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      border-radius: 3px; 
+    }
+    .menu-panel .menu-item-list .menu-link-item:hover {
+      background-color: #4a6fa5; 
+    }
+    /* End New Menu Item List Styles */
+    
+    .container { 
+      width: 100%; 
+      max-width: 900px; 
+      margin: 0 auto; 
+      background: #34495e; 
+      padding: 15px; 
+      box-sizing: border-box;
+    }
+    
+    .main-content-area {
+        /* Wraps scrollable parts */
+    }
+
+    .container > h2 { 
+      display: none; 
+    }
+    h3 { 
+      margin-top: 0; 
+      border-bottom: 1px solid #4a6fa5; 
+      padding-bottom: 8px;
+      font-size: 1.25em;
+    }
+
+    .dialog-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 2000;
+    }
+    .dialog-overlay.hidden {
+        display: none;
+    }
+    .dialog-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #34495e;
+        border: 1px solid #4a6fa5;
+        border-radius: 8px;
+        z-index: 2010;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        width: 90%;
+        max-width: 500px; 
+        max-height: 80vh; 
+        display: flex; 
+        flex-direction: column;
+    }
+    .dialog-modal.hidden {
+        display: none;
+    }
+    .dialog-content {
+        padding: 20px;
+        overflow-y: auto; 
+        flex-grow: 1; 
+    }
+    .dialog-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #5d8aa8;
+        color: #ecf0f1;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 1.2em;
+        line-height: 30px; 
+        text-align: center;
+        cursor: pointer;
+    }
+    .dialog-close-btn:hover {
+        background: #4a6fa5;
+    }
+
+    .search-box { 
+      background: #4a6fa5; 
+      padding: 15px; 
+      border-radius: 6px; 
+      margin-bottom: 20px; 
+      position: relative; 
+    }
+    .search-box input { 
+      width: 100%; 
+      padding: 12px;
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      border: 1px solid #5d8aa8; 
+      border-radius: 4px; 
+      box-sizing: border-box;
+    }
+    .suggestions { 
+      position: absolute; 
+      top: 100%; 
+      left: 0; 
+      right: 0; 
+      background: #34495e; 
+      border: 1px solid #5d8aa8; 
+      border-top: none; 
+      border-radius: 0 0 4px 4px; 
+      max-height: 200px; 
+      overflow-y: auto; 
+      display: none; 
+      z-index: 10; 
+    }
+    .suggestion { 
+      padding: 10px;
+      cursor: pointer; 
+      font-size: 0.9em; 
+    }
+    .suggestion:hover { background: #4a6fa5; }
+    .suggestion.active { background: #2980b9; }
+    .suggestion .lp-icon { 
+      color: #2ecc71; 
+      margin-left: 4px; 
+      font-weight: bold; 
+    }
+    .preview-container { 
+      margin-bottom: 20px; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .iframe-preview { 
+      border: 1px solid #5d8aa8;
+      width: 100%; 
+      max-width: 300px;
+    }
+    
+    #appFooter {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #34495e; 
+      padding: 10px 15px;
+      border-top: 1px solid #4a6fa5;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-end; 
+      box-sizing: border-box;
+    }
+
+    #appFooter .btn { 
+       width: auto; 
+    }
+
+    .btn { 
+      padding: 12px 15px;
+      background: #5d8aa8; 
+      color: #ecf0f1; 
+      border: none; 
+      border-radius: 4px; 
+      cursor: pointer; 
+      transition: background .3s; 
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .btn:hover { background: #4a6fa5; }
+    
+    #labelSettingsDialog .settings label, 
+    #contentFiltersDialog .settings label { 
+      display: block;
+      width: auto;
+      margin-bottom: 8px;
+    }
+     #labelSettingsDialog .settings input[type="number"],
+     #contentFiltersDialog .settings input[type="number"] { 
+      margin-right: 5px; 
+      margin-bottom: 10px; 
+      padding: 8px;
+      border-radius: 4px; 
+      border: 1px solid #5d8aa8; 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      width: calc(25% - 10px);
+      box-sizing: border-box;
+    }
+    #labelSettingsDialog .settings .margin-group,
+    #contentFiltersDialog .settings .margin-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+    }
+    #labelSettingsDialog .settings .margin-group input[type="number"],
+    #contentFiltersDialog .settings .margin-group input[type="number"] {
+      width: calc(50% - 10px);
+      margin-right: 0;
+    }
+    #labelSettingsDialog .settings .margin-group span,
+    #contentFiltersDialog .settings .margin-group span {
+      margin-right: 5px;
+      margin-bottom: 10px;
+    }
+    #labelSettingsDialog .settings br,
+    #contentFiltersDialog .settings br { 
+      display: none; 
+    } 
+
+    #labelSettingsDialog .settings .settings-actions,
+    #contentFiltersDialog .settings .settings-actions { 
+      margin-top: 10px; 
+      display: flex; 
+      flex-direction: column;
+      gap: 10px; 
+    }
+    #labelSettingsDialog .settings .settings-actions .btn,
+    #contentFiltersDialog .settings .settings-actions .btn {
+      width: 100%; 
+    }
+
+    .settings-section {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #4a6fa5;
+    }
+    .filter-group {
+      margin-bottom: 15px;
+    }
+    .filter-group h4 {
+      font-size: 1.1em;
+      margin-bottom: 8px;
+      border-bottom: none;
+    }
+    .filter-controls {
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+    }
+    .btn-small {
+      padding: 5px 10px;
+      font-size: 0.85em;
+      width: auto;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      max-height: 150px;
+      overflow-y: auto;
+      background: #2c3e50;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #5d8aa8;
+    }
+    .checkbox-group label {
+      display: block;
+      color: #ecf0f1;
+      cursor: pointer;
+    }
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* Tablet Styles */
+    @media (min-width: 600px) {
+      body {
+         padding-top: 60px; 
+         padding-bottom: 70px;
+      }
+      .container {
+        width: 90%; 
+        padding: 20px;
+        border-radius: 8px; 
+        box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+      }
+      #appTitle {
+        font-size: 1.65em; 
+      }
+      h3 {
+        font-size: 1.35em;
+      }
+      #labelSettingsDialog .settings label, 
+      #contentFiltersDialog .settings label {
+        display: inline-block; 
+        width: 150px; 
+        margin-bottom: 5px;
+      }
+      #labelSettingsDialog .settings input[type="number"],
+      #contentFiltersDialog .settings input[type="number"] {
+        width: 70px; 
+      }
+      #labelSettingsDialog .settings .margin-group,
+      #contentFiltersDialog .settings .margin-group {
+        display: inline-block; 
+      }
+      #labelSettingsDialog .settings .margin-group input[type="number"],
+      #contentFiltersDialog .settings .margin-group input[type="number"] {
+        width: 60px; 
+        margin-right: 1px;
+      }
+      #labelSettingsDialog .settings br,
+      #contentFiltersDialog .settings br { 
+        display: block; 
+      } 
+
+      #labelSettingsDialog .settings .settings-actions,
+      #contentFiltersDialog .settings .settings-actions {
+        flex-direction: row; 
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      #labelSettingsDialog .settings .settings-actions .btn,
+      #contentFiltersDialog .settings .settings-actions .btn {
+        width: auto; 
+      }
+      .iframe-preview {
+        max-width: 400px; 
+      }
+    }
+
+    /* Desktop Styles */
+    @media (min-width: 992px) {
+      .container {
+        max-width: 900px; 
+      }
+       #appTitle {
+        font-size: 1.75em;
+      }
+      #labelSettingsDialog .settings label,
+      #contentFiltersDialog .settings label {
+        width: 120px; 
+      }
+      #labelSettingsDialog .settings input[type="number"],
+      #contentFiltersDialog .settings input[type="number"] {
+        width: 60px; 
+      }
+      #labelSettingsDialog .settings .margin-group input[type="number"],
+      #contentFiltersDialog .settings .margin-group input[type="number"] {
+        width: 50px; 
+      }
+      .iframe-preview {
+         max-width: 500px; 
+      }
+    }

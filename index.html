@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KDM Label Printer</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="appHeader">
+    <span id="appTitle">KDM Label Printer</span>
+    <button id="menuBtn" class="btn">☰</button>
+  </header>
+
+  <div id="mainMenu" class="menu-panel hidden">
+    <ul class="menu-item-list">
+      <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Label Settings</a></li>
+      <li><a href="#" id="openContentFiltersBtn" class="menu-link-item">Content Filters</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="main-content-area"> 
+      <div class="search-box">
+        <h3>Search</h3>
+        <input id="search" type="text" placeholder="Type item name..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div id="list" class="suggestions"></div>
+      </div>
+
+      <div class="preview-container">
+        <h3>Label Preview</h3>
+        <iframe id="preview" class="iframe-preview"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer id="appFooter">
+    <button id="print" class="btn">Print</button>
+  </footer>
+
+  <div id="dialogOverlay" class="dialog-overlay hidden"></div>
+
+  <div id="labelSettingsDialog" class="dialog-modal hidden">
+    <div class="dialog-content">
+      <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
+      <h3>Label Settings</h3>
+      <label>Label Size (W H):</label>
+      <input id="width" type="number" value="50.8" step="0.1" title="Label Width"><span>mm</span>
+      <input id="height" type="number" value="25.4" step="0.1" title="Label Height"><span>mm</span><br>
+      
+      <label>Margins (Top R B L):</label>
+      <div class="margin-group" style="display: inline-block;">
+          <input id="marginTop" type="number" value="1" step="0.1" title="Top Margin"><span>mm</span>
+          <input id="marginRight" type="number" value="1" step="0.1" title="Right Margin"><span>mm</span>
+          <input id="marginBottom" type="number" value="1" step="0.1" title="Bottom Margin"><span>mm</span>
+          <input id="marginLeft" type="number" value="1" step="0.1" title="Left Margin"><span>mm</span>
+      </div>
+      <div class="settings-actions">
+          <button id="save" class="btn">Save Settings</button>
+          <button id="showCalibrationLabelBtn" class="btn">Show Calibration Label</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="contentFiltersDialog" class="dialog-modal hidden">
+    <div class="dialog-content">
+      <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
+      <div class="settings-section" id="contentFiltersInDialog"> 
+        <h3>Content Filters</h3>
+        <div class="filter-group" id="expansionFilters">
+          <h4>Expansions</h4>
+          <div class="filter-controls">
+            <button id="selectAllExpansions" class="btn btn-small">Select All</button>
+            <button id="deselectAllExpansions" class="btn btn-small">Deselect All</button>
+          </div>
+          <div id="expansionCheckboxes" class="checkbox-group">
+            <!-- JS will populate -->
+          </div>
+        </div>
+        <div class="filter-group" id="philosophyFilters">
+          <h4>Philosophies</h4>
+          <div class="filter-controls">
+            <button id="selectAllPhilosophies" class="btn btn-small">Select All</button>
+            <button id="deselectAllPhilosophies" class="btn btn-small">Deselect All</button>
+          </div>
+          <div id="philosophyCheckboxes" class="checkbox-group">
+            <!-- JS will populate -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="./kdm-data.js"></script>
+<script src="./script.js"></script>
+
+</body>
+</html>
