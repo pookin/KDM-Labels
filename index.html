@@ -16,6 +16,8 @@
     <ul class="menu-item-list">
       <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Label Settings</a></li>
       <li><a href="#" id="openContentFiltersBtn" class="menu-link-item">Content Filters</a></li>
+      <li><a href="#" id="openUnlockedStatusBtn" class="menu-link-item">Unlocked Status</a></li>
+      <li><a href="#" id="openDeckBuildingBtn" class="menu-link-item">Build Character Deck</a></li>
     </ul>
   </div>
 
@@ -87,6 +89,55 @@
             <!-- JS will populate -->
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="unlockedStatusDialog" class="dialog-modal hidden">
+    <div class="dialog-content">
+      <button class="dialog-close-btn" data-dialog-id="unlockedStatusDialog">X</button>
+      <h3>Unlocked Philosophies & Knowledges</h3>
+      <div class="settings-section" id="unlockedItemsContainer">
+        <p>Loading unlocked items...</p>
+        <!-- Philosophies and Knowledges will be populated here by JavaScript -->
+      </div>
+      <div class="settings-actions">
+        <button id="clearUnlockedDataBtn" class="btn btn-danger">Clear All Unlocked Data</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="deckBuildingDialog" class="dialog-modal hidden">
+    <div class="dialog-content">
+      <button class="dialog-close-btn" data-dialog-id="deckBuildingDialog">X</button>
+      <h3>Character Deck Building</h3>
+
+      <div class="deck-building-area">
+        <div class="trait-selection-panel">
+          <h4>Available Character Traits</h4>
+          <div id="availableTraitsContainer" class="checkbox-group scrollable-group">
+            <!-- Character Traits will be populated here by JavaScript -->
+            <p>Loading traits...</p>
+          </div>
+        </div>
+
+        <div class="deck-summary-panel">
+          <h4>Deck Summary & Rules</h4>
+          <div id="deckRulesTally">
+            <p>Total Items: <span id="deckTotalItems">0</span>/24</p>
+            <p>Impairments: <span id="deckImpairmentCount">0</span></p>
+            <p>Abilities per Impairment: <span id="deckAbilitiesPerImpairment">N/A</span> (Max 5)</p>
+            <p>Legendary Abilities: <span id="deckLegendaryCount">0</span>/1</p>
+          </div>
+          <div id="deckRuleViolations" class="rule-violations">
+            <!-- Rule violation messages will appear here -->
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-actions">
+        <!-- <button id="saveDeckBtn" class="btn">Save Deck</button> --> <!-- Future consideration -->
+        <!-- <button id="loadDeckBtn" class="btn">Load Deck</button> --> <!-- Future consideration -->
       </div>
     </div>
   </div>

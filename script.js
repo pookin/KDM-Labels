@@ -40,12 +40,27 @@ document.addEventListener('DOMContentLoaded', function() {
   const mainMenu = document.getElementById('mainMenu'); // This is the panel with menu item links
 
   // Dialog related elements (for future use in next step, ensure IDs are correct in HTML)
-  // const openLabelSettingsBtn = document.getElementById('openLabelSettingsBtn');
-  // const openContentFiltersBtn = document.getElementById('openContentFiltersBtn');
-  // const labelSettingsDialog = document.getElementById('labelSettingsDialog');
-  // const contentFiltersDialog = document.getElementById('contentFiltersDialog');
-  // const dialogOverlay = document.getElementById('dialogOverlay');
-  // const closeDialogBtns = document.querySelectorAll('.dialog-close-btn');
+  const openLabelSettingsBtn = document.getElementById('openLabelSettingsBtn');
+  const openContentFiltersBtn = document.getElementById('openContentFiltersBtn');
+  const labelSettingsDialog = document.getElementById('labelSettingsDialog');
+  const contentFiltersDialog = document.getElementById('contentFiltersDialog');
+  const dialogOverlay = document.getElementById('dialogOverlay');
+  const closeDialogBtns = document.querySelectorAll('.dialog-close-btn');
+
+  // Dialog related elements (for Unlocked Status)
+  const openUnlockedStatusBtn = document.getElementById('openUnlockedStatusBtn');
+  const unlockedStatusDialog = document.getElementById('unlockedStatusDialog');
+  const clearUnlockedDataBtn = document.getElementById('clearUnlockedDataBtn'); // Ensured this is active
+
+  // Dialog related elements (for Deck Building)
+  const openDeckBuildingBtn = document.getElementById('openDeckBuildingBtn');
+  const deckBuildingDialog = document.getElementById('deckBuildingDialog');
+  const availableTraitsContainer = document.getElementById('availableTraitsContainer'); // Now used
+  const deckTotalItemsSpan = document.getElementById('deckTotalItems');
+  const deckImpairmentCountSpan = document.getElementById('deckImpairmentCount');
+  const deckAbilitiesPerImpairmentSpan = document.getElementById('deckAbilitiesPerImpairment');
+  const deckLegendaryCountSpan = document.getElementById('deckLegendaryCount');
+  const deckRuleViolationsDiv = document.getElementById('deckRuleViolations');
 
   // Assign DOM elements for filter containers here (these are inside contentFiltersDialog)
   expansionCheckboxesContainer = document.getElementById('expansionCheckboxes');
@@ -56,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const selectAllPhilosophiesBtn = document.getElementById('selectAllPhilosophies');
   const deselectAllPhilosophiesBtn = document.getElementById('deselectAllPhilosophies');
 
-  const romanNumeralRegex = /\s+(I|II|III)$/;
+  const romanNumeralRegex = /\s+(I|II|III)$/; // This is already here, good.
   const philosophyKnowledgeMap = { "The First Step": "Path of the First Step", "The Second Step": "Path of the Second Step", "The Third Step": "Path of the Third Step" };
 
   let defaultSettings = {
@@ -284,14 +299,60 @@ document.addEventListener('DOMContentLoaded', function() {
       const labelTitle = searchInput.value;
       if (labelTitle && window.dataset && Array.isArray(window.dataset)) {
           const currentItem = window.dataset.find(i => i.name === labelTitle);
-          if (currentItem && currentItem.type === 'Knowledge') {
-              const baseNameRegex = /\s+(I|II|III)$/;
-              let baseName = labelTitle;
-              if (baseNameRegex.test(labelTitle)) {
-                  baseName = labelTitle.replace(baseNameRegex, '').trim();
+
+          // --- Auto-unlock logic ---
+          if (currentItem && (currentItem.type === 'Philosophy' || currentItem.type === 'Knowledge')) {
+            const itemTypeLower = currentItem.type.toLowerCase();
+            const safeItemName = currentItem.name.replace(/\s+/g, '_');
+            const storageKey = `${UNLOCKED_STATUS_PREFIX}${itemTypeLower}_${safeItemName}`;
+
+            if (localStorage.getItem(storageKey) !== 'true') {
+              localStorage.setItem(storageKey, 'true');
+              console.log(`Auto-unlocked ${currentItem.name} (${currentItem.type}) upon printing.`);
+            }
+
+            // Handle unlocking preceding levels for leveled Knowledges
+            if (currentItem.type === 'Knowledge') {
+              const levelMatch = currentItem.name.match(romanNumeralRegex); // romanNumeralRegex is accessible from DOMContentLoaded scope
+              if (levelMatch) {
+                const currentLevelRoman = levelMatch[1]; // I, II, or III
+                const baseName = currentItem.name.replace(romanNumeralRegex, '').trim();
+
+                const levelsToUnlock = [];
+                if (currentLevelRoman === 'III') {
+                  levelsToUnlock.push(`${baseName} II`, `${baseName} I`);
+                } else if (currentLevelRoman === 'II') {
+                  levelsToUnlock.push(`${baseName} I`);
+                }
+
+                levelsToUnlock.forEach(levelNameToUnlock => {
+                  const precedingLevelItem = window.dataset.find(
+                    k => k.name === levelNameToUnlock && k.type === 'Knowledge'
+                  );
+                  if (precedingLevelItem) {
+                    const precedingSafeName = precedingLevelItem.name.replace(/\s+/g, '_');
+                    // UNLOCKED_STATUS_PREFIX is accessible from the higher scope
+                    const precedingStorageKey = `${UNLOCKED_STATUS_PREFIX}knowledge_${precedingSafeName}`; 
+                    if (localStorage.getItem(precedingStorageKey) !== 'true') {
+                      localStorage.setItem(precedingStorageKey, 'true');
+                      console.log(`Auto-unlocked preceding level ${precedingLevelItem.name} upon printing ${currentItem.name}.`);
+                    }
+                  }
+                });
               }
-              try { localStorage.setItem(`lastPrinted_${baseName}`, labelTitle); }
-              catch (e) { console.warn("LocalStorage error in printLabel:", e); }
+            }
+          }
+          // --- End auto-unlock logic ---
+
+          // Existing logic for lastPrinted_ for Knowledges (keep this)
+          if (currentItem && currentItem.type === 'Knowledge') {
+              // const baseNameRegexForLastPrinted = /\s+(I|II|III)$/; // Can reuse romanNumeralRegex
+              let baseNameForLastPrinted = labelTitle;
+              if (romanNumeralRegex.test(labelTitle)) { // Re-use romanNumeralRegex
+                  baseNameForLastPrinted = labelTitle.replace(romanNumeralRegex, '').trim();
+              }
+              try { localStorage.setItem(`lastPrinted_${baseNameForLastPrinted}`, labelTitle); }
+              catch (e) { console.warn("LocalStorage error in printLabel for lastPrinted_:", e); }
           }
       }
   }
@@ -481,4 +542,386 @@ document.addEventListener('DOMContentLoaded', function() {
     const initialResults = search(searchInput.value);
     renderSuggestions(initialResults);
   }
+
+  // --- Dialog Management ---
+  function openDialog(dialogElement) {
+    if (dialogElement && dialogOverlay && mainMenu) {
+      dialogElement.classList.remove('hidden');
+      dialogOverlay.classList.remove('hidden');
+      mainMenu.classList.add('hidden'); // Hide main menu when dialog opens
+    }
+  }
+
+  function closeDialog(dialogElement) {
+    if (dialogElement && dialogOverlay) {
+      dialogElement.classList.add('hidden');
+      dialogOverlay.classList.add('hidden');
+    }
+  }
+
+  if (openLabelSettingsBtn && labelSettingsDialog) {
+    openLabelSettingsBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      openDialog(labelSettingsDialog);
+    });
+  }
+
+  if (openContentFiltersBtn && contentFiltersDialog) {
+    openContentFiltersBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      openDialog(contentFiltersDialog);
+    });
+  }
+
+  closeDialogBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const parentDialog = this.closest('.dialog-modal');
+      if (parentDialog) {
+        closeDialog(parentDialog);
+      }
+    });
+  });
+
+  if (dialogOverlay) {
+    dialogOverlay.addEventListener('click', function() {
+      if (labelSettingsDialog && !labelSettingsDialog.classList.contains('hidden')) {
+        closeDialog(labelSettingsDialog);
+      }
+      if (contentFiltersDialog && !contentFiltersDialog.classList.contains('hidden')) {
+        closeDialog(contentFiltersDialog);
+      }
+      if (unlockedStatusDialog && !unlockedStatusDialog.classList.contains('hidden')) { // Add this condition
+        closeDialog(unlockedStatusDialog);
+      }
+    });
+  }
+
+  // Event Listener for "Unlocked Status" Dialog
+  if (openUnlockedStatusBtn && unlockedStatusDialog) {
+    openUnlockedStatusBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      populateUnlockedStatusDialog(); // Call it here
+      openDialog(unlockedStatusDialog);
+    });
+  }
+  // --- End Dialog Management ---
+
+  const UNLOCKED_STATUS_PREFIX = 'unlocked_'; // Define storage key prefix
+
+  // --- Unlocked Status Dialog Population ---
+  function populateUnlockedStatusDialog() {
+    const container = document.getElementById('unlockedItemsContainer');
+    if (!container) {
+      console.error("populateUnlockedStatusDialog: container 'unlockedItemsContainer' not found.");
+      return;
+    }
+    container.innerHTML = ''; // Clear previous items
+
+    if (!window.dataset || !Array.isArray(window.dataset)) {
+      container.innerHTML = '<p>Error: Dataset not loaded.</p>';
+      return;
+    }
+
+    // Helper to get all filterable philosophy names (similar to search function)
+    // This is to ensure a knowledge's linked philosophy is one that *can* be filtered
+    const filterablePhilosophyNames = new Set();
+    if (philosophyCheckboxesContainer) { // philosophyCheckboxesContainer is global-like
+        const philosophyCheckboxes = philosophyCheckboxesContainer.querySelectorAll('input[type="checkbox"]');
+        philosophyCheckboxes.forEach(cb => filterablePhilosophyNames.add(cb.value));
+    }
+
+
+    const itemsToShow = window.dataset.filter(item => {
+      const itemExpansionName = item.expansion && item.expansion.trim() !== "" ? item.expansion.trim() : CORE_GAME_EXPANSION_NAME;
+      
+      // Common check for expansion filter
+      if (!isFilterActive('expansion', itemExpansionName)) {
+        return false;
+      }
+
+      if (item.type === 'Philosophy') {
+        return isFilterActive('philosophy', item.name.trim());
+      } else if (item.type === 'Knowledge') {
+        const linkedPhilosophy = item.philosophyLinked ? item.philosophyLinked.trim() : null;
+        if (linkedPhilosophy && linkedPhilosophy !== "" && filterablePhilosophyNames.has(linkedPhilosophy)) {
+          // If it's linked to a filterable philosophy, that philosophy must be active
+          return isFilterActive('philosophy', linkedPhilosophy);
+        } else if (linkedPhilosophy && linkedPhilosophy !== "" && !filterablePhilosophyNames.has(linkedPhilosophy)) {
+          // If it's linked to a philosophy that IS NOT in the filter list (e.g. an "Other" or "General" type not explicitly listed),
+          // it should probably be shown, as it cannot be filtered out by a philosophy filter.
+          // However, the current isFilterActive('philosophy', linkedPhilosophy) would return true if it's not in localStorage (default true)
+          // For safety, let's stick to the original logic: if linked, it must pass the filter.
+          // If the philosophy is not in the filter list, isFilterActive will default to true, showing it.
+          // This matches the example logic: isFilterActive('philosophy', linkedPhilosophy)
+           return isFilterActive('philosophy', linkedPhilosophy);
+        }
+        // For knowledges not linked to a specific filterable philosophy, they are shown (as long as their expansion is active)
+        return true;
+      }
+      return false;
+    }).sort((a, b) => { // Basic sort: Type (Philosophy then Knowledge), then Name
+      if (a.type === 'Philosophy' && b.type === 'Knowledge') return -1;
+      if (a.type === 'Knowledge' && b.type === 'Philosophy') return 1;
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    });
+
+    if (itemsToShow.length === 0) {
+      container.innerHTML = '<p>No Philosophies or Knowledges match the current content filters or none exist in the dataset.</p>';
+      return;
+    }
+
+    itemsToShow.forEach(item => {
+      const div = document.createElement('div');
+      div.classList.add('checkbox-item'); // For potential styling
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      const safeItemName = item.name.replace(/\s+/g, '_'); // Use a consistent safe name for ID and storage
+      const itemTypeLower = item.type.toLowerCase();
+      checkbox.id = `unlocked_checkbox_${itemTypeLower}_${safeItemName}`; // Make ID more specific for checkboxes
+      checkbox.value = item.name;
+      checkbox.dataset.itemType = item.type;
+
+      // --- Load status from localStorage ---
+      const storageKey = `${UNLOCKED_STATUS_PREFIX}${itemTypeLower}_${safeItemName}`;
+      const isUnlocked = localStorage.getItem(storageKey) === 'true';
+      checkbox.checked = isUnlocked;
+      // --- End Load status ---
+
+      const label = document.createElement('label');
+      label.htmlFor = checkbox.id;
+      let labelText = item.name;
+      if (item.type === 'Knowledge') {
+          labelText += ` (Knowledge${item.philosophyLinked ? ' - ' + item.philosophyLinked : ''})`;
+      } else { // Philosophy
+          labelText += ` (Philosophy)`;
+      }
+      label.textContent = labelText;
+
+      // --- Save status to localStorage on change ---
+      checkbox.addEventListener('change', function() {
+        // We can re-derive storageKey or use the one from the outer scope if careful
+        const currentStorageKey = `${UNLOCKED_STATUS_PREFIX}${this.dataset.itemType.toLowerCase()}_${this.value.replace(/\s+/g, '_')}`;
+        localStorage.setItem(currentStorageKey, this.checked);
+        // console.log(`Saved ${currentStorageKey} = ${this.checked}`);
+      });
+      // --- End Save status ---
+
+      div.appendChild(checkbox);
+      div.appendChild(label);
+      container.appendChild(div);
+    });
+  }
+  // --- End Unlocked Status Dialog Population ---
+
+  // --- Clear Unlocked Data Functionality ---
+  if (clearUnlockedDataBtn) {
+    clearUnlockedDataBtn.addEventListener('click', function() {
+      if (confirm('Are you sure you want to clear ALL unlocked Philosophies and Knowledges data? This action cannot be undone.')) {
+        let clearedCount = 0;
+        const keysToRemove = [];
+
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && key.startsWith(UNLOCKED_STATUS_PREFIX)) {
+            keysToRemove.push(key);
+          }
+        }
+
+        keysToRemove.forEach(key => {
+          localStorage.removeItem(key);
+          clearedCount++;
+        });
+
+        if (clearedCount > 0) {
+          console.log(`Cleared ${clearedCount} unlocked item statuses from localStorage.`);
+        } else {
+          console.log('No unlocked item statuses found in localStorage to clear.');
+        }
+
+        // Refresh the dialog view if it's open
+        // unlockedStatusDialog is accessible from the outer scope
+        if (unlockedStatusDialog && !unlockedStatusDialog.classList.contains('hidden')) {
+          populateUnlockedStatusDialog(); // populateUnlockedStatusDialog is accessible
+        }
+      }
+    });
+  }
+  // --- End Clear Unlocked Data Functionality ---
+
+  // --- Event Listener for Opening "Deck Building" Dialog ---
+  if (openDeckBuildingBtn && deckBuildingDialog) {
+    openDeckBuildingBtn.addEventListener('click', function(event) {
+      event.preventDefault();
+      populateDeckBuildingDialog();
+      // updateDeckSummaryAndRules(); // Called at the end of populateDeckBuildingDialog now
+      openDialog(deckBuildingDialog);
+    });
+  }
+  // --- End Event Listener for Opening "Deck Building" Dialog ---
+
+  // --- Deck Building Dialog Population and Rules ---
+  function populateDeckBuildingDialog() {
+    if (!availableTraitsContainer) {
+      console.error("populateDeckBuildingDialog: container 'availableTraitsContainer' not found.");
+      return;
+    }
+    availableTraitsContainer.innerHTML = '';
+
+    if (!window.dataset || !Array.isArray(window.dataset)) {
+      availableTraitsContainer.innerHTML = '<p>Error: Dataset not loaded.</p>';
+      return;
+    }
+
+    const characterTraits = window.dataset.filter(item => {
+      if (item.type === 'Character Trait') {
+        const itemExpansionName = item.expansion && item.expansion.trim() !== "" ? item.expansion.trim() : CORE_GAME_EXPANSION_NAME;
+        return isFilterActive('expansion', itemExpansionName); // CORE_GAME_EXPANSION_NAME & isFilterActive are accessible
+      }
+      return false;
+    }).sort((a, b) => { // Sort by subtype, then name
+      const subTypeA = a.traitSubType || 'Unknown'; // Handle undefined/null traitSubType
+      const subTypeB = b.traitSubType || 'Unknown';
+      if (subTypeA < subTypeB) return -1;
+      if (subTypeA > subTypeB) return 1;
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    });
+
+    if (characterTraits.length === 0) {
+      availableTraitsContainer.innerHTML = '<p>No Character Traits match the current content filters or none exist in the dataset.</p>';
+      return;
+    }
+
+    characterTraits.forEach(item => {
+      const div = document.createElement('div');
+      div.classList.add('checkbox-item');
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      const safeName = item.name.replace(/\s+/g, '_').replace(/[^\w-]/g, ''); // Make ID safer
+      checkbox.id = `deck_trait_${safeName}`;
+      checkbox.value = item.name;
+      checkbox.dataset.itemName = item.name;
+      checkbox.dataset.traitSubType = item.traitSubType || 'Unknown'; // Default if undefined
+      checkbox.dataset.itemId = item.id || safeName; // Use ID if available, else safeName as fallback
+
+      checkbox.addEventListener('change', function() {
+        // console.log(`Trait ${this.value} (${this.dataset.traitSubType}) selected: ${this.checked}`);
+        updateDeckSummaryAndRules(); // This function will be implemented next
+      });
+
+      const label = document.createElement('label');
+      label.htmlFor = checkbox.id;
+      label.textContent = `${item.name} (${item.traitSubType || 'Trait'})`; // Display fallback if subtype missing
+
+      div.appendChild(checkbox);
+      div.appendChild(label);
+      availableTraitsContainer.appendChild(div);
+    });
+    updateDeckSummaryAndRules(); // Initial call after populating and before dialog is shown if called from open button.
+  }
+
+  function updateDeckSummaryAndRules() {
+    if (!availableTraitsContainer || !deckTotalItemsSpan || !deckImpairmentCountSpan || !deckAbilitiesPerImpairmentSpan || !deckLegendaryCountSpan || !deckRuleViolationsDiv) {
+      console.error("updateDeckSummaryAndRules: One or more UI elements for deck summary are missing.");
+      return;
+    }
+
+    const selectedTraitCheckboxes = availableTraitsContainer.querySelectorAll('input[type="checkbox"]:checked');
+
+    let totalItems = 0;
+    let impairmentCount = 0;
+    let abilityCount = 0;
+    let legendaryCount = 0;
+
+    selectedTraitCheckboxes.forEach(checkbox => {
+      totalItems++;
+      const subType = checkbox.dataset.traitSubType;
+      if (subType === 'Impairment') impairmentCount++;
+      if (subType === 'Ability') abilityCount++;
+      if (subType === 'Legendary Ability') legendaryCount++;
+    });
+
+    // Update Summary Spans
+    const minItemsRule = 24;
+    deckTotalItemsSpan.textContent = `${totalItems}/${minItemsRule}`;
+    deckImpairmentCountSpan.textContent = impairmentCount;
+    deckAbilitiesPerImpairmentSpan.textContent = `${abilityCount}`; // Displaying current ability count
+    const maxLegendaryRule = 1;
+    deckLegendaryCountSpan.textContent = `${legendaryCount}/${maxLegendaryRule}`;
+
+    // Check Rules and Display Violations
+    deckRuleViolationsDiv.innerHTML = '';
+    let violations = [];
+
+    // Rule 1: Min 24 items
+    const minItemsRule = 24; // Defined this earlier in the function, but good to re-affirm
+    if (totalItems > 0 && totalItems < minItemsRule) { // Only show if some items are selected but not enough
+        violations.push(`Minimum ${minItemsRule} items required.`);
+    }
+    deckTotalItemsSpan.parentElement.classList.toggle('violated', totalItems > 0 && totalItems < minItemsRule);
+    // deckTotalItemsSpan.textContent = `${totalItems}/${minItemsRule}`; // Already set earlier
+
+
+    // Rule 2: If Impairments > 0, then Abilities <= 5
+    const maxAbilitiesWithImpairments = 5;
+    if (impairmentCount > 0 && abilityCount > maxAbilitiesWithImpairments) {
+      violations.push(`Max ${maxAbilitiesWithImpairments} 'Ability' traits allowed when 'Impairment' traits are present.`);
+    }
+    deckAbilitiesPerImpairmentSpan.parentElement.classList.toggle('violated', impairmentCount > 0 && abilityCount > maxAbilitiesWithImpairments);
+
+    // Rule 3: Max 1 Legendary Ability
+    if (legendaryCount > maxLegendaryRule) {
+      violations.push(`Maximum ${maxLegendaryRule} 'Legendary Ability' trait allowed.`);
+    }
+    deckLegendaryCountSpan.parentElement.classList.toggle('violated', legendaryCount > maxLegendaryRule);
+
+    // Display Violations
+    if (violations.length > 0) {
+      violations.forEach(msg => {
+        const p = document.createElement('p');
+        p.classList.add('rule-violation-message'); // For styling
+        p.textContent = msg;
+        deckRuleViolationsDiv.appendChild(p);
+      });
+    }
+  }
+  // --- End Deck Building Dialog Population and Rules ---
+
+  // Update dialogOverlay click listener (original location in script)
+  // This is a bit of a re-declaration of the listener, ensure it's the only one or refactor.
+  // For now, assuming this replaces or is the primary one for the overlay.
+  // NO CHANGE NEEDED HERE FOR THIS SUBTASK, the previous subtask already updated it.
+  // if (dialogOverlay) { ... }
+
+  // Ensure updateDeckSummaryAndRules is called after populating traits in populateDeckBuildingDialog
+  // Modify populateDeckBuildingDialog to call updateDeckSummaryAndRules at the end
+  // This is done by replacing the existing populateDeckBuildingDialog function
+  // with one that includes this call.
+  // The previous diff for populateDeckBuildingDialog already has the call to updateDeckSummaryAndRules
+  // in the checkbox event listener. We need to add it once after the loop.
+
+  // Re-defining populateDeckBuildingDialog to include the call to updateDeckSummaryAndRules at the end.
+  // This will replace the version from the previous step.
+
+  // The change is inside the existing populateDeckBuildingDialog, just adding a line at the end.
+  // So, will use a SEARCH/REPLACE block for that.
 });
+
+// The following is a conceptual placement. The actual change will be inside populateDeckBuildingDialog
+// <<< SEARCH inside populateDeckBuildingDialog
+//     availableTraitsContainer.appendChild(div);
+//   });
+// }
+// >>> REPLACE
+//     availableTraitsContainer.appendChild(div);
+//   });
+//   updateDeckSummaryAndRules(); // Initial call to set summary based on (empty) current selection
+// }
+// >>>
+// This specific block is better handled by directly modifying the function body.
+// I'll add it as a separate replace block for clarity of the intended change.
