@@ -180,24 +180,6 @@
             document.head.appendChild(pageStyle);
         }
 
-        function formatWeaponSpecialistViewHTML(item) {
-            let html = `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div>`;
-            html += '<div class="weapon-specialist-levels-container">';
-            const specialistLevels = item.specialistLevels || []; 
-            for (let i = 1; i <= 8; i++) {
-                let boxClass = "weapon-specialist-level-box";
-                if (specialistLevels.includes(i)) {
-                    boxClass += " bold";
-                }
-                html += `<span class="${boxClass.trim()}">&nbsp;</span>`;
-            }
-            html += '</div>';
-            if (item.spec) {
-                html += `<div class="LabelBody" style="text-align: left;">${processSpecialFormatting(item.spec)}</div>`;
-            }
-            return html;
-        }
-
         function renderItemHTML(item, settings, tenetKnowledgeItem) {
             let itemSpecificHTML = ''; 
             const unit = settings.unit || 'mm';
@@ -247,8 +229,16 @@
             
             // For other single-page types
             switch (item.type) {
-                case 'Weapon': 
-                    itemSpecificHTML = formatWeaponSpecialistViewHTML(item);
+                case 'Weapon':
+                    // item.weaponViewType is passed from script.js
+                    if (item.weaponViewType === 'mastery') {
+                        itemSpecificHTML = `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div>`;
+                        if (item.mastery) {
+                            itemSpecificHTML += `<div class="LabelBody" style="text-align: left;">${processSpecialFormatting(item.mastery)}</div>`;
+                        }
+                    } else { // Default to Specialist view
+                        itemSpecificHTML = formatWeaponSpecialistViewHTML(item);
+                    }
                     typeIndicatorText = 'W';
                     break;
                 case 'Knowledge': 

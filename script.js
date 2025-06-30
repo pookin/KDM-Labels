@@ -51,6 +51,9 @@ document.addEventListener('DOMContentLoaded', function() {
   expansionCheckboxesContainer = document.getElementById('expansionCheckboxes');
   philosophyCheckboxesContainer = document.getElementById('philosophyCheckboxes');
 
+  // Weapon view radio buttons
+  const weaponViewRadios = document.querySelectorAll('input[name="weaponView"]');
+
   const selectAllExpansionsBtn = document.getElementById('selectAllExpansions');
   const deselectAllExpansionsBtn = document.getElementById('deselectAllExpansions');
   const selectAllPhilosophiesBtn = document.getElementById('selectAllPhilosophies');
@@ -66,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   let loadedSettings = JSON.parse(localStorage.getItem('labelSettings'));
   let settings = { ...defaultSettings };
+  let preferredWeaponView = localStorage.getItem('preferredWeaponView') || 'specialist'; // Default to specialist
 
   if (loadedSettings) {
       settings.width = loadedSettings.width !== undefined ? loadedSettings.width : defaultSettings.width;
@@ -88,6 +92,13 @@ document.addEventListener('DOMContentLoaded', function() {
   if (marginRightInput) marginRightInput.value = settings.marginRight;
   if (marginBottomInput) marginBottomInput.value = settings.marginBottom;
   if (marginLeftInput) marginLeftInput.value = settings.marginLeft;
+
+  // Set initial state of weapon view radio buttons
+  weaponViewRadios.forEach(radio => {
+    if (radio.value === preferredWeaponView) {
+      radio.checked = true;
+    }
+  });
 
   let selectedIndex = -1;
 
@@ -240,10 +251,13 @@ document.addEventListener('DOMContentLoaded', function() {
           }
       }
 
+      const selectedWeaponView = document.querySelector('input[name="weaponView"]:checked')?.value || 'specialist';
+
       const dataForIframe = {
           item: JSON.parse(JSON.stringify(item)),
           settings: JSON.parse(JSON.stringify(settings)),
-          tenetKnowledgeItem: tenetKnowledgeItemData
+          tenetKnowledgeItem: tenetKnowledgeItemData,
+          weaponViewType: selectedWeaponView // Add the selected view type
       };
 
       const iframeSrc = 'label_render.html';
@@ -380,6 +394,22 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- End Content Filter Functions ---
 
   // --- Event Listeners ---
+
+  // Weapon View Radio Button Listener
+  weaponViewRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+      preferredWeaponView = this.value;
+      localStorage.setItem('preferredWeaponView', preferredWeaponView);
+      // If an item is currently selected in the search input, re-render its preview
+      if (searchInput && searchInput.value && window.dataset) {
+        const currentItem = window.dataset.find(i => i.name === searchInput.value);
+        if (currentItem) {
+          selectItem(currentItem); // This will now use the new preferredWeaponView
+        }
+      }
+    });
+  });
+
   if (searchInput) {
     searchInput.addEventListener('input', debounce(e => {
         const results = search(e.target.value);
