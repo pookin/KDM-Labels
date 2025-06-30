@@ -201,6 +201,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "If your wound attempt fails, you may ignore it and attempt to wound the selected {N} again. Limit, once per attack.",
     "mastery": "When you wound a monster at a location with a persistent injury, that wound becomes a critical wound.",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "axe weapon if your wound attempt fails, you may ignore it and attempt to wound the selected hit location again. limit, once per attack. when you wound a monster at a location with a persistent injury, that wound becomes a critical wound."
   },
@@ -210,6 +211,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "When attacking with a bow you may reroll any misses once.",
     "mastery": "Gain *Deadly 2* and ignore *Cumbersome*",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "bow weapon when attacking with a bow you may reroll any misses once. gain deadly 2 and ignore *Cumbersome*"
   },
@@ -219,6 +221,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "On a *perfect hit* double your wound attempt total on the first selected hit location.\nLimit once per attack.",
     "mastery": "If successful wound attempt total is greater than or equal to twice the monster's toughness, inflict an additional wound.",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "club weapon on a *perfect hit* double your wound attempt total on the first selected hit location. limit once per attack. if successful wound attempt total is greater than or equal to twice the monster's toughness, inflict an additional wound."
   },
@@ -228,6 +231,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "If a wound attempt fails, after performing any reactions, you may discard another drawn {N} to attempt to wound that {N} again. Limit, once per attack.",
     "mastery": "After a wounded {N} is discarded, if adjacent to the attacker and wounded monster you may spend 1 survival to re-draw the wounded {N} and attempt to wound with a dagger.",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "dagger weapon if a wound attempt fails, after performing any reactions, you may discard another drawn hit location card to attempt to wound that hit location again. limit, once per attack. after a wounded hit location is discarded, if adjacent to the attacker and wounded monster you may spend 1 survival to re-draw the wounded hit location and attempt to wound with a dagger."
   },
@@ -237,6 +241,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "You may stand (if knocked down) at the start of the monster's turn or the survivors' turn.\nLimit once per round",
     "mastery": "+2 permanent accuracy and str",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "fist & tooth weapon you may stand (if knocked down) at the start of the monster's turn or the survivors' turn. limit once per round +2 permanent accuracy and strength"
   },
@@ -246,6 +251,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "+1 Acc.\nIf you critically wound the monster is knocked down.",
     "mastery": "When you have a *perfect hit*, cancel all reactions for that attack.",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "grand weapon weapon +1 acc. if you critically wound the monster is knocked down. when you have a *perfect hit*, cancel all reactions for that attack."
   },
@@ -255,6 +261,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "Cannot select this weapon type. If you are *blind* and have 4+ ranks: On your first *perfect hit* each attack, do not draw a {H}. The monster suffers 1 wound.",
     "mastery": "Leave the settlement, can set another survivor weapon type to Katana",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "katana weapon cannot select this weapon type. if you are *blind* and have 4+ ranks: on your first *perfect hit* each attack, do not draw a hit location. the monster suffers 1 wound. leave the settlement, can set another survivor weapon type to katana"
   },
@@ -264,6 +271,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "Cancel reactions on the first selected {N}",
     "mastery": "+1 evasion token on a *perfect hit*.\nWhen you are knocked down remove all +1 evasion tokens",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "katar weapon cancel reactions on the first selected hit location +1 evasion token on a *perfect hit*. when you are knocked down remove all +1 evasion tokens"
   },
@@ -273,6 +281,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "No longer knocked down after collision with monster.\n{!} to all hit locations",
     "mastery": "While adjacent to a survivor that is targeted by a monster, you may swap spaces on the board and become the target instead.",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "shield weapon no longer knocked down after collision with monster. +{!} to all hit locations while adjacent to a survivor that is targeted by a monster, you may swap spaces on the board and become the target instead."
   },
@@ -282,6 +291,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "If you draw the trap, roll 1d10 . On a 7+ cancel the trap. Discard it, then reshuffle the {N} deck and draw a new card. Limit once per round.",
     "mastery": "When you hit the monster you may spend 1 survival to gain the *priority target* token. If they made the hit from directly behind another survivor, that survivor gains it instead.",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "spear weapon if you draw the trap, roll 1d10 . on a 7+ cancel the trap. discard it, then reshuffle the hl deck and draw a new card. limit once per round. when you hit the monster you may spend 1 survival to gain the *priority target* token. if they made the hit from directly behind another survivor, that survivor gains it instead."
   },
@@ -291,6 +301,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "After drawing hit location, make a wound attempt and then select a {N} to resolve with that result. Limit once per attack.",
     "mastery": "+1 Acc, Str and speed",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "sword weapon after drawing hit location, make a wound attempt and then select a hit location to resolve with that result. limit once per attack. +1 acc, str and speed"
   },
@@ -300,6 +311,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "Swords in your gear grid gain Block 1 and the two-handed keyword. When you block or deflect a hit with a sword, gain +1 survival. Limit once per round.",
     "mastery": "After resolving a monster's {O}, if you ignored a hit with block or defect, you may spend 1 survival to activate a sword and attack. Limit once per round.",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "sword - willow weapon swords in your gear grid gain block 1 and the two-handed keyword. when you block or deflect a hit with a sword, gain +1 survival. limit once per round. after resolving a monster's ai, if you ignored a hit with block or defect, you may spend 1 survival to activate a sword and attack. limit once per round."
   },
@@ -309,6 +321,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "Rank 2 - Ignore *Cumbersome*, Rank 4 - Ignore slow and gain +2 speed, Rank 6 - Gain Deadly",
     "mastery": "Leave the settlement, may give the twilight sword to another survivor.",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "twilight sword weapon rank 2 - ignore *Cumbersome*, rank 4 - ignore slow and gain +2 speed, rank 6 - gain deadly leave the settlement, may give the twilight sword to another survivor."
   },
@@ -318,6 +331,7 @@ var dataset = [
     "type": "Weapon",
     "spec": "Instead of moving the top card of the AI deck into the wound stack, you may move the top card of the AI discard pile. Limit once per Attack",
     "mastery": "Gain +5 strength when attacking with a whip",
+    "specialistLevels": [3, 8],
     "expansion": null,
     "searchableText": "whip weapon instead of moving the top card of the ai deck into the wound stack, you may move the top card of the ai discard pile. limit once per attack gain +5 strength when attacking with a whip"
   },
