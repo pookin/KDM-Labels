@@ -51,8 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
   expansionCheckboxesContainer = document.getElementById('expansionCheckboxes');
   philosophyCheckboxesContainer = document.getElementById('philosophyCheckboxes');
 
-  // Weapon view radio buttons
-  const weaponViewRadios = document.querySelectorAll('input[name="weaponView"]');
+  // const weaponViewRadios = document.querySelectorAll('input[name="weaponView"]'); // Removed
 
   const selectAllExpansionsBtn = document.getElementById('selectAllExpansions');
   const deselectAllExpansionsBtn = document.getElementById('deselectAllExpansions');
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   let loadedSettings = JSON.parse(localStorage.getItem('labelSettings'));
   let settings = { ...defaultSettings };
-  let preferredWeaponView = localStorage.getItem('preferredWeaponView') || 'specialist'; // Default to specialist
+  // let preferredWeaponView = localStorage.getItem('preferredWeaponView') || 'specialist'; // Removed
 
   if (loadedSettings) {
       settings.width = loadedSettings.width !== undefined ? loadedSettings.width : defaultSettings.width;
@@ -93,12 +92,12 @@ document.addEventListener('DOMContentLoaded', function() {
   if (marginBottomInput) marginBottomInput.value = settings.marginBottom;
   if (marginLeftInput) marginLeftInput.value = settings.marginLeft;
 
-  // Set initial state of weapon view radio buttons
-  weaponViewRadios.forEach(radio => {
-    if (radio.value === preferredWeaponView) {
-      radio.checked = true;
-    }
-  });
+  // Set initial state of weapon view radio buttons // Removed
+  // weaponViewRadios.forEach(radio => {
+  //   if (radio.value === preferredWeaponView) {
+  //     radio.checked = true;
+  //   }
+  // });
 
   let selectedIndex = -1;
 
@@ -123,34 +122,53 @@ document.addEventListener('DOMContentLoaded', function() {
         philosophyCheckboxes.forEach(cb => filterablePhilosophyNames.add(cb.value));
     }
 
-    return window.dataset.filter(item => {
-      if (!item || typeof item.name !== 'string' || typeof item.type !== 'string') {
-        return false;
+    return window.dataset.flatMap(originalItem => {
+      if (!originalItem || typeof originalItem.name !== 'string' || typeof originalItem.type !== 'string') {
+        return []; // Skip invalid items
       }
 
-      const nameMatches = !trimmedQuery || item.name.toLowerCase().includes(trimmedQuery);
+      const nameMatches = !trimmedQuery || originalItem.name.toLowerCase().includes(trimmedQuery);
       if (!nameMatches && trimmedQuery) {
-        return false;
+        return []; // Does not match search query
       }
 
-      let itemExpansionName = item.expansion && item.expansion.trim() !== "" ? item.expansion.trim() : CORE_GAME_EXPANSION_NAME;
+      let itemExpansionName = originalItem.expansion && originalItem.expansion.trim() !== "" ? originalItem.expansion.trim() : CORE_GAME_EXPANSION_NAME;
       if (!isFilterActive('expansion', itemExpansionName)) {
-        return false;
+        return []; // Filtered out by expansion
       }
 
-      if (item.type === 'Philosophy') {
-        if (!isFilterActive('philosophy', item.name.trim())) {
-          return false;
+      if (originalItem.type === 'Philosophy') {
+        if (!isFilterActive('philosophy', originalItem.name.trim())) {
+          return []; // Filtered out by philosophy
         }
-      } else if (item.type === 'Knowledge') {
-        const linkedPhilosophy = item.philosophyLinked ? item.philosophyLinked.trim() : null;
+      } else if (originalItem.type === 'Knowledge') {
+        const linkedPhilosophy = originalItem.philosophyLinked ? originalItem.philosophyLinked.trim() : null;
         if (linkedPhilosophy && linkedPhilosophy !== "" && filterablePhilosophyNames.has(linkedPhilosophy)) {
           if (!isFilterActive('philosophy', linkedPhilosophy)) {
-            return false;
+            return []; // Linked philosophy is filtered out
           }
         }
       }
-      return true;
+
+      // If it's a weapon and passes all above filters, create two versions
+      if (originalItem.type === 'Weapon') {
+        const specialistVersion = {
+          ...originalItem, // Spread original item properties
+          name: `${originalItem.name} (Specialist)`,
+          displayType: 'specialist',
+          originalName: originalItem.name // Keep track of the original name for selection
+        };
+        const masteryVersion = {
+          ...originalItem,
+          name: `${originalItem.name} (Mastery)`,
+          displayType: 'mastery',
+          originalName: originalItem.name // Keep track of the original name for selection
+        };
+        return [specialistVersion, masteryVersion];
+      }
+
+      // For non-weapon items that pass filters
+      return [originalItem];
     });
   }
 
@@ -216,15 +234,39 @@ document.addEventListener('DOMContentLoaded', function() {
       suggestionBox.style.display = 'block';
   }
 
-  function selectItem(item) {
+  function selectItem(itemFromSuggestion) { // Renamed item to itemFromSuggestion for clarity
       if (!previewFrame || !searchInput) { console.error("selectItem: previewFrame or searchInput missing."); return; }
-      if (!item || typeof item.name === 'undefined') { console.error("selectItem: Invalid item.", item); return; }
+      if (!itemFromSuggestion || typeof itemFromSuggestion.name === 'undefined') { console.error("selectItem: Invalid item.", itemFromSuggestion); return; }
 
       if (suggestionBox) { suggestionBox.style.display = 'none'; }
-      searchInput.value = item.name;
+      searchInput.value = itemFromSuggestion.name; // Keep the suffixed name in the search bar
+
+      let originalItemData = itemFromSuggestion;
+      let weaponViewType = itemFromSuggestion.displayType; // Will be 'specialist' or 'mastery' for weapons
+
+      // If it's a weapon variant from search, find the true original item from dataset
+      // The itemFromSuggestion is a shallow copy with modified name and new displayType/originalName.
+      // We need to send the *actual* full original item to the iframe.
+      if (itemFromSuggestion.displayType && itemFromSuggestion.originalName && window.dataset) {
+        const foundOriginal = window.dataset.find(i => i.name === itemFromSuggestion.originalName && i.type === 'Weapon');
+        if (foundOriginal) {
+            originalItemData = foundOriginal;
+        } else {
+            console.error(`Could not find original weapon data for: ${itemFromSuggestion.originalName}`);
+            // Fallback to using itemFromSuggestion, though it might lack some original props if not spread fully
+            originalItemData = { ...itemFromSuggestion };
+            delete originalItemData.displayType; // Don't send this if we couldn't find original
+            delete originalItemData.originalName;
+            // We still have itemFromSuggestion.displayType for weaponViewType though
+        }
+      }
+
 
       let tenetKnowledgeItemData = null;
-      if (item.type === 'Philosophy' && item.tenetKnowledge && typeof window.dataset !== 'undefined') {
+      // Use originalItemData for checks if it's a weapon variant, otherwise itemFromSuggestion
+      const itemForLogic = (itemFromSuggestion.displayType && itemFromSuggestion.originalName) ? originalItemData : itemFromSuggestion;
+
+      if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && typeof window.dataset !== 'undefined') {
           const baseKnowledgeName = item.tenetKnowledge;
           let knowledgeToFetchFullName = null;
           try {
@@ -250,14 +292,15 @@ document.addEventListener('DOMContentLoaded', function() {
               if (fetchedData) tenetKnowledgeItemData = JSON.parse(JSON.stringify(fetchedData));
           }
       }
-
-      const selectedWeaponView = document.querySelector('input[name="weaponView"]:checked')?.value || 'specialist';
+      // const selectedWeaponView = document.querySelector('input[name="weaponView"]:checked')?.value || 'specialist'; // No longer needed
 
       const dataForIframe = {
-          item: JSON.parse(JSON.stringify(item)),
+          // item: JSON.parse(JSON.stringify(itemFromSuggestion)), // Send the original item data
+          item: JSON.parse(JSON.stringify(originalItemData)), // Send the original item data
           settings: JSON.parse(JSON.stringify(settings)),
           tenetKnowledgeItem: tenetKnowledgeItemData,
-          weaponViewType: selectedWeaponView // Add the selected view type
+          // weaponViewType: selectedWeaponView // Use the displayType from the suggestion
+          weaponViewType: weaponViewType // This is itemFromSuggestion.displayType
       };
 
       const iframeSrc = 'label_render.html';
@@ -269,13 +312,14 @@ document.addEventListener('DOMContentLoaded', function() {
           } else { console.error(`KDMLabels.html: previewFrame.contentWindow not ready.`);}
       };
 
-      if (previewFrame.getAttribute('src') !== iframeSrc || (item.type === 'Philosophy' || item.type === 'Calibration')) {
+      // Force iframe reload for weapons to ensure view type change is picked up, or for Philosophy/Calibration
+      if (itemForLogic.type === 'Weapon' || itemForLogic.type === 'Philosophy' || itemForLogic.type === 'Calibration' || previewFrame.getAttribute('src') !== iframeSrc) {
           previewFrame.setAttribute('src', iframeSrc);
           previewFrame.onload = () => {
               if (previewFrame.getAttribute('src') === iframeSrc && previewFrame.contentWindow) {
                    postDataToIframe();
               }
-              previewFrame.onload = null;
+              previewFrame.onload = null; // Important to prevent multiple loads if user clicks fast
           };
       } else {
           postDataToIframe();
@@ -395,20 +439,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // --- Event Listeners ---
 
-  // Weapon View Radio Button Listener
-  weaponViewRadios.forEach(radio => {
-    radio.addEventListener('change', function() {
-      preferredWeaponView = this.value;
-      localStorage.setItem('preferredWeaponView', preferredWeaponView);
-      // If an item is currently selected in the search input, re-render its preview
-      if (searchInput && searchInput.value && window.dataset) {
-        const currentItem = window.dataset.find(i => i.name === searchInput.value);
-        if (currentItem) {
-          selectItem(currentItem); // This will now use the new preferredWeaponView
-        }
-      }
-    });
-  });
+  // Weapon View Radio Button Listener // Removed
+  // weaponViewRadios.forEach(radio => {
+  //   radio.addEventListener('change', function() {
+  //     preferredWeaponView = this.value;
+  //     localStorage.setItem('preferredWeaponView', preferredWeaponView);
+  //     // If an item is currently selected in the search input, re-render its preview
+  //     if (searchInput && searchInput.value && window.dataset) {
+  //       const currentItem = window.dataset.find(i => i.name === searchInput.value);
+  //       if (currentItem) {
+  //         selectItem(currentItem); // This will now use the new preferredWeaponView
+  //       }
+  //     }
+  //   });
+  // });
 
   if (searchInput) {
     searchInput.addEventListener('input', debounce(e => {
