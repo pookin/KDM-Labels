@@ -41,6 +41,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const unitInchesRadio = document.getElementById('unitInches');
   const unitDisplays = document.querySelectorAll('.unit-display'); // Collection of all spans showing "mm" or "in"
 
+  // Embedded calibration preview elements
+  const calibrationPreviewContainer = document.getElementById('calibrationPreviewContainer');
+  const embeddedCalibrationLabel = document.getElementById('embeddedCalibrationLabel');
+  const previewMarginDisplayTop = document.getElementById('previewMarginDisplayTop');
+  const previewMarginDisplayRight = document.getElementById('previewMarginDisplayRight');
+  const previewMarginDisplayBottom = document.getElementById('previewMarginDisplayBottom');
+  const previewMarginDisplayLeft = document.getElementById('previewMarginDisplayLeft');
+
   const menuBtn = document.getElementById('menuBtn');
   const mainMenu = document.getElementById('mainMenu'); // This is the panel with menu item links
 
@@ -75,13 +83,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const INCHES_TO_MM = 25.4;
 
   let defaultSettings = {
-      width: 50.8, // mm
-      height: 25.4, // mm
-      marginTop: 1, // mm
-      marginRight: 1, // mm
-      marginBottom: 1, // mm
-      marginLeft: 1, // mm
-      preferredUnit: 'mm' // Added to store preferred unit
+      width: 54,    // mm - Updated default
+      height: 25,   // mm - Updated default
+      marginTop: 1,   // mm - Standard default
+      marginRight: 1, // mm - Standard default
+      marginBottom: 1,// mm - Standard default
+      marginLeft: 1,  // mm - Standard default
+      preferredUnit: 'mm'
   };
   let settings = { ...defaultSettings }; // Initialize settings with defaults
 
@@ -152,6 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (marginBottomInput) marginBottomInput.value = settings.marginBottom;
     if (marginLeftInput) marginLeftInput.value = settings.marginLeft;
     updateUnitDisplays(settings.preferredUnit);
+    // Also update the embedded preview when input fields are programmatically changed
+    // This ensures consistency if settings are loaded or units change.
+    updateEmbeddedCalibrationPreview();
   }
 
 
@@ -186,7 +197,110 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   // Initial load of settings
-  loadAndApplySettings();
+  loadAndApplySettings(); // This already calls updatePreviewSize
+
+  function updateEmbeddedCalibrationPreview() {
+    if (!embeddedCalibrationLabel || !calibrationPreviewContainer) return;
+
+    // 1. Get current values from input fields (these are in the currently selected unit)
+    const currentWidth = parseFloat(widthInput.value);
+    const currentHeight = parseFloat(heightInput.value);
+    const currentMarginTop = parseFloat(marginTopInput.value);
+    const currentMarginRight = parseFloat(marginRightInput.value);
+    const currentMarginBottom = parseFloat(marginBottomInput.value);
+    const currentMarginLeft = parseFloat(marginLeftInput.value);
+    const currentUnit = settings.preferredUnit; // mm or in
+
+    // 2. Convert to MM for consistent scaling logic if current unit is inches
+    let widthInMM = currentWidth;
+    let heightInMM = currentHeight;
+    // Margin values for display will use currentUnit, but for scaling the label preview, we use MM.
+
+    if (currentUnit === 'in') {
+      widthInMM = currentWidth * INCHES_TO_MM;
+      heightInMM = currentHeight * INCHES_TO_MM;
+    }
+
+    // 3. Scale for display
+    // The preview container has padding, let's get its available width for the label preview.
+    // Max width of preview container is around 500px (dialog) - 20px*2 (dialog padding) - 10px*2 (preview container padding) ~ 440px
+    // but it's inside settings groups, which might be narrower.
+    // Let's aim for a max display width for the label part of, say, 150px or 200px.
+    const PREVIEW_MAX_WIDTH = 150; // Max width for the label representation in px
+    const PREVIEW_MAX_HEIGHT = 100; // Max height for the label representation in px
+
+    let displayWidth, displayHeight;
+
+    if (widthInMM <= 0 || heightInMM <= 0) { // Avoid division by zero or negative dimensions
+        displayWidth = 0;
+        displayHeight = 0;
+    } else {
+        const aspectRatio = widthInMM / heightInMM;
+        if (widthInMM > heightInMM) { // Landscape-ish
+            displayWidth = PREVIEW_MAX_WIDTH;
+            displayHeight = displayWidth / aspectRatio;
+            if (displayHeight > PREVIEW_MAX_HEIGHT) {
+                displayHeight = PREVIEW_MAX_HEIGHT;
+                displayWidth = displayHeight * aspectRatio;
+            }
+        } else { // Portrait-ish or square
+            displayHeight = PREVIEW_MAX_HEIGHT;
+            displayWidth = displayHeight * aspectRatio;
+            if (displayWidth > PREVIEW_MAX_WIDTH) {
+                displayWidth = PREVIEW_MAX_WIDTH;
+                displayHeight = displayWidth / aspectRatio;
+            }
+        }
+    }
+
+    // Ensure non-negative final dimensions
+    displayWidth = Math.max(0, displayWidth);
+    displayHeight = Math.max(0, displayHeight);
+
+    // 4. Update label preview div style
+    embeddedCalibrationLabel.style.width = displayWidth + 'px';
+    embeddedCalibrationLabel.style.height = displayHeight + 'px';
+    if(displayWidth > 0 && displayHeight > 0) {
+        embeddedCalibrationLabel.textContent = `${currentWidth}${currentUnit} x ${currentHeight}${currentUnit}`;
+    } else {
+        embeddedCalibrationLabel.textContent = 'Invalid Size';
+    }
+
+
+    // 5. Update margin indicators text (showing values in the currently selected unit)
+    if (previewMarginDisplayTop) previewMarginDisplayTop.textContent = `${currentMarginTop}${currentUnit}`;
+    if (previewMarginDisplayRight) previewMarginDisplayRight.textContent = `${currentMarginRight}${currentUnit}`;
+    if (previewMarginDisplayBottom) previewMarginDisplayBottom.textContent = `${currentMarginBottom}${currentUnit}`;
+    if (previewMarginDisplayLeft) previewMarginDisplayLeft.textContent = `${currentMarginLeft}${currentUnit}`;
+
+    // Optional: Visually represent margins via padding on a wrapper, or by adjusting positions.
+    // For now, text display is the primary goal.
+  }
+
+  // Call it once initially after settings are loaded and applied to UI
+  // loadAndApplySettings itself will trigger necessary updates.
+  // We might need to call it when the dialog becomes visible if it's not initially.
+  // However, event listeners will cover changes while dialog is open.
+  // Let's ensure it's called after the first full setup.
+  // The `loadAndApplySettings` already calls `updateInputFieldsFromSettings` which sets values.
+  // Then, the event listeners should pick up from there.
+  // A direct call after load might be good.
+  updateEmbeddedCalibrationPreview();
+
+  // Add event listeners to all dimension/margin inputs to update the preview live
+  const inputsForLivePreview = [
+    widthInput, heightInput,
+    marginTopInput, marginRightInput, marginBottomInput, marginLeftInput
+  ];
+
+  inputsForLivePreview.forEach(input => {
+    if (input) { // Check if the element exists
+      input.addEventListener('input', updateEmbeddedCalibrationPreview);
+    }
+  });
+
+  // Note: The unit radio button change is already handled because `handleUnitChange`
+  // calls `updateInputFieldsFromSettings`, which now calls `updateEmbeddedCalibrationPreview`.
 
 
   // Set initial state of weapon view radio buttons // Removed
