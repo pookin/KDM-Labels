@@ -152,170 +152,173 @@
     <div id="label-content-wrapper"></div>
 
     <script>
-    function processSpecialFormatting(text) {
-        if (typeof text !== 'string') return text;
-        let processedText = text;
-        processedText = processedText.replace(/{([^}]+)}/g, '<span class="kdm-icon">$1</span>');
-        processedText = processedText.replace(/\*(.*?)\*/g, '<strong>$1</strong>'); // Single asterisk for bold
-        processedText = processedText.replace(/\n/g, '<br><br>');
-        return processedText;
-    }
-
-    function applyPageSettings(settings) {
-        const body = document.body; 
-        const unit = settings.unit || 'mm';
-        const marginTopVal = parseFloat(settings.marginTop) || 0;
-        const marginRightVal = parseFloat(settings.marginRight) || 0; 
-        const marginBottomVal = parseFloat(settings.marginBottom) || 0;
-        const marginLeftVal = parseFloat(settings.marginLeft) || 0;   
-        body.style.padding = `${marginTopVal}${unit} ${marginRightVal}${unit} ${marginBottomVal}${unit} ${marginLeftVal}${unit}`;
-        const totalLabelHeightForIframe = parseFloat(settings.height) || 25.4;
-        const pageContentHeightForPreview = totalLabelHeightForIframe - marginTopVal - marginBottomVal;
-        body.style.setProperty('--page-content-height', `${pageContentHeightForPreview}${unit}`);
-        const oldPageStyle = document.getElementById('dynamic-page-style-LBL');
-        if (oldPageStyle) { oldPageStyle.remove(); }
-        const pageStyle = document.createElement('style');
-        pageStyle.id = 'dynamic-page-style-LBL'; 
-        pageStyle.innerHTML = `@page { size: ${settings.width || 50.8}${unit} ${settings.height || 25.4}${unit}; margin-top: ${marginTopVal}${unit}; margin-right: ${marginRightVal}${unit}; margin-bottom: ${marginBottomVal}${unit}; margin-left: ${marginLeftVal}${unit}; }`;
-        document.head.appendChild(pageStyle);
-    }
-
-    // --- START OF CRITICAL CHANGES ---
-    function formatWeaponSpecialistViewHTML(item) {
-        let html = `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div>`;
-        html += '<div class="weapon-specialist-levels-container">';
-        const specialistLevels = item.specialistLevels || []; 
-        for (let i = 1; i <= 8; i++) {
-            let boxClass = "weapon-specialist-level-box";
-            if (specialistLevels.includes(i)) {
-                boxClass += " bold";
-            }
-            html += `<span class="${boxClass.trim()}">&nbsp;</span>`;
+        function processSpecialFormatting(text) {
+            if (typeof text !== 'string') return text;
+            let processedText = text;
+            processedText = processedText.replace(/{([^}]+)}/g, '<span class="kdm-icon">$1</span>');
+            processedText = processedText.replace(/\*(.*?)\*/g, '<strong>$1</strong>'); // Single asterisk for bold
+            processedText = processedText.replace(/\n/g, '<br><br>');
+            return processedText;
         }
-        html += '</div>';
-        if (item.spec) {
-            html += `<div class="LabelBody" style="text-align: left;">${processSpecialFormatting(item.spec)}</div>`;
-        }
-        return html;
-    }
 
-    function renderItemHTML(item, settings, tenetKnowledgeItem, weaponViewType) { // Added weaponViewType
-        let itemSpecificHTML = ''; 
-        const unit = settings.unit || 'mm';
-        let typeIndicatorText = ''; 
-
-        if (item.type === 'Philosophy') {
-            let allPhiloPagesHTML = '';
-            // Page 1
-            let page1HTML = '<div class="label-page philosophy-page-1">';
-            let philosophyBoxesHTML = '<div class="philo-hunt-xp-track">';
-            const milestones = item.milestoneNumbers || [];
-            for (let i = 1; i <= 16; i++) { let boxClass = "philo-xp-box"; if (milestones.includes(i)) boxClass += " philo-milestone"; if (i === 16) boxClass += " philo-final-milestone"; philosophyBoxesHTML += `<span class="${boxClass.trim()}">&nbsp;</span>`; }
-            philosophyBoxesHTML += '</div>';
-            page1HTML += `${philosophyBoxesHTML}<div class="philo-main-content"><div class="philo-name-area">${processSpecialFormatting(item.name)}</div><div class="philo-rank-box-area"><div class="philo-rank-box"></div><div class="philo-rank-label">Rank</div></div></div></div>`;
-            allPhiloPagesHTML += page1HTML;
-            // Page 2 (Nerosis)
-            let page2HTML = '<div class="label-page philosophy-page-2 nerosis-card">';
-            if (item.nerosis) { 
-                page2HTML += `<div class="LabelTitle">${processSpecialFormatting(item.nerosis)}</div>`; 
-                page2HTML += `<div class="LabelBody">${processSpecialFormatting(item.description || '(No description provided)')}</div>`;
-            } else {
-                page2HTML += `<div class="LabelTitle" style="border-bottom:none; margin-bottom:0;">${processSpecialFormatting(item.name)} - Nerosis</div>`;
-                page2HTML += `<div class="LabelBody" style="padding-top:2mm;">Nerosis information not available.</div>`;
-            }
-            page2HTML += '<div class="label-type-indicator">N</div></div>'; 
-            allPhiloPagesHTML += page2HTML;
-            // Page 3 (Tenet Knowledge)
-            if (item.tenetKnowledge) { 
-                let page3HTML = '<div class="label-page philosophy-page-3">';
-                if (tenetKnowledgeItem && tenetKnowledgeItem.name) { 
-                    page3HTML += formatKnowledgeLabel(tenetKnowledgeItem);
-                } else { page3HTML += `<div class="missing-data-message">Tenet Knowledge linked: "${processSpecialFormatting(item.tenetKnowledge)}"<br>However, specific level details could not be loaded.</div>`; }
-                page3HTML += '<div class="label-type-indicator">TK</div></div>'; 
-                allPhiloPagesHTML += page3HTML;
-            }
-            return allPhiloPagesHTML; 
+        function applyPageSettings(settings) {
+            const body = document.body; 
+            const unit = settings.unit || 'mm';
+            const marginTopVal = parseFloat(settings.marginTop) || 0;
+            const marginRightVal = parseFloat(settings.marginRight) || 0; 
+            const marginBottomVal = parseFloat(settings.marginBottom) || 0;
+            const marginLeftVal = parseFloat(settings.marginLeft) || 0;   
+            body.style.padding = `${marginTopVal}${unit} ${marginRightVal}${unit} ${marginBottomVal}${unit} ${marginLeftVal}${unit}`;
+            const totalLabelHeightForIframe = parseFloat(settings.height) || 25.4;
+            const pageContentHeightForPreview = totalLabelHeightForIframe - marginTopVal - marginBottomVal;
+            body.style.setProperty('--page-content-height', `${pageContentHeightForPreview}${unit}`);
+            const oldPageStyle = document.getElementById('dynamic-page-style-LBL');
+            if (oldPageStyle) { oldPageStyle.remove(); }
+            const pageStyle = document.createElement('style');
+            pageStyle.id = 'dynamic-page-style-LBL'; 
+            pageStyle.innerHTML = `@page { size: ${settings.width || 50.8}${unit} ${settings.height || 25.4}${unit}; margin-top: ${marginTopVal}${unit}; margin-right: ${marginRightVal}${unit}; margin-bottom: ${marginBottomVal}${unit}; margin-left: ${marginLeftVal}${unit}; }`;
+            document.head.appendChild(pageStyle);
         }
-        
-        switch (item.type) {
-            case 'Weapon':
-                if (weaponViewType === 'mastery') { 
-                    itemSpecificHTML = `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div>`;
-                    if (item.mastery) {
-                        itemSpecificHTML += `<div class="LabelBody" style="text-align: left;">${processSpecialFormatting(item.mastery)}</div>`;
+
+        // --- START OF CRITICAL CHANGES ---
+        function formatWeaponSpecialistViewHTML(item) {
+            let html = `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div>`;
+            html += '<div class="weapon-specialist-levels-container">';
+            const specialistLevels = item.specialistLevels || []; 
+            for (let i = 1; i <= 8; i++) {
+                let boxClass = "weapon-specialist-level-box";
+                if (specialistLevels.includes(i)) {
+                    boxClass += " bold";
+                }
+                html += `<span class="${boxClass.trim()}">&nbsp;</span>`;
+            }
+            html += '</div>';
+            if (item.spec) {
+                html += `<div class="LabelBody" style="text-align: left;"><b>Spec:</b> ${processSpecialFormatting(item.spec)}</div>`;
+            }
+            return html;
+        }
+
+        function renderItemHTML(item, settings, tenetKnowledgeItem, weaponViewType) { // Added weaponViewType
+            let itemSpecificHTML = ''; 
+            const unit = settings.unit || 'mm';
+            let typeIndicatorText = ''; 
+
+            if (item.type === 'Philosophy') {
+                let allPhiloPagesHTML = '';
+                // Page 1
+                let page1HTML = '<div class="label-page philosophy-page-1">';
+                let philosophyBoxesHTML = '<div class="philo-hunt-xp-track">';
+                const milestones = item.milestoneNumbers || [];
+                for (let i = 1; i <= 16; i++) { let boxClass = "philo-xp-box"; if (milestones.includes(i)) boxClass += " philo-milestone"; if (i === 16) boxClass += " philo-final-milestone"; philosophyBoxesHTML += `<span class="${boxClass.trim()}">&nbsp;</span>`; }
+                philosophyBoxesHTML += '</div>';
+                page1HTML += `${philosophyBoxesHTML}<div class="philo-main-content"><div class="philo-name-area">${processSpecialFormatting(item.name)}</div><div class="philo-rank-box-area"><div class="philo-rank-box"></div><div class="philo-rank-label">Rank</div></div></div></div>`;
+                allPhiloPagesHTML += page1HTML;
+                // Page 2 (Nerosis)
+                let page2HTML = '<div class="label-page philosophy-page-2 nerosis-card">';
+                if (item.nerosis) { 
+                    page2HTML += `<div class="LabelTitle">${processSpecialFormatting(item.nerosis)}</div>`; 
+                    page2HTML += `<div class="LabelBody">${processSpecialFormatting(item.description || '(No description provided)')}</div>`;
+                } else {
+                    page2HTML += `<div class="LabelTitle" style="border-bottom:none; margin-bottom:0;">${processSpecialFormatting(item.name)} - Nerosis</div>`;
+                    page2HTML += `<div class="LabelBody" style="padding-top:2mm;">Nerosis information not available.</div>`;
+                }
+                page2HTML += '<div class="label-type-indicator">N</div></div>'; 
+                allPhiloPagesHTML += page2HTML;
+                // Page 3 (Tenet Knowledge)
+                if (item.tenetKnowledge) { 
+                    let page3HTML = '<div class="label-page philosophy-page-3">';
+                    if (tenetKnowledgeItem && tenetKnowledgeItem.name) { 
+                        page3HTML += formatKnowledgeLabel(tenetKnowledgeItem);
+                    } else { page3HTML += `<div class="missing-data-message">Tenet Knowledge linked: "${processSpecialFormatting(item.tenetKnowledge)}"<br>However, specific level details could not be loaded.</div>`; }
+                    page3HTML += '<div class="label-type-indicator">TK</div></div>'; 
+                    allPhiloPagesHTML += page3HTML;
+                }
+                return allPhiloPagesHTML; 
+            }
+            
+            switch (item.type) {
+                case 'Weapon':
+                    if (weaponViewType === 'mastery') { 
+                        itemSpecificHTML = `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div>`;
+                        if (item.spec) { // ADDING SPEC TEXT FOR MASTERY VIEW
+                            itemSpecificHTML += `<div class="LabelBody" style="text-align: left;"><strong>Spec:</strong> ${processSpecialFormatting(item.spec)}</div>`;
+                        }
+                        if (item.mastery) {
+                            itemSpecificHTML += `<div class="LabelBody" style="text-align: left; margin-bottom: 0.5mm;"><strong>Mastery:</strong> ${processSpecialFormatting(item.mastery)}</div>`;
+                        }
+                    } else { // Default to Specialist view (or if weaponViewType is 'specialist')
+                        itemSpecificHTML = formatWeaponSpecialistViewHTML(item);
                     }
-                } else { // Default to Specialist view (or if weaponViewType is 'specialist')
-                    itemSpecificHTML = formatWeaponSpecialistViewHTML(item);
-                }
-                typeIndicatorText = 'W';
-                break;
-            case 'Knowledge': 
-                itemSpecificHTML = formatKnowledgeLabel(item);
-                typeIndicatorText = 'K';
-                break;
-            case 'Character Trait': 
-                typeIndicatorText = 'C'; itemSpecificHTML = formatNameExpansionDesc(item); break;
-            case 'Disorder':
-                typeIndicatorText = 'D'; itemSpecificHTML = formatNameExpansionDesc(item); break;
-            case 'Fighting Art':
-                typeIndicatorText = 'FA'; itemSpecificHTML = formatNameExpansionDesc(item); break;
-            case 'Secret Fighting Art':
-                typeIndicatorText = 'SF'; itemSpecificHTML = formatNameExpansionDesc(item); break;
-            case 'Ability':
-                typeIndicatorText = 'A'; itemSpecificHTML = formatNameExpansionDesc(item); break;
-            case 'Calibration': 
-                 return `<div id="calibration-pattern"><div class="info" style="font-weight: bold; font-size: 6pt;">PRINT CALIBRATION LABEL</div><div class="info settings-info">Label (WxH): ${settings.width}${unit} x ${settings.height}${unit}</div><div class="info settings-info" style="margin-top: 0.25mm;">Margins (T|R|B|L):</div><div class="info settings-info" style="font-weight:bold;">${settings.marginTop}${unit}|${settings.marginRight}${unit}|${settings.marginBottom}${unit}|${settings.marginLeft}${unit}</div><div class="info" style="margin-top:0.5mm;">The <strong>BLACK DASHED BORDER</strong> is content area.</div><div class="info">The <strong>BLACK AREA</strong> around this is your margin.</div><div class="info" style="margin-top:0.5mm; font-weight:bold;">Print & measure. Adjust in Settings.</div><div class="corner-marker" style="top: 0; left: 0;">TL</div><div class="corner-marker" style="top: 0; right: 0;">TR</div><div class="corner-marker" style="bottom: 0; left: 0;">BL</div><div class="corner-marker" style="bottom: 0; right: 0;">BR</div></div>`;
-            default: 
-                let defItemName = item.name || 'Unknown Item';
-                let defItemExpansionHTML = item.expansion ? ` <span class="expansion-tag">(${processSpecialFormatting(item.expansion)})</span>` : '';
-                let defItemDescription = item.description || item.mainDesc || 'No description available.'; // Simplified fallback
-                itemSpecificHTML = `<div class="item-name-expansion">${processSpecialFormatting(defItemName)}${defItemExpansionHTML}</div><div class="item-main-description">${processSpecialFormatting(defItemDescription)}</div>`;
-                if(item.type && !['Weapon', 'Knowledge', 'Character Trait', 'Disorder', 'Fighting Art', 'Secret Fighting Art', 'Ability'].includes(item.type) ){
-                     itemSpecificHTML = `<div style="font-size:5pt; opacity:0.6; text-align:right; position:absolute; top:0.5mm; right:0.5mm;">${processSpecialFormatting(item.type)}</div>` + itemSpecificHTML;
-                }
-                break;
+                    typeIndicatorText = 'W';
+                    break;
+                case 'Knowledge': 
+                    itemSpecificHTML = formatKnowledgeLabel(item);
+                    typeIndicatorText = 'K';
+                    break;
+                case 'Character Trait': 
+                    typeIndicatorText = 'C'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Disorder':
+                    typeIndicatorText = 'D'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Fighting Art':
+                    typeIndicatorText = 'FA'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Secret Fighting Art':
+                    typeIndicatorText = 'SF'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Ability':
+                    typeIndicatorText = 'A'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Calibration': 
+                    return `<div id="calibration-pattern"><div class="info" style="font-weight: bold; font-size: 6pt;">PRINT CALIBRATION LABEL</div><div class="info settings-info">Label (WxH): ${settings.width}${unit} x ${settings.height}${unit}</div><div class="info settings-info" style="margin-top: 0.25mm;">Margins (T|R|B|L):</div><div class="info settings-info" style="font-weight:bold;">${settings.marginTop}${unit}|${settings.marginRight}${unit}|${settings.marginBottom}${unit}|${settings.marginLeft}${unit}</div><div class="info" style="margin-top:0.5mm;">The <strong>BLACK DASHED BORDER</strong> is content area.</div><div class="info">The <strong>BLACK AREA</strong> around this is your margin.</div><div class="info" style="margin-top:0.5mm; font-weight:bold;">Print & measure. Adjust in Settings.</div><div class="corner-marker" style="top: 0; left: 0;">TL</div><div class="corner-marker" style="top: 0; right: 0;">TR</div><div class="corner-marker" style="bottom: 0; left: 0;">BL</div><div class="corner-marker" style="bottom: 0; right: 0;">BR</div></div>`;
+                default: 
+                    let defItemName = item.name || 'Unknown Item';
+                    let defItemExpansionHTML = item.expansion ? ` <span class="expansion-tag">(${processSpecialFormatting(item.expansion)})</span>` : '';
+                    let defItemDescription = item.description || item.mainDesc || 'No description available.'; // Simplified fallback
+                    itemSpecificHTML = `<div class="item-name-expansion">${processSpecialFormatting(defItemName)}${defItemExpansionHTML}</div><div class="item-main-description">${processSpecialFormatting(defItemDescription)}</div>`;
+                    if(item.type && !['Weapon', 'Knowledge', 'Character Trait', 'Disorder', 'Fighting Art', 'Secret Fighting Art', 'Ability'].includes(item.type) ){
+                        itemSpecificHTML = `<div style="font-size:5pt; opacity:0.6; text-align:right; position:absolute; top:0.5mm; right:0.5mm;">${processSpecialFormatting(item.type)}</div>` + itemSpecificHTML;
+                    }
+                    break;
+            }
+            
+            let finalPageContent = itemSpecificHTML;
+            if (typeIndicatorText) {
+                finalPageContent += `<div class="label-type-indicator">${typeIndicatorText}</div>`;
+            }
+            return `<div class="label-page">${finalPageContent}</div>`;
+        }
+
+        function formatKnowledgeLabel(item){
+            const rankCount = item.toRankCount || 0; let boxes = ''; for (let i = 0; i < rankCount; i++) { boxes += '<span class="knowledge-rank-checkbox"></span>';}
+            let footerContentHTML = '';
+            if (item.observationText) { footerContentHTML += `<div class="knowledge-observation-text"><em>${processSpecialFormatting(item.observationText)}</em></div>`; }
+            if (rankCount > 0) { footerContentHTML += `<div class="knowledge-to-rank-boxes-container">${boxes}</div>`; }
+            if (item.rankUpText) { footerContentHTML += `<div class="knowledge-rankup-text">${processSpecialFormatting(item.rankUpText)}</div>`; }
+            return `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div><div class="LabelBody">${processSpecialFormatting(item.mainDesc || '')}</div>${footerContentHTML ? `<div class="knowledge-footer-content">${footerContentHTML}</div>` : ''}`;
         }
         
-        let finalPageContent = itemSpecificHTML;
-        if (typeIndicatorText) {
-            finalPageContent += `<div class="label-type-indicator">${typeIndicatorText}</div>`;
+        function formatNameExpansionDesc(item) { 
+            let itemName = item.name || 'Unknown Item';
+            let itemExpansionHTML = item.expansion ? ` <span class="expansion-tag">(${processSpecialFormatting(item.expansion)})</span>` : '';
+            let itemDescription = item.description || '(No description provided)'; 
+            return `<div class="LabelTitle">${processSpecialFormatting(itemName)}${itemExpansionHTML}</div><div class="LabelBody">${processSpecialFormatting(itemDescription)}</div>`;
         }
-        return `<div class="label-page">${finalPageContent}</div>`;
-    }
 
-    function formatKnowledgeLabel(item){
-        const rankCount = item.toRankCount || 0; let boxes = ''; for (let i = 0; i < rankCount; i++) { boxes += '<span class="knowledge-rank-checkbox"></span>';}
-        let footerContentHTML = '';
-        if (item.observationText) { footerContentHTML += `<div class="knowledge-observation-text"><em>${processSpecialFormatting(item.observationText)}</em></div>`; }
-        if (rankCount > 0) { footerContentHTML += `<div class="knowledge-to-rank-boxes-container">${boxes}</div>`; }
-        if (item.rankUpText) { footerContentHTML += `<div class="knowledge-rankup-text">${processSpecialFormatting(item.rankUpText)}</div>`; }
-        return `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div><div class="LabelBody">${processSpecialFormatting(item.mainDesc || '')}</div>${footerContentHTML ? `<div class="knowledge-footer-content">${footerContentHTML}</div>` : ''}`;
-    }
-    
-    function formatNameExpansionDesc(item) { 
-        let itemName = item.name || 'Unknown Item';
-        let itemExpansionHTML = item.expansion ? ` <span class="expansion-tag">(${processSpecialFormatting(item.expansion)})</span>` : '';
-        let itemDescription = item.description || '(No description provided)'; 
-        return `<div class="LabelTitle">${processSpecialFormatting(itemName)}${itemExpansionHTML}</div><div class="LabelBody">${processSpecialFormatting(itemDescription)}</div>`;
-    }
-
-    window.addEventListener('message', function(event) {
-        if (event.data && typeof event.data === 'object' && event.data.item && event.data.settings) {
-            const item = event.data.item;
-            const settings = event.data.settings;
-            const tenetKnowledgeItem = event.data.tenetKnowledgeItem || null; 
-            const weaponViewType = event.data.weaponViewType || 'specialist'; // Ensure this is fetched
-            
-            applyPageSettings(settings); 
-            if (item.type === 'Calibration') { document.body.style.backgroundColor = 'black'; } 
-            else { document.body.style.backgroundColor = 'white'; }
-            
-            document.getElementById('label-content-wrapper').innerHTML = renderItemHTML(item, settings, tenetKnowledgeItem, weaponViewType); // Pass weaponViewType 
-        } else { 
-            document.getElementById('label-content-wrapper').innerHTML = '<p style="color:black; font-size:7pt;">Error: Invalid data from parent.</p>';
-        }
-    });
-    // --- END OF CRITICAL CHANGES ---
-</script>
+        window.addEventListener('message', function(event) {
+            if (event.data && typeof event.data === 'object' && event.data.item && event.data.settings) {
+                const item = event.data.item;
+                const settings = event.data.settings;
+                const tenetKnowledgeItem = event.data.tenetKnowledgeItem || null; 
+                const weaponViewType = event.data.weaponViewType || 'specialist'; // Ensure this is fetched
+                
+                applyPageSettings(settings); 
+                if (item.type === 'Calibration') { document.body.style.backgroundColor = 'black'; } 
+                else { document.body.style.backgroundColor = 'white'; }
+                
+                document.getElementById('label-content-wrapper').innerHTML = renderItemHTML(item, settings, tenetKnowledgeItem, weaponViewType); // Pass weaponViewType 
+            } else { 
+                document.getElementById('label-content-wrapper').innerHTML = '<p style="color:black; font-size:7pt;">Error: Invalid data from parent.</p>';
+            }
+        });
+        // --- END OF CRITICAL CHANGES ---
+    </script>
 </body>
 </html>
