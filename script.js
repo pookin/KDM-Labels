@@ -40,12 +40,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const mainMenu = document.getElementById('mainMenu'); // This is the panel with menu item links
 
   // Dialog related elements (for future use in next step, ensure IDs are correct in HTML)
-  // const openLabelSettingsBtn = document.getElementById('openLabelSettingsBtn');
-  // const openContentFiltersBtn = document.getElementById('openContentFiltersBtn');
-  // const labelSettingsDialog = document.getElementById('labelSettingsDialog');
-  // const contentFiltersDialog = document.getElementById('contentFiltersDialog');
-  // const dialogOverlay = document.getElementById('dialogOverlay');
-  // const closeDialogBtns = document.querySelectorAll('.dialog-close-btn');
+  const openLabelSettingsBtn = document.getElementById('openLabelSettingsBtn');
+  const openContentFiltersBtn = document.getElementById('openContentFiltersBtn');
+  const labelSettingsDialog = document.getElementById('labelSettingsDialog');
+  const contentFiltersDialog = document.getElementById('contentFiltersDialog');
+  const dialogOverlay = document.getElementById('dialogOverlay');
+  const closeDialogBtns = document.querySelectorAll('.dialog-close-btn');
+
+  const survivorSheetBtn = document.getElementById('survivorSheetBtn'); // Added for Survivor Sheet
+  const helpBtn = document.getElementById('helpBtn'); // Added for Help
+  const helpDialog = document.getElementById('helpDialog'); // Added for Help Dialog
 
   // Assign DOM elements for filter containers here (these are inside contentFiltersDialog)
   expansionCheckboxesContainer = document.getElementById('expansionCheckboxes');
@@ -169,6 +173,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // For non-weapon items that pass filters
       return [originalItem];
+    });
+  }
+
+  // Event listener for Help button
+  if (helpBtn) {
+    helpBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDialog(helpDialog); // Uses the generic openDialog function
+    });
+  }
+
+  // Event listener for Survivor Sheet
+  if (survivorSheetBtn) {
+    survivorSheetBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      window.open('KDM_ARC_Sheet.pdf', '_blank');
+      if (mainMenu && !mainMenu.classList.contains('hidden')) {
+        mainMenu.classList.add('hidden'); // Close menu
+      }
     });
   }
 
@@ -438,6 +461,67 @@ document.addEventListener('DOMContentLoaded', function() {
   // --- End Content Filter Functions ---
 
   // --- Event Listeners ---
+
+  // Function to open a dialog
+  function openDialog(dialogElement) {
+    if (dialogElement && dialogOverlay) {
+      dialogElement.classList.remove('hidden');
+      dialogOverlay.classList.remove('hidden');
+      if (mainMenu && !mainMenu.classList.contains('hidden')) {
+        mainMenu.classList.add('hidden'); // Close menu when dialog opens
+      }
+    }
+  }
+
+  // Function to close any active dialog
+  function closeActiveDialog() {
+    if (dialogOverlay) dialogOverlay.classList.add('hidden');
+    if (labelSettingsDialog && !labelSettingsDialog.classList.contains('hidden')) {
+      labelSettingsDialog.classList.add('hidden');
+    }
+    if (contentFiltersDialog && !contentFiltersDialog.classList.contains('hidden')) {
+      contentFiltersDialog.classList.add('hidden');
+    }
+    // Add future dialogs here for closing, e.g., helpDialog
+    const helpDialog = document.getElementById('helpDialog'); // Get it here as it might not exist when script first runs
+    if (helpDialog && !helpDialog.classList.contains('hidden')) {
+        helpDialog.classList.add('hidden');
+    }
+  }
+
+  // Event listeners for opening dialogs
+  if (openLabelSettingsBtn) {
+    openLabelSettingsBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDialog(labelSettingsDialog);
+    });
+  }
+
+  if (openContentFiltersBtn) {
+    openContentFiltersBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDialog(contentFiltersDialog);
+    });
+  }
+
+  // Event listeners for closing dialogs
+  if (dialogOverlay) {
+    dialogOverlay.addEventListener('click', closeActiveDialog);
+  }
+
+  closeDialogBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // const dialogId = btn.getAttribute('data-dialog-id');
+        // const dialogToClose = document.getElementById(dialogId);
+        // if (dialogToClose) {
+        //   dialogToClose.classList.add('hidden');
+        // }
+        // if (dialogOverlay) {
+        //   dialogOverlay.classList.add('hidden');
+        // }
+        closeActiveDialog(); // Simplified to close any active dialog
+    });
+  });
 
   // Weapon View Radio Button Listener // Removed
   // weaponViewRadios.forEach(radio => {
