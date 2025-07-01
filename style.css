@@ -379,23 +379,17 @@
     .input-quad.grid-margin-right { grid-area: margin-right; justify-self: start; } /* Align to the left of its cell */
     .input-quad.grid-margin-bottom { grid-area: margin-bottom; }
 
-    .embedded-calibration-label.grid-label-preview {
+    iframe.grid-label-preview { /* Changed selector to target iframe */
       grid-area: label-preview;
-      background-color: #ecf0f1;
-      color: #2c3e50;
-      border: 1px solid #7f8c8d;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8em;
-      min-width: 100px; /* Min width for the preview label itself */
-      min-height: 50px; /* Min height for the preview label itself */
-      padding: 5px;
+      background-color: #ecf0f1; /* Fallback background */
+      border: 1px solid #7f8c8d; /* Border for the iframe itself */
       box-sizing: border-box;
       transition: width 0.2s ease-out, height 0.2s ease-out;
-      /* Max width/height can be controlled by JS or by ensuring grid column/row for label-preview is constrained */
-      /* For now, JS sets width/height up to PREVIEW_MAX_WIDTH/HEIGHT */
+      /* Width and height will be set by JavaScript */
+      min-width: 100px;
+      min-height: 50px;
+      /* Removed: text-align, display: flex, align-items, justify-content, font-size, color, padding */
+      /* These properties should be controlled by the content within the iframe (label_render.html) */
     }
 
     /* Adjustments for input-quads in the grid if needed */

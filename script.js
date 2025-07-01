@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Embedded calibration preview elements
   // const calibrationPreviewContainer = document.getElementById('calibrationPreviewContainer'); // Obsolete
-  const embeddedCalibrationLabel = document.getElementById('embeddedCalibrationLabel');
+  const embeddedCalibrationPreviewFrame = document.getElementById('embeddedCalibrationPreviewFrame'); // Changed from embeddedCalibrationLabel
   // const previewMarginDisplayTop = document.getElementById('previewMarginDisplayTop'); // Obsolete
   // const previewMarginDisplayRight = document.getElementById('previewMarginDisplayRight'); // Obsolete
   // const previewMarginDisplayBottom = document.getElementById('previewMarginDisplayBottom'); // Obsolete
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
   loadAndApplySettings(); // This already calls updatePreviewSize
 
   function updateEmbeddedCalibrationPreview() {
-    if (!embeddedCalibrationLabel) return; // Removed check for calibrationPreviewContainer
+    if (!embeddedCalibrationPreviewFrame) return;
 
     // 1. Get current values from input fields (these are in the currently selected unit)
     const currentWidth = parseFloat(widthInput.value);
@@ -211,71 +211,87 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentMarginLeft = parseFloat(marginLeftInput.value);
     const currentUnit = settings.preferredUnit; // mm or in
 
-    // 2. Convert to MM for consistent scaling logic if current unit is inches
-    let widthInMM = currentWidth;
-    let heightInMM = currentHeight;
-    // Margin values for display will use currentUnit, but for scaling the label preview, we use MM.
+    // 2. Convert all dimensions to MM for sending to the iframe
+    let settingsForIframe = {
+        width: currentWidth,
+        height: currentHeight,
+        marginTop: currentMarginTop,
+        marginRight: currentMarginRight,
+        marginBottom: currentMarginBottom,
+        marginLeft: currentMarginLeft,
+        preferredUnit: currentUnit // Keep original unit for a moment
+    };
 
     if (currentUnit === 'in') {
-      widthInMM = currentWidth * INCHES_TO_MM;
-      heightInMM = currentHeight * INCHES_TO_MM;
+        settingsForIframe.width = parseFloat((currentWidth * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.height = parseFloat((currentHeight * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.marginTop = parseFloat((currentMarginTop * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.marginRight = parseFloat((currentMarginRight * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.marginBottom = parseFloat((currentMarginBottom * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.marginLeft = parseFloat((currentMarginLeft * INCHES_TO_MM).toFixed(1));
     }
+    settingsForIframe.unit = 'mm'; // Explicitly tell iframe units are mm
+    delete settingsForIframe.preferredUnit; // Not needed by label_render.html
 
-    // 3. Scale for display
-    // The preview container has padding, let's get its available width for the label preview.
-    // Max width of preview container is around 500px (dialog) - 20px*2 (dialog padding) - 10px*2 (preview container padding) ~ 440px
-    // but it's inside settings groups, which might be narrower.
-    // Let's aim for a max display width for the label part of, say, 150px or 200px.
-    const PREVIEW_MAX_WIDTH = 150; // Max width for the label representation in px
-    const PREVIEW_MAX_HEIGHT = 100; // Max height for the label representation in px
+    // 3. Prepare calibration item data
+    const calibrationItem = { name: "--- PRINT CALIBRATION LABEL ---", type: "Calibration" };
 
-    let displayWidth, displayHeight;
+    // 4. Prepare data for iframe
+    const dataForIframe = {
+        item: calibrationItem,
+        settings: settingsForIframe,
+        // No tenetKnowledgeItem or weaponViewType for calibration label
+    };
 
-    if (widthInMM <= 0 || heightInMM <= 0) { // Avoid division by zero or negative dimensions
-        displayWidth = 0;
-        displayHeight = 0;
+    // 5. Scale the iframe container itself
+    const PREVIEW_MAX_WIDTH = 150;
+    const PREVIEW_MAX_HEIGHT = 100;
+    let displayWidthPx, displayHeightPx;
+
+    // Use the MM dimensions for scaling the iframe box
+    const widthInMMForScaling = (currentUnit === 'in') ? currentWidth * INCHES_TO_MM : currentWidth;
+    const heightInMMForScaling = (currentUnit === 'in') ? currentHeight * INCHES_TO_MM : currentHeight;
+
+    if (widthInMMForScaling <= 0 || heightInMMForScaling <= 0) {
+        displayWidthPx = 0;
+        displayHeightPx = 0;
     } else {
-        const aspectRatio = widthInMM / heightInMM;
-        if (widthInMM > heightInMM) { // Landscape-ish
-            displayWidth = PREVIEW_MAX_WIDTH;
-            displayHeight = displayWidth / aspectRatio;
-            if (displayHeight > PREVIEW_MAX_HEIGHT) {
-                displayHeight = PREVIEW_MAX_HEIGHT;
-                displayWidth = displayHeight * aspectRatio;
+        const aspectRatio = widthInMMForScaling / heightInMMForScaling;
+        if (widthInMMForScaling > heightInMMForScaling) {
+            displayWidthPx = PREVIEW_MAX_WIDTH;
+            displayHeightPx = displayWidthPx / aspectRatio;
+            if (displayHeightPx > PREVIEW_MAX_HEIGHT) {
+                displayHeightPx = PREVIEW_MAX_HEIGHT;
+                displayWidthPx = displayHeightPx * aspectRatio;
             }
-        } else { // Portrait-ish or square
-            displayHeight = PREVIEW_MAX_HEIGHT;
-            displayWidth = displayHeight * aspectRatio;
-            if (displayWidth > PREVIEW_MAX_WIDTH) {
-                displayWidth = PREVIEW_MAX_WIDTH;
-                displayHeight = displayWidth / aspectRatio;
+        } else {
+            displayHeightPx = PREVIEW_MAX_HEIGHT;
+            displayWidthPx = displayHeightPx * aspectRatio;
+            if (displayWidthPx > PREVIEW_MAX_WIDTH) {
+                displayWidthPx = PREVIEW_MAX_WIDTH;
+                displayHeightPx = displayWidthPx / aspectRatio;
             }
         }
     }
+    displayWidthPx = Math.max(0, Math.round(displayWidthPx));
+    displayHeightPx = Math.max(0, Math.round(displayHeightPx));
 
-    // Ensure non-negative final dimensions
-    displayWidth = Math.max(0, displayWidth);
-    displayHeight = Math.max(0, displayHeight);
+    embeddedCalibrationPreviewFrame.style.width = displayWidthPx + 'px';
+    embeddedCalibrationPreviewFrame.style.height = displayHeightPx + 'px';
 
-    // 4. Update label preview div style
-    embeddedCalibrationLabel.style.width = displayWidth + 'px';
-    embeddedCalibrationLabel.style.height = displayHeight + 'px';
-    if(displayWidth > 0 && displayHeight > 0) {
-        embeddedCalibrationLabel.textContent = `${currentWidth}${currentUnit} x ${currentHeight}${currentUnit}`;
+    // 6. Post data to iframe
+    const targetOrigin = window.location.origin === 'null' || window.location.protocol === 'file:' ? '*' : window.location.origin;
+
+    // Ensure iframe is loaded before posting. If src is static, this might be tricky without onload.
+    // A common pattern is to set src and then post on iframe's 'load' event.
+    // For simplicity, if iframe.contentWindow is available, try posting.
+    // This assumes "label_render.html" is set as src in HTML and has loaded.
+    if (embeddedCalibrationPreviewFrame.contentWindow) {
+        embeddedCalibrationPreviewFrame.contentWindow.postMessage(dataForIframe, targetOrigin);
     } else {
-        embeddedCalibrationLabel.textContent = 'Invalid Size';
+        // This might happen if called too early. Could add a listener for iframe load.
+        console.warn("Embedded calibration preview iframe contentWindow not ready.");
     }
-
-
-    // 5. Update margin indicators text - This part is now obsolete as margin inputs are directly visible.
-    // if (previewMarginDisplayTop) previewMarginDisplayTop.textContent = `${currentMarginTop}${currentUnit}`;
-    // if (previewMarginDisplayRight) previewMarginDisplayRight.textContent = `${currentMarginRight}${currentUnit}`;
-    // if (previewMarginDisplayBottom) previewMarginDisplayBottom.textContent = `${currentMarginBottom}${currentUnit}`;
-    // if (previewMarginDisplayLeft) previewMarginDisplayLeft.textContent = `${currentMarginLeft}${currentUnit}`;
-
-    // The margin values are now directly part of the input fields positioned around the label.
-    // The `unit-display` spans within those input quads are updated by `updateInputFieldsFromSettings`
-    // when the unit changes.
   }
 
   // Call it once initially after settings are loaded and applied to UI
@@ -286,7 +302,41 @@ document.addEventListener('DOMContentLoaded', function() {
   // The `loadAndApplySettings` already calls `updateInputFieldsFromSettings` which sets values.
   // Then, the event listeners should pick up from there.
   // A direct call after load might be good.
-  updateEmbeddedCalibrationPreview();
+  // updateEmbeddedCalibrationPreview(); // Initial call moved to iframe onload
+
+  if (embeddedCalibrationPreviewFrame) {
+    // Set the source for the iframe if it's not already set, or to ensure it reloads if necessary.
+    // However, it's already set in HTML to label_render.html.
+    // We just need to ensure we post data after it's loaded.
+
+    let initialUpdateDone = false; // Flag to ensure initial update runs only once via onload or direct check
+
+    const performInitialPreviewUpdate = () => {
+      if (!initialUpdateDone) {
+        // console.log("Performing initial embedded preview update.");
+        updateEmbeddedCalibrationPreview();
+        initialUpdateDone = true;
+      }
+    };
+
+    embeddedCalibrationPreviewFrame.onload = () => {
+      // console.log("Embedded preview iframe loaded via onload event.");
+      performInitialPreviewUpdate();
+      // To prevent this onload from firing multiple times if src were changed by JS (not planned here):
+      // embeddedCalibrationPreviewFrame.onload = null;
+    };
+
+    // Fallback for browsers that might have already loaded the iframe (e.g. from cache)
+    // before the onload listener was attached.
+    if (embeddedCalibrationPreviewFrame.contentWindow &&
+        embeddedCalibrationPreviewFrame.contentWindow.document.readyState === 'complete') {
+      // console.log("Embedded preview iframe already complete on script run, attempting update.");
+      // A small delay can sometimes help ensure everything is truly ready.
+      setTimeout(performInitialPreviewUpdate, 100);
+    }
+  } else {
+    console.warn("embeddedCalibrationPreviewFrame not found for onload setup.");
+  }
 
   // Add event listeners to all dimension/margin inputs to update the preview live
   const inputsForLivePreview = [
