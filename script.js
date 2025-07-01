@@ -42,12 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const unitDisplays = document.querySelectorAll('.unit-display'); // Collection of all spans showing "mm" or "in"
 
   // Embedded calibration preview elements
-  const calibrationPreviewContainer = document.getElementById('calibrationPreviewContainer');
+  // const calibrationPreviewContainer = document.getElementById('calibrationPreviewContainer'); // Obsolete
   const embeddedCalibrationLabel = document.getElementById('embeddedCalibrationLabel');
-  const previewMarginDisplayTop = document.getElementById('previewMarginDisplayTop');
-  const previewMarginDisplayRight = document.getElementById('previewMarginDisplayRight');
-  const previewMarginDisplayBottom = document.getElementById('previewMarginDisplayBottom');
-  const previewMarginDisplayLeft = document.getElementById('previewMarginDisplayLeft');
+  // const previewMarginDisplayTop = document.getElementById('previewMarginDisplayTop'); // Obsolete
+  // const previewMarginDisplayRight = document.getElementById('previewMarginDisplayRight'); // Obsolete
+  // const previewMarginDisplayBottom = document.getElementById('previewMarginDisplayBottom'); // Obsolete
+  // const previewMarginDisplayLeft = document.getElementById('previewMarginDisplayLeft'); // Obsolete
 
   const menuBtn = document.getElementById('menuBtn');
   const mainMenu = document.getElementById('mainMenu'); // This is the panel with menu item links
@@ -267,14 +267,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    // 5. Update margin indicators text (showing values in the currently selected unit)
-    if (previewMarginDisplayTop) previewMarginDisplayTop.textContent = `${currentMarginTop}${currentUnit}`;
-    if (previewMarginDisplayRight) previewMarginDisplayRight.textContent = `${currentMarginRight}${currentUnit}`;
-    if (previewMarginDisplayBottom) previewMarginDisplayBottom.textContent = `${currentMarginBottom}${currentUnit}`;
-    if (previewMarginDisplayLeft) previewMarginDisplayLeft.textContent = `${currentMarginLeft}${currentUnit}`;
+    // 5. Update margin indicators text - This part is now obsolete as margin inputs are directly visible.
+    // if (previewMarginDisplayTop) previewMarginDisplayTop.textContent = `${currentMarginTop}${currentUnit}`;
+    // if (previewMarginDisplayRight) previewMarginDisplayRight.textContent = `${currentMarginRight}${currentUnit}`;
+    // if (previewMarginDisplayBottom) previewMarginDisplayBottom.textContent = `${currentMarginBottom}${currentUnit}`;
+    // if (previewMarginDisplayLeft) previewMarginDisplayLeft.textContent = `${currentMarginLeft}${currentUnit}`;
 
-    // Optional: Visually represent margins via padding on a wrapper, or by adjusting positions.
-    // For now, text display is the primary goal.
+    // The margin values are now directly part of the input fields positioned around the label.
+    // The `unit-display` spans within those input quads are updated by `updateInputFieldsFromSettings`
+    // when the unit changes.
   }
 
   // Call it once initially after settings are loaded and applied to UI

@@ -72,39 +72,40 @@
       </div>
       
       <div class="settings-group">
-        <label class="group-label">Margins:</label>
-        <div class="margin-inputs-container">
-          <div class="input-quad">
+        <label class="group-label">Margins & Preview:</label>
+        <div class="margin-preview-grid-container">
+          <!-- Top Margin Input -->
+          <div class="input-quad grid-margin-top">
             <label for="marginTop">Top:</label>
             <input id="marginTop" type="number" value="1" step="0.01" title="Top Margin">
             <span class="unit-display">mm</span>
           </div>
-          <div class="input-quad">
-            <label for="marginRight">Right:</label>
-            <input id="marginRight" type="number" value="1" step="0.01" title="Right Margin">
-            <span class="unit-display">mm</span>
-          </div>
-          <div class="input-quad">
-            <label for="marginBottom">Bottom:</label>
-            <input id="marginBottom" type="number" value="1" step="0.01" title="Bottom Margin">
-            <span class="unit-display">mm</span>
-          </div>
-          <div class="input-quad">
+
+          <!-- Left Margin Input -->
+          <div class="input-quad grid-margin-left">
             <label for="marginLeft">Left:</label>
             <input id="marginLeft" type="number" value="1" step="0.01" title="Left Margin">
             <span class="unit-display">mm</span>
           </div>
-        </div>
-        <div id="calibrationPreviewContainer" class="calibration-preview-container">
-          <div id="previewMarginDisplayTop" class="margin-display top">1mm</div>
-          <div class="middle-row-preview">
-            <div id="previewMarginDisplayLeft" class="margin-display left">1mm</div>
-            <div id="embeddedCalibrationLabel" class="embedded-calibration-label">
-              Label
-            </div>
-            <div id="previewMarginDisplayRight" class="margin-display right">1mm</div>
+
+          <!-- Embedded Calibration Label (Center) -->
+          <div id="embeddedCalibrationLabel" class="embedded-calibration-label grid-label-preview">
+            Label
           </div>
-          <div id="previewMarginDisplayBottom" class="margin-display bottom">1mm</div>
+
+          <!-- Right Margin Input -->
+          <div class="input-quad grid-margin-right">
+            <label for="marginRight">Right:</label>
+            <input id="marginRight" type="number" value="1" step="0.01" title="Right Margin">
+            <span class="unit-display">mm</span>
+          </div>
+
+          <!-- Bottom Margin Input -->
+          <div class="input-quad grid-margin-bottom">
+            <label for="marginBottom">Bottom:</label>
+            <input id="marginBottom" type="number" value="1" step="0.01" title="Bottom Margin">
+            <span class="unit-display">mm</span>
+          </div>
         </div>
       </div>
 
