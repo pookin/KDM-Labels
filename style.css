@@ -150,7 +150,6 @@
     #helpDialog .dialog-header {
         position: sticky;
         top: 0;
-        background-color: #34495e; /* Match dialog background */
         z-index: 1; /* Keep header above scrolling content */
         padding-bottom: 10px;
         margin-bottom: 10px; /* Space before content starts */
