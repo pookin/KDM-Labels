@@ -46,27 +46,65 @@
     <div class="dialog-content">
       <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
       <h3>Label Settings</h3>
-      <label>Label Size (W H):</label>
-      <input id="width" type="number" value="50.8" step="0.1" title="Label Width"><span>mm</span>
-      <input id="height" type="number" value="25.4" step="0.1" title="Label Height"><span>mm</span><br>
-      
-      <label>Margins (Top R B L):</label>
-      <div class="margin-group" style="display: inline-block;">
-          <input id="marginTop" type="number" value="1" step="0.1" title="Top Margin"><span>mm</span>
-          <input id="marginRight" type="number" value="1" step="0.1" title="Right Margin"><span>mm</span>
-          <input id="marginBottom" type="number" value="1" step="0.1" title="Bottom Margin"><span>mm</span>
-          <input id="marginLeft" type="number" value="1" step="0.1" title="Left Margin"><span>mm</span>
+
+      <div class="settings-group">
+        <label class="group-label">Unit:</label>
+        <div class="radio-group">
+          <input type="radio" id="unitMM" name="labelUnit" value="mm" checked>
+          <label for="unitMM">MM</label>
+          <input type="radio" id="unitInches" name="labelUnit" value="in">
+          <label for="unitInches">Inches</label>
+        </div>
       </div>
+
+      <div class="settings-group">
+        <label class="group-label">Label Size:</label>
+        <div class="input-pair">
+          <label for="width">Width:</label>
+          <input id="width" type="number" value="50.8" step="0.01" title="Label Width">
+          <span class="unit-display">mm</span>
+        </div>
+        <div class="input-pair">
+          <label for="height">Height:</label>
+          <input id="height" type="number" value="25.4" step="0.01" title="Label Height">
+          <span class="unit-display">mm</span>
+        </div>
+      </div>
+      
+      <div class="settings-group">
+        <label class="group-label">Margins:</label>
+        <div class="input-quad">
+          <label for="marginTop">Top:</label>
+          <input id="marginTop" type="number" value="1" step="0.01" title="Top Margin">
+          <span class="unit-display">mm</span>
+        </div>
+        <div class="input-quad">
+          <label for="marginRight">Right:</label>
+          <input id="marginRight" type="number" value="1" step="0.01" title="Right Margin">
+          <span class="unit-display">mm</span>
+        </div>
+        <div class="input-quad">
+          <label for="marginBottom">Bottom:</label>
+          <input id="marginBottom" type="number" value="1" step="0.01" title="Bottom Margin">
+          <span class="unit-display">mm</span>
+        </div>
+        <div class="input-quad">
+          <label for="marginLeft">Left:</label>
+          <input id="marginLeft" type="number" value="1" step="0.01" title="Left Margin">
+          <span class="unit-display">mm</span>
+        </div>
+      </div>
+
       <div class="settings-actions">
           <button id="save" class="btn">Save Settings</button>
-          <button id="showCalibrationLabelBtn" class="btn">Show Calibration Label</button>
+          <button id="printCalibrationLabelBtn" class="btn">Print Calibration Label</button>
       </div>
     </div>
   </div>
 
   <div id="contentFiltersDialog" class="dialog-modal hidden">
+    <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
     <div class="dialog-content">
-      <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
       <div class="settings-section" id="contentFiltersInDialog"> 
         <h3>Content Filters</h3>
         <div class="filter-group" id="expansionFilters">
@@ -89,6 +127,7 @@
             <!-- JS will populate -->
           </div>
         </div>
+        <div id="filterSaveFeedback" class="save-feedback hidden">Saved!</div>
       </div>
     </div>
   </div>

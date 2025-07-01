@@ -34,7 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const marginRightInput = document.getElementById('marginRight');
   const marginBottomInput = document.getElementById('marginBottom');
   const marginLeftInput = document.getElementById('marginLeft');
-  const showCalibrationLabelBtn = document.getElementById('showCalibrationLabelBtn');
+  const printCalibrationLabelBtn = document.getElementById('printCalibrationLabelBtn'); // Renamed from showCalibrationLabelBtn
+
+  // Unit switching elements
+  const unitMMRadio = document.getElementById('unitMM');
+  const unitInchesRadio = document.getElementById('unitInches');
+  const unitDisplays = document.querySelectorAll('.unit-display'); // Collection of all spans showing "mm" or "in"
 
   const menuBtn = document.getElementById('menuBtn');
   const mainMenu = document.getElementById('mainMenu'); // This is the panel with menu item links
@@ -50,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const survivorSheetBtn = document.getElementById('survivorSheetBtn'); // Added for Survivor Sheet
   const helpBtn = document.getElementById('helpBtn'); // Added for Help
   const helpDialog = document.getElementById('helpDialog'); // Added for Help Dialog
+  const filterSaveFeedback = document.getElementById('filterSaveFeedback'); // Added for filter save feedback
 
   // Assign DOM elements for filter containers here (these are inside contentFiltersDialog)
   expansionCheckboxesContainer = document.getElementById('expansionCheckboxes');
@@ -65,36 +71,123 @@ document.addEventListener('DOMContentLoaded', function() {
   const romanNumeralRegex = /\s+(I|II|III)$/;
   const philosophyKnowledgeMap = { "The First Step": "Path of the First Step", "The Second Step": "Path of the Second Step", "The Third Step": "Path of the Third Step" };
 
-  let defaultSettings = {
-      width: 50.8, height: 25.4,
-      marginTop: 1, marginRight: 1, marginBottom: 1, marginLeft: 1,
-      unit: 'mm'
-  };
-  let loadedSettings = JSON.parse(localStorage.getItem('labelSettings'));
-  let settings = { ...defaultSettings };
-  // let preferredWeaponView = localStorage.getItem('preferredWeaponView') || 'specialist'; // Removed
+  const MM_TO_INCHES = 1 / 25.4;
+  const INCHES_TO_MM = 25.4;
 
-  if (loadedSettings) {
-      settings.width = loadedSettings.width !== undefined ? loadedSettings.width : defaultSettings.width;
-      settings.height = loadedSettings.height !== undefined ? loadedSettings.height : defaultSettings.height;
-      settings.unit = loadedSettings.unit || defaultSettings.unit;
-      if (loadedSettings.margin !== undefined && typeof loadedSettings.margin === 'number') {
-          const oldMargin = parseFloat(loadedSettings.margin);
-          settings.marginTop = oldMargin; settings.marginRight = oldMargin; settings.marginBottom = oldMargin; settings.marginLeft = oldMargin;
-      } else {
-          settings.marginTop = loadedSettings.marginTop !== undefined ? loadedSettings.marginTop : defaultSettings.marginTop;
-          settings.marginRight = loadedSettings.marginRight !== undefined ? loadedSettings.marginRight : defaultSettings.marginRight;
-          settings.marginBottom = loadedSettings.marginBottom !== undefined ? loadedSettings.marginBottom : defaultSettings.marginBottom;
-          settings.marginLeft = loadedSettings.marginLeft !== undefined ? loadedSettings.marginLeft : defaultSettings.marginLeft;
-      }
+  let defaultSettings = {
+      width: 50.8, // mm
+      height: 25.4, // mm
+      marginTop: 1, // mm
+      marginRight: 1, // mm
+      marginBottom: 1, // mm
+      marginLeft: 1, // mm
+      preferredUnit: 'mm' // Added to store preferred unit
+  };
+  let settings = { ...defaultSettings }; // Initialize settings with defaults
+
+  // Function to update all unit display spans
+  function updateUnitDisplays(unit) {
+    unitDisplays.forEach(span => span.textContent = unit);
   }
 
-  if (widthInput) widthInput.value = settings.width;
-  if (heightInput) heightInput.value = settings.height;
-  if (marginTopInput) marginTopInput.value = settings.marginTop;
-  if (marginRightInput) marginRightInput.value = settings.marginRight;
-  if (marginBottomInput) marginBottomInput.value = settings.marginBottom;
-  if (marginLeftInput) marginLeftInput.value = settings.marginLeft;
+  // Function to convert settings values to a target unit
+  function convertSettingsValues(currentSettings, targetUnit) {
+    const newSettings = { ...currentSettings };
+    const fieldsToConvert = ['width', 'height', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft'];
+
+    if (currentSettings.preferredUnit === targetUnit) {
+      return newSettings; // No conversion needed
+    }
+
+    const conversionFactor = targetUnit === 'in' ? MM_TO_INCHES : INCHES_TO_MM;
+
+    fieldsToConvert.forEach(field => {
+      // If converting from MM to IN, or IN to MM
+      if (currentSettings.preferredUnit === 'mm' && targetUnit === 'in') {
+        newSettings[field] = parseFloat((currentSettings[field] * MM_TO_INCHES).toFixed(3));
+      } else if (currentSettings.preferredUnit === 'in' && targetUnit === 'mm') {
+        newSettings[field] = parseFloat((currentSettings[field] * INCHES_TO_MM).toFixed(1));
+      }
+    });
+    newSettings.preferredUnit = targetUnit;
+    return newSettings;
+  }
+
+  // Function to load settings from localStorage and apply them
+  function loadAndApplySettings() {
+    const loadedSettingsString = localStorage.getItem('labelSettings');
+    if (loadedSettingsString) {
+        const loaded = JSON.parse(loadedSettingsString);
+        // Ensure all fields from defaultSettings are present
+        settings = { ...defaultSettings, ...loaded };
+    } else {
+        settings = { ...defaultSettings };
+    }
+
+    // Values in 'settings' are already in the preferredUnit from storage, or default (mm)
+    // No conversion needed here, just apply to UI
+    if (widthInput) widthInput.value = settings.width;
+    if (heightInput) heightInput.value = settings.height;
+    if (marginTopInput) marginTopInput.value = settings.marginTop;
+    if (marginRightInput) marginRightInput.value = settings.marginRight;
+    if (marginBottomInput) marginBottomInput.value = settings.marginBottom;
+    if (marginLeftInput) marginLeftInput.value = settings.marginLeft;
+
+    if (settings.preferredUnit === 'in') {
+        if (unitInchesRadio) unitInchesRadio.checked = true;
+    } else {
+        if (unitMMRadio) unitMMRadio.checked = true; // Default
+    }
+    updateUnitDisplays(settings.preferredUnit);
+    updatePreviewSize(); // Ensure preview uses correct unit if it depends on global settings object
+  }
+
+
+  // Function to update input fields from the global 'settings' object
+  function updateInputFieldsFromSettings() {
+    if (widthInput) widthInput.value = settings.width;
+    if (heightInput) heightInput.value = settings.height;
+    if (marginTopInput) marginTopInput.value = settings.marginTop;
+    if (marginRightInput) marginRightInput.value = settings.marginRight;
+    if (marginBottomInput) marginBottomInput.value = settings.marginBottom;
+    if (marginLeftInput) marginLeftInput.value = settings.marginLeft;
+    updateUnitDisplays(settings.preferredUnit);
+  }
+
+
+  // Event listener for unit change
+  function handleUnitChange(event) {
+    const newUnit = event.target.value;
+    if (newUnit !== settings.preferredUnit) {
+      // Get current values from input fields, assuming they are in the OLD unit
+      const currentValues = {
+        width: parseFloat(widthInput.value),
+        height: parseFloat(heightInput.value),
+        marginTop: parseFloat(marginTopInput.value),
+        marginRight: parseFloat(marginRightInput.value),
+        marginBottom: parseFloat(marginBottomInput.value),
+        marginLeft: parseFloat(marginLeftInput.value),
+        preferredUnit: settings.preferredUnit // The old unit
+      };
+
+      const convertedValues = convertSettingsValues(currentValues, newUnit);
+
+      // Update global settings object
+      settings = { ...settings, ...convertedValues }; // Spread to keep other non-converted settings if any
+
+      // Update UI input fields with new converted values
+      updateInputFieldsFromSettings();
+      // Note: Save button will persist these new settings.
+    }
+  }
+
+  if (unitMMRadio) unitMMRadio.addEventListener('change', handleUnitChange);
+  if (unitInchesRadio) unitInchesRadio.addEventListener('change', handleUnitChange);
+
+
+  // Initial load of settings
+  loadAndApplySettings();
+
 
   // Set initial state of weapon view radio buttons // Removed
   // weaponViewRadios.forEach(radio => {
@@ -106,10 +199,18 @@ document.addEventListener('DOMContentLoaded', function() {
   let selectedIndex = -1;
 
   function updatePreviewSize() {
-      if (previewFrame) {
-        previewFrame.style.width = settings.width + settings.unit;
-        previewFrame.style.height = settings.height + settings.unit;
+    if (previewFrame) {
+      let displayWidth = settings.width;
+      let displayHeight = settings.height;
+      // Convert to MM for preview iframe style, as it might expect MM consistency from before
+      if (settings.preferredUnit === 'in') {
+        displayWidth = settings.width * INCHES_TO_MM;
+        displayHeight = settings.height * INCHES_TO_MM;
       }
+      // The previewFrame style itself should probably always be in mm for consistency of the visual preview box
+      previewFrame.style.width = displayWidth + 'mm';
+      previewFrame.style.height = displayHeight + 'mm';
+    }
   }
 
   function search(query) {
@@ -317,13 +418,26 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       // const selectedWeaponView = document.querySelector('input[name="weaponView"]:checked')?.value || 'specialist'; // No longer needed
 
+      // Prepare settings for iframe: always convert dimensions to MM
+      let settingsForIframe = JSON.parse(JSON.stringify(settings));
+      if (settings.preferredUnit === 'in') {
+        settingsForIframe.width = parseFloat((settings.width * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.height = parseFloat((settings.height * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.marginTop = parseFloat((settings.marginTop * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.marginRight = parseFloat((settings.marginRight * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.marginBottom = parseFloat((settings.marginBottom * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.marginLeft = parseFloat((settings.marginLeft * INCHES_TO_MM).toFixed(1));
+        settingsForIframe.preferredUnit = 'mm'; // Tell iframe the values are in mm
+      }
+      // Ensure unit field is named 'unit' if label_render.html expects that from old structure
+      settingsForIframe.unit = 'mm';
+
+
       const dataForIframe = {
-          // item: JSON.parse(JSON.stringify(itemFromSuggestion)), // Send the original item data
-          item: JSON.parse(JSON.stringify(originalItemData)), // Send the original item data
-          settings: JSON.parse(JSON.stringify(settings)),
+          item: JSON.parse(JSON.stringify(originalItemData)),
+          settings: settingsForIframe, // Pass the mm-converted settings
           tenetKnowledgeItem: tenetKnowledgeItemData,
-          // weaponViewType: selectedWeaponView // Use the displayType from the suggestion
-          weaponViewType: weaponViewType // This is itemFromSuggestion.displayType
+          weaponViewType: weaponViewType
       };
 
       const iframeSrc = 'label_render.html';
@@ -378,6 +492,22 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // --- Content Filter Functions ---
+  let saveFeedbackTimeout = null; // Timeout ID for filter save feedback
+
+  function showFilterSaveFeedback() {
+    if (filterSaveFeedback) {
+      filterSaveFeedback.classList.remove('hidden');
+      // Clear any existing timeout to reset the duration
+      if (saveFeedbackTimeout) {
+        clearTimeout(saveFeedbackTimeout);
+      }
+      saveFeedbackTimeout = setTimeout(() => {
+        filterSaveFeedback.classList.add('hidden');
+        saveFeedbackTimeout = null;
+      }, 2000); // Show for 2 seconds
+    }
+  }
+
   function populateExpansionFilters() {
       if (!window.dataset || !expansionCheckboxesContainer) return; // expansionCheckboxesContainer is now global-like
       const expansionNames = new Set([CORE_GAME_EXPANSION_NAME]);
@@ -421,6 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       checkbox.addEventListener('change', function() {
           localStorage.setItem(storageKey, this.checked);
+          showFilterSaveFeedback(); // Show feedback
           if(searchInput) {
             const currentQuery = searchInput.value;
             renderSuggestions(search(currentQuery));
@@ -595,14 +726,25 @@ document.addEventListener('DOMContentLoaded', function() {
   // Event listeners for Label Settings save and calibration (ensure these elements exist)
   if (saveBtn) {
     saveBtn.addEventListener('click', () => {
-        if (widthInput) settings.width = parseFloat(widthInput.value);
-        if (heightInput) settings.height = parseFloat(heightInput.value);
-        if (marginTopInput) settings.marginTop = parseFloat(marginTopInput.value);
-        if (marginRightInput) settings.marginRight = parseFloat(marginRightInput.value);
-        if (marginBottomInput) settings.marginBottom = parseFloat(marginBottomInput.value);
-        if (marginLeftInput) settings.marginLeft = parseFloat(marginLeftInput.value);
+        // Values in input fields are already in settings.preferredUnit due to handleUnitChange
+        // Update the global settings object directly from input fields
+        settings.width = parseFloat(widthInput.value);
+        settings.height = parseFloat(heightInput.value);
+        settings.marginTop = parseFloat(marginTopInput.value);
+        settings.marginRight = parseFloat(marginRightInput.value);
+        settings.marginBottom = parseFloat(marginBottomInput.value);
+        settings.marginLeft = parseFloat(marginLeftInput.value);
+        // settings.preferredUnit is already up-to-date via handleUnitChange
+
         localStorage.setItem('labelSettings', JSON.stringify(settings));
-        updatePreviewSize();
+        updatePreviewSize(); // This will now use settings.preferredUnit correctly
+
+        // Provide some visual feedback for saving (optional, can be enhanced later)
+        const originalText = saveBtn.textContent;
+        saveBtn.textContent = 'Saved!';
+        setTimeout(() => {
+            saveBtn.textContent = originalText;
+        }, 1500);
 
         const currentSelectedItemName = searchInput ? searchInput.value : "";
         let itemToReselect = null;
@@ -614,10 +756,24 @@ document.addEventListener('DOMContentLoaded', function() {
         if (itemToReselect) { selectItem(itemToReselect); }
     });
   }
-  if (showCalibrationLabelBtn) {
-      showCalibrationLabelBtn.addEventListener('click', function() {
+
+  if (printCalibrationLabelBtn) {
+      printCalibrationLabelBtn.addEventListener('click', function() {
           const calibrationItem = { name: "--- PRINT CALIBRATION LABEL ---", type: "Calibration" };
+          // Select the item first to load it into the preview
           selectItem(calibrationItem);
+
+          // Call printLabel. It might need a slight delay for the iframe to fully load,
+          // especially if selectItem forces a reload of the iframe.
+          // The selectItem function already handles onload for iframe reloads.
+          // If the iframe source is not changed by selectItem, contentWindow should be available.
+
+          // A short timeout can help ensure the iframe content is ready for print,
+          // though ideally, selectItem would return a promise or have a callback.
+          // For now, let's try a small delay.
+          setTimeout(() => {
+            printLabel();
+          }, 250); // 250ms delay, adjust if needed
       });
   }
 
