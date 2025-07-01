@@ -385,6 +385,7 @@
       border: 1px solid #7f8c8d; /* Border for the iframe itself */
       box-sizing: border-box;
       transition: width 0.2s ease-out, height 0.2s ease-out;
+      overflow: hidden; /* Prevent scrollbars on the iframe itself */
       /* Width and height will be set by JavaScript */
       min-width: 100px;
       min-height: 50px;
