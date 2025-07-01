@@ -795,4 +795,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const initialResults = search(searchInput.value);
     renderSuggestions(initialResults);
   }
+
+  // Show help modal on first visit
+  const visitedFlag = 'kdmLabelPrinter_hasVisited';
+  if (!localStorage.getItem(visitedFlag)) {
+    if (helpDialog && typeof openDialog === 'function') { // Ensure elements and function are available
+        openDialog(helpDialog);
+        localStorage.setItem(visitedFlag, 'true');
+    }
+  }
 });
