@@ -355,11 +355,27 @@
     }
     /* End of new Label Settings structure styles */
 
-    .settings-section {
+    .settings-section { /* General style for sections *within* a dialog that need separation */
       margin-top: 20px;
       padding-top: 15px;
       border-top: 1px solid #4a6fa5;
     }
+    /* Override for the main content container within Content Filters if it uses .settings-section */
+    #contentFiltersInDialog.settings-section {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    /* Ensure the h3 title in dialogs is well-placed if it's the first element */
+    .dialog-content > .settings-section > h3:first-child,
+    .dialog-content > h3:first-child {
+        margin-top: 0; /* Explicitly ensure no top margin if it's the first title */
+    }
+    /* If #contentFiltersInDialog is NOT a settings-section, but directly holds h3 */
+    /* We might not need the above if h3 already has margin-top:0, which it does. */
+    /* The key is removing the settings-section's top spacing effects. */
+
     .filter-group {
       margin-bottom: 15px;
     }
