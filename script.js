@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
   loadAndApplySettings(); // This already calls updatePreviewSize
 
   function updateEmbeddedCalibrationPreview() {
-    if (!embeddedCalibrationLabel || !calibrationPreviewContainer) return;
+    if (!embeddedCalibrationLabel) return; // Removed check for calibrationPreviewContainer
 
     // 1. Get current values from input fields (these are in the currently selected unit)
     const currentWidth = parseFloat(widthInput.value);
