@@ -133,9 +133,41 @@
     }
     .dialog-content {
         padding: 20px;
-        overflow-y: auto; 
+        /* overflow-y: auto; Replaced by individual dialog control */
         flex-grow: 1; 
     }
+
+    /* Specific for Help Dialog */
+    #helpDialog {
+        overflow-y: auto; /* Allow help dialog to scroll if content overflows */
+    }
+
+    #helpDialog .dialog-content {
+         /* Help dialog content itself should not have its own scrollbar if the dialog scrolls */
+        overflow-y: visible;
+    }
+
+    #helpDialog .dialog-header {
+        position: sticky;
+        top: 0;
+        background-color: #34495e; /* Match dialog background */
+        z-index: 1; /* Keep header above scrolling content */
+        padding-bottom: 10px;
+        margin-bottom: 10px; /* Space before content starts */
+        border-bottom: 1px solid #4a6fa5; /* Consistent with other h3 */
+    }
+
+    #helpDialog p a,
+    #helpDialog ul li a {
+        color: #87CEFA; /* LightSkyBlue */
+        text-decoration: underline;
+    }
+
+    #helpDialog p a:hover,
+    #helpDialog ul li a:hover {
+        color: #ADD8E6; /* LightBlue */
+    }
+
     .dialog-close-btn {
         position: absolute;
         top: 10px;
