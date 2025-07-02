@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const itemForLogic = (itemFromSuggestion.displayType && itemFromSuggestion.originalName) ? originalItemData : itemFromSuggestion;
 
       if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && typeof window.dataset !== 'undefined') {
-          const baseKnowledgeName = item.tenetKnowledge;
+          const baseKnowledgeName = itemForLogic.tenetKnowledge; // Changed 'item' to 'itemForLogic'
           let knowledgeToFetchFullName = null;
           try {
               const lastPrintedFull = localStorage.getItem(`lastPrinted_${baseKnowledgeName}`);
