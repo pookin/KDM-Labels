@@ -335,6 +335,16 @@ var dataset = [
     "expansion": null,
     "searchableText": "whip weapon instead of moving the top card of the ai deck into the wound stack, you may move the top card of the ai discard pile. limit once per attack gain +5 strength when attacking with a whip"
   },
+  {
+    "id": null,
+    "name": "Scythe", // This is a duplicate name from ID 18 in your CSV, ensuring unique ID here.
+    "type": "Weapon",
+    "spec": "When you critically wound with a scythe. roll 1d10. On a 6+, shuffle the hit location deck (do not shuffle unresolved hit locations). Limit, once per attack",
+    "mastery": "At teh start of a Scythe Master's act, if they are insane, they gain +1 {q}, which they may only spend to activate scythes.",
+    "specialistLevels": [3, 8],
+    "expansion": null,
+    "searchableText": "whip weapon instead of moving the top card of the ai deck into the wound stack, you may move the top card of the ai discard pile. limit once per attack gain +5 strength when attacking with a whip"
+  },
   // --- End Weapon Items ---
 
  // --- Character Trait Items (starting ID 32) ---
@@ -4207,7 +4217,7 @@ var dataset = [
     "type": "Secret Fighting Art",
     "description": "When you *depart* or gain this, choose a {V} from the deck. For the rest of the lantern year, treat the effects of the chosen card as an ability.",
     "expansion": "King",
-    "searchableText": "mind palace secret fighting art when you *depart* or gain this, choose a fa from the deck. for the rest of the lantern year, treat the effects of the chosen card as an ability. king"
+    "searchableText": "mind palace secret fighting art when you *depart* or gain this, choose a fa from the deck. for the rest of the lantern year, treat the effects of the chosen card as king"
   },
   {
     "id": 414,
@@ -4762,6 +4772,765 @@ var dataset = [
     "description": "In the Aftermath, gain 1 additional Hunt XP. You may not wear other gear. If you trigger the White Secret story event, you cease to exist. When you retire, you cease to exist.",
     "expansion": null,
     "searchableText": "life exchange ability in the aftermath, gain 1 additional hunt xp. you may not wear other gear. if you trigger the white secret story event, you cease to exist. when you retire, you cease to exist. "
+  },
+ {
+    "id": 484,
+    "name": "Anemic",
+    "type": "Impairment",
+    "description": "It takes one fewer bleeding token to kill you. This impairment can be gained multiple times. If you gain Anemic enough times that it takes 0 bleeding tokens to kill you, you instantly die.",
+    "expansion": null,
+    "searchableText": "anemic it takes one fewer bleeding token to kill you. this impairment can be gained multiple times. if you gain anemic enough times that it takes 0 bleeding tokens to kill you, you instantly die."
+  },
+  {
+    "id": 485,
+    "name": "Broken Vow",
+    "type": "Impairment",
+    "description": "If any survivors with 0 Hunt XP in your hunting party die during the hunt or showdown, you retire.",
+    "expansion": null,
+    "searchableText": "broken vow if any survivors with 0 hunt xp in your hunting party die during the hunt or showdown, you retire."
+  },
+  {
+    "id": 486,
+    "name": "Closed Meridians",
+    "type": "Impairment",
+    "description": "Gain +6 permanent luck. At the start of your act, suffer -1 permanent luck. When you have 0 or less permanent luck, suffer the head explosion severe injury.",
+    "expansion": null,
+    "searchableText": "closed meridians gain +6 permanent luck. at the start of your act, suffer -1 permanent luck. when you have 0 or less permanent luck, suffer the head explosion severe injury."
+  },
+  {
+    "id": 487,
+    "name": "Cowardly",
+    "type": "Impairment",
+    "description": "When you would die or cease to exist, you instead retreat to safety and rejoin the survivors during the Aftermath.",
+    "expansion": null,
+    "searchableText": "cowardly when you would die or cease to exist, you instead retreat to safety and rejoin the survivors during the aftermath."
+  },
+  {
+    "id": 488,
+    "name": "Crystal Skin ",
+    "type": "Ability",
+    "description": "You ignore cursed and cannot wear armor. When you depart gain 3 to all hit locations. Suffer -2 to the result of all severe injury rolls. When you participate in Intimacy, newborns gain Crystal Skin in addition to any other roll results. ",
+    "expansion": null,
+    "searchableText": "crystal skin you ignore cursed and cannot wear armor. when you depart gain 3 to all hit locations. suffer -2 to the result of all severe injury rolls. when you participate in intimacy, newborns gain crystal skin in addition to any other roll results. "
+  },
+  {
+    "id": 489,
+    "name": "Hemerochory",
+    "type": "Knowledge",
+    "philosophyLinked": "Gatherism",
+    "mainDesc": "You may *depart* with one resource card. If that resource is *Perishable*, it is not destoryed. \nAt the start of any hunt turn, before hunt events are revealed, you may sow a resource. Archive it to gain +{l} survival",
+    "observationText": "",
+    "toRankCount": null,
+    "rankUpText": "",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 490,
+    "name": "Florafantasia",
+    "type": "Knowledge",
+    "philosophyLinked": "Gatherism",
+    "mainDesc": "When a monster is on or adjacent to terrain, you may *dodge* hits from it as many times as you would like each round without spending survival.",
+    "observationText": "When you use this to *dodge*",
+    "toRankCount": 6,
+    "rankUpText": "Lose this knowlage and suffer *frenzy*",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 491,
+    "name": "Botanical Tracker",
+    "type": "Knowledge",
+    "philosophyLinked": "Gatherism",
+    "mainDesc": "After Hunt Phase setup, place the *Virid Grove* event on any hunt space.",
+    "observationText": "",
+    "toRankCount": null,
+    "rankUpText": "",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 492,
+    "name": "Phytologist I",
+    "type": "Knowledge",
+    "philosophyLinked": "Gatherism",
+    "mainDesc": "You may add +2 to your roll result for a plant-related hunt event, *Herb Gathering,* or *Virid Grove.* Limit once per lantern year",
+    "observationText": "When you use this",
+    "toRankCount": 2,
+    "rankUpText": "",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 493,
+    "name": "Phytologist II",
+    "type": "Knowledge",
+    "philosophyLinked": "Gatherism",
+    "mainDesc": "Add +3 to your roll result for a plant-related hunt event, *Herb Gathering,* or *Virid Grove.*",
+    "observationText": "When using this causes your roll result to become 10+",
+    "toRankCount": 5,
+    "rankUpText": "",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 494,
+    "name": "Phytologist III",
+    "type": "Knowledge",
+    "philosophyLinked": "Gatherism",
+    "mainDesc": "Add your understanding to your roll result for a plant-related hunt event, plant-related terrain, *Herb Gathering,* or *Virid Grove.*",
+    "observationText": "",
+    "toRankCount": null,
+    "rankUpText": "",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 495,
+    "name": "Invasive I",
+    "type": "Knowledge",
+    "philosophyLinked": "Gatherism",
+    "mainDesc": "During showdown setup, if the Terrain & Deployment section instructs you to set up any random terrain cards, replace one with a Gatherism {Q} of your choice from the terrain deck.",
+    "observationText": "When you use this",
+    "toRankCount": 2,
+    "rankUpText": "",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 496,
+    "name": "Invasive II",
+    "type": "Knowledge",
+    "philosophyLinked": "Gatherism",
+    "mainDesc": "During showdown setup, add a Gatherism {Q} of your choice from the terrain deck and place it according to its setup rules.",
+    "observationText": "When you activate a Gatherism terrain",
+    "toRankCount": 5,
+    "rankUpText": "",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 497,
+    "name": "Invasive III",
+    "type": "Knowledge",
+    "philosophyLinked": "Gatherism",
+    "mainDesc": "During showdown setup, add a plant-related {Q} of your choice from the terrain deck and place it according to its setup rules. \nAt the start of your act, gain {q} that can only be spent to activate terrain.",
+    "observationText": "",
+    "toRankCount": null,
+    "rankUpText": "",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 498,
+    "name": "Gatherism",
+    "type": "Philosophy",
+    "milestoneNumbers": [2, 5, 8, 12, 16],
+    "nerosis": "Inquisitive",
+	  "tenetKnowledge": "Invasive",
+    "description": "Obsessive curiosity. When the survivors are prompted to *investigate* during the hunt, you must do so (multiple Gatherists roll off if necessary). \nWhile you are on or adjacent to terrain during the showdown, you cannot spend survival.",
+    "expansion": "Gatherism",
+    "searchableText": ""
+  },
+  {
+    "id": 499,
+    "name": "Rooted to All",
+    "type": "Ability",
+    "description": "If you are standing at teh start of yoru act, reveal the top 2 cards of the AI deck and put them back in any order.",
+    "expansion": null,
+    "searchableText": ""
+  },
+  {
+    "id": 500,
+    "name": "Effervescence",
+    "type": "Philosophy",
+    "milestoneNumbers": [2, 4, 6, 13, 16],
+    "nerosis": "Compound Grief",
+	  "tenetKnowledge": "Reframe",
+    "description": "On *Arrival*, Candy gains a random disorder, if all her disorder slots are already filled, she instead gains +1 systemic pressure and suffers -1 ♥",
+    "expansion": "Candy & Cola",
+    "searchableText": ""
+  },
+  {
+    "id": 501,
+    "name": "Reframe",
+    "type": "Fighting Art",
+    "description": "*Non-Arc Survivor Campagin Only \nDuring your act, you may spend 2 survival to remove one of your disorders. Limit once per round.",
+    "expansion": "Candy & Cola",
+    "searchableText": ""
+  },
+  {
+    "id": 502,
+    "name": "Reframe I",
+    "type": "Knowledge",
+    "philosophyLinked": "Effervescence",
+    "mainDesc": "*Theory*",
+    "observationText": "When you gain a disorder",
+    "toRankCount": 2,
+    "rankUpText": "",
+    "expansion": "Candy & Cola",
+    "searchableText": ""
+  },
+  {
+    "id": 503,
+    "name": "Reframe II",
+    "type": "Knowledge",
+    "philosophyLinked": "Effervescence",
+    "mainDesc": "During your act, you may spend 2 survival to remove one of your disorders. Limit once per round.",
+    "observationText": "When you remove a disorder",
+    "toRankCount": 8,
+    "rankUpText": "",
+    "expansion": "Candy & Cola",
+    "searchableText": ""
+  },
+  {
+    "id": 504,
+    "name": "Reframe III",
+    "type": "Knowledge",
+    "philosophyLinked": "Effervescence",
+    "mainDesc": "During your act, you may remove one of your disorders to gain +2 survival. Limit once per round.",
+    "observationText": "",
+    "toRankCount": 0,
+    "rankUpText": "",
+    "expansion": "Candy & Cola",
+    "searchableText": ""
+  },
+  {
+    "id": 505,
+    "name": "Disintegration",
+    "type": "Philosophy",
+    "milestoneNumbers": [2, 5, 9, 16],
+    "nerosis": "Rotter",
+	  "tenetKnowledge": "Adrenaline",
+    "description": "When you *depart,* set your armor points at each hit location to 0 after factoring all bonuses. When you are a returning survivor, you devour another. Suffer -1 population, the settlement does not gain benefits of their death principle.",
+    "expansion": "Goth",
+    "searchableText": ""
+  },
+  {
+    "id": 506,
+    "name": "Adrenaline",
+    "type": "Fighting Art",
+    "description": "*Non-Arc Survivor Campagin Only \nAt the start of your act, you may: Gain {m} that must be used to move. | Gain {q} that must be used to activate a weapon. Limit once per showdown, per option",
+    "expansion": "Goth",
+    "searchableText": ""
+  },
+  {
+    "id": 507,
+    "name": "Adrenaline I",
+    "type": "Knowledge",
+    "philosophyLinked": "Disintegration",
+    "mainDesc": "At the start of the act you may: Gain {m} that must be used to move. Limit once per showdown.",
+    "observationText": "When you wound the monster",
+    "toRankCount": 6,
+    "rankUpText": "",
+    "expansion": "Goth",
+    "searchableText": ""
+  },
+  {
+    "id": 508,
+    "name": "Adrenaline II",
+    "type": "Knowledge",
+    "philosophyLinked": "Disintegration",
+    "mainDesc": "*+1 systemic pressure*\nAt the start of the act you may: Gain {m} that must be used to move. | Gain {q} that must be used to activate a weapon. Limit once per showdown, per option.",
+    "observationText": "When you wound the monster",
+    "toRankCount": 12,
+    "rankUpText": "",
+    "expansion": "Goth",
+    "searchableText": ""
+  },
+  {
+    "id": 509,
+    "name": "Adrenaline III",
+    "type": "Knowledge",
+    "philosophyLinked": "Disintegration",
+     "mainDesc": "*+2 systemic pressure*\nAt the start of the act you may: Gain {m} that must be used to move. | Gain {q} that must be used to activate a weapon. | Gain {m} or {q}. Limit once per showdown, per option.",
+    "observationText": "When you wound the monster",
+    "toRankCount": 24,
+    "rankUpText": "",
+    "expansion": "Goth",
+    "searchableText": ""
+  },
+  {
+    "id": 510,
+    "name": "Adrenaline IIII",
+    "type": "Knowledge",
+    "philosophyLinked": "Disintegration",
+    "mainDesc": "*+3 systemic pressure*\nAt the start of the act you may: Gain {m} that must be used to move. | Gain {q} that must be used to activate a weapon. | Gain {m} or {q}. | Gain either a +1 strength token, or add {#} to all hit locations. Limit once per showdown, per option.",
+    "observationText": "",
+    "toRankCount": 0,
+    "rankUpText": "",
+    "expansion": "Goth",
+    "searchableText": ""
+  },
+  {
+    "id": 511,
+    "name": "Consumption",
+    "type": "Philosophy",
+    "milestoneNumbers": [2, 6, 10, 14, 16], // Parsed from "Hunt Milestone"
+    "nerosis": "Cravings",
+	  "tenetKnowledge": "Dubious Fare",
+    "description": "If Aeneas is *Hungry*, she consumes and archives 1 consumable resource or gear in the settlement (including settlement storage) at the start of the Develop Step of the settlement phase",
+    "expansion": "Aeneas",
+    "searchableText": ""
+  },
+   {
+    "id": 512,
+    "name": "Endless Appetite",
+    "type": "Impairment",
+    "description": "This impairment cannot be removed for any reason. You cannot {s} *Run Away* or {s} *Logistics of Death.* You play with the *Dual Modes - Hunger / Content* tile.",
+    "expansion": "Aeneas",
+    "searchableText": ""
+  },
+  {
+    "id": 513,
+    "name": "Moonwolf Style",
+    "type": "Secret Fighting Art",
+    "description": "When your wound attempt on a hit location succeeds, you may ignore it and attempt to wound the selected hit location again with +2 luck. Limit once per attack.",
+    "expansion": "Aeneas",
+    "searchableText": ""
+  },
+  {
+    "id": 514,
+    "name": "Rousing Wail",
+    "type": "Secret Fighting Art",
+    "description": "{q}: All hearing knocked down survivors stand and gain + {l} insanity. If you are adjacent to the monster, it gains a *flinch token.* Limit once per round.",
+    "expansion": "Aeneas",
+    "searchableText": ""
+  },
+  {
+    "id": 515,
+    "name": "Dubuious Fare",
+    "type": "Fighting Art",
+    "description": "*Non-Arc Survivor Campagin Only \nYou may *consume* a monster roesource from a Node 1, 2, or 3 quarry monster (archive it) to roll 1d10. If the resourece is indomitable, add +3 to the result. 1-7 Gain +2 survival and +2 insanity | 8-11 Gain +1 permanent strength. | 12+ Gain +1 permanent luck",
+    "expansion": "Aeneas",
+    "searchableText": ""
+  },
+  {
+    "id": 516,
+    "name": "Dubious Fare I",
+    "type": "Knowledge",
+    "philosophyLinked": "Consumption",
+    "mainDesc": "You may *consume* a monster roesource from a Node 1 quarry monster (archive it) to roll 1d10. If the resourece is indomitable, add +3 to the result. 1-8 Gain +2 survival and +2 insanity | 9-11 Gain +1 permanent strength. | 12+ Gain this monster's secret fighting art",
+    "observationText": "When you *consume* to use this",
+    "toRankCount": 5,
+    "rankUpText": "",
+    "expansion": "Aeneas",
+    "searchableText": ""
+  },
+  {
+    "id": 517,
+    "name": "Dubious Fare II",
+    "type": "Knowledge",
+    "philosophyLinked": "Consumption",
+    "mainDesc": "You may *consume* a monster roesource from a Node 1 or 2 quarry monster (archive it) to roll 1d10. If the resourece is indomitable, add +3 to the result. 1-7 Gain +1 courage and +2 survival. | 8-11 Gain +1 permanent strength. | 12+ Gain this monster's secret fighting art",
+    "observationText": "When you *consume* an indomitable resource to use this",
+    "toRankCount": 3,
+    "rankUpText": "",
+    "expansion": "Aeneas",
+    "searchableText": ""
+  },
+  {
+    "id": 516,
+    "name": "Dubious Fare III",
+    "type": "Knowledge",
+    "philosophyLinked": "Consumption",
+    "mainDesc": "You may *consume* a monster roesource from a Node 1, 2, or 3 quarry monster (archive it) to roll 1d10. If the resourece is indomitable, add +3 to the result. 1-5 Gain +1 courage and +2 survival | 6-9 Gain +1 permanent strength. | 10+ Gain this monster's secret fighting art",
+    "observationText": "When you *consume* to use this",
+    "toRankCount": 5,
+    "rankUpText": "",
+    "expansion": "Aeneas",
+    "searchableText": ""
+  },
+  {
+    "id": 517,
+    "name": "Hyper Light",
+    "type": "Philosophy",
+    "milestoneNumbers": [2, 4, 8, 14, 16], // Parsed from "Hunt Milestone"
+    "nerosis": "Afflicted",
+	  "tenetKnowledge": "Chain Dash",
+    "description": "At the end of your act, if you did not *dash* this round, you are knocked down and gain a bleeding token.",
+    "expansion": "Death Drifter",
+    "searchableText": ""
+  },
+  {
+    "id": 518,
+    "name": "Lone Drifter",
+    "type": "Ability", //Ability of Impairment
+    "description": "You may *dash* 1 addtional time per round. You cannot perform any survival action except for *dash*. At the start of your act, gain survival up to the settlement limit",
+    "expansion": "Death Drifter",
+    "searchableText": ""
+  },
+  {
+    "id": 519,
+    "name": "Chain Dash",
+    "type": "Fighting Art",
+    "description": "*Non-Arc Survivor Campagin Only* \nAfter performing *dash*, roll 1d10. On a 5+, you may immediately perform another *dash,* ignoring round limits. On a 10+, you may perform this dash without spending survival.",
+    "expansion": "",
+    "searchableText": ""
+  },
+  {
+    "id": 520,
+    "name": "Chain Dash I",
+    "type": "Knowledge",
+    "philosophyLinked": "Hyper Light",
+    "mainDesc": "*Theory*",
+    "observationText": "When you *dash*",
+    "toRankCount": 3,
+    "rankUpText": "",
+    "expansion": "Death Drifter",
+    "searchableText": ""
+  },
+  {
+    "id": 520,
+    "name": "Chain Dash II",
+    "type": "Knowledge",
+    "philosophyLinked": "Hyper Light",
+    "mainDesc": "After performing *dash*, roll 1d10. On a 5+, you may immediately perform another *dash,* ignoring round limits. On a 10+, you may perform this dash without spending survival.",
+    "observationText": "When you are a returning survivor",
+    "toRankCount": 0,
+    "rankUpText": "☐☐☐ Epiphany *Phasing Strike* ☐☐☐ Epiphany *Guarding Rush* ☐☐☐ Epiphany *Dashing Thrust*",
+    "expansion": "Death Drifter",
+    "searchableText": ""
+  },
+  {
+    "id": 521,
+    "name": "Phasing Strike",
+    "type": "Knowledge",
+    "philosophyLinked": "Hyper Light",
+    "mainDesc": "When you *dash* to move, you may move through (but not end on) spaces the monster occupies. \nAfter moving though a monster, roll 1d10. On a 9+, the monster suffers a wound",
+    "observationText": "",
+    "toRankCount": 0,
+    "rankUpText": "",
+    "expansion": "Death Drifter",
+    "searchableText": ""
+  },
+  {
+    "id": 522,
+    "name": "Guarding Rush",
+    "type": "Knowledge",
+    "philosophyLinked": "Hyper Light",
+    "mainDesc": "*+1 movement* \nWhen you *dash*, gain a deflect token until the end of the round. Limit three times per round.",
+    "observationText": "",
+    "toRankCount": 0,
+    "rankUpText": "",
+    "expansion": "Death Drifter",
+    "searchableText": ""
+  },
+  {
+    "id": 523,
+    "name": "Dashing Thrust",
+    "type": "Knowledge",
+    "philosophyLinked": "Hyper Light",
+    "mainDesc": "If you are standing adjacent to the monster after performing *dash,* you may spend 1 survival to make an automatic hit and attempt to wound with a melee weapon. If you wound the monster this way, it suffers *knockback 2* and an addtional wound. Limit once per round.",
+    "observationText": "",
+    "toRankCount": 0,
+    "rankUpText": "",
+    "expansion": "Death Drifter",
+    "searchableText": ""
+  },
+  {
+    "id": 524,
+    "name": "Feedback Loop I",
+    "type": "Knowledge",
+    "philosophyLinked": "Monster",
+    "mainDesc": "The first time you gain a token each lantern year, gain a copy of that token.",
+    "observationText": "When you gain a token with this",
+    "toRankCount": 2,
+    "rankUpText": "",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },  
+  {
+    "id": 525,
+    "name": "Feedback Loop II",
+    "type": "Knowledge",
+    "philosophyLinked": "Monster",
+    "mainDesc": "When you gain a token, you may gain a copy of that token. Limit once per lantern year.",
+    "observationText": "When you gain a token with this",
+    "toRankCount": 3,
+    "rankUpText": "",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 526,
+    "name": "Feedback Loop III",
+    "type": "Knowledge",
+    "philosophyLinked": "Monster",
+    "mainDesc": "When you or another survivor gain a token, you may gain a copy of that token. Limit once per lantern year.",
+    "observationText": "",
+    "toRankCount": 0,
+    "rankUpText": "",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 527,
+    "name": "Sacred Code",
+    "type": "Secret Fighting Art",
+    "description": "Once per showdown, durning your act, you may recite the code. Everyone and everything else trembles and collapses into a heap. \nAll other survivors and monsters are knocked down.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 528,
+    "name": "Quadradept",
+    "type": "Secret Fighting Art",
+    "description": "You use all your limbs as needed. You may use {q} as {m} and vice versa. \nYour preternatural reflexes sharpen. You cannot be knocked down.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+{
+    "id": 529,
+    "name": "Inversion",
+    "type": "Fighting Art",
+    "description": "When you gain an attribute token, you may flip it to its opposite side. Limit once per lantern year.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 530,
+    "name": "Freeclimber",
+    "type": "Fighting Art",
+    "description": "Your *Fist & Tooth* gains *Refined* and the climbing keyword.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 531,
+    "name": "Anhedonia",
+    "type": "Disorder",
+    "description": "You are always sane. \nYou cannot gain fighting arts, secret fighting arts, or abilities.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 532,
+    "name": "Bile Body",
+    "type": "Ability", //Ability of Impairment
+    "description": "On Arrival, gain a +1 evasion token. When you suffer a severe injury, adjacent monsters and survivors are knocked down. Limit once per showdown.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 533,
+    "name": "Bile Smell",
+    "type": "Impairment", //Ability of Impairment
+    "description": "You are always stinky. You do not generate endeavors. When a survivor ends their movement adjacent to you, they suffer 1 brain damage.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 534,
+    "name": "Boost Heart",
+    "type": "Ability", //Ability of Impairment
+    "description": "At the start of your act, gain +1 strength token. When you are knocked down, lose all your +1 strength tokens. When you have five or more +1 strength tokens, your heart bursts. Dead",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 535,
+    "name": "Ferrous Feed",
+    "type": "Ability", //Ability of Impairment
+    "description": "During your act, consume and archive 1 of your attribute tokens to suffer bleed 1.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 536,
+    "name": "Fused",
+    "type": "Ability", //Ability of Impairment
+    "description": "When you suffer a severe body injury, the monster suffers an automatic hit that inflicts a critical wound.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 537,
+    "name": "Heart Strings",
+    "type": "Ability", //Ability of Impairment
+    "description": "You cannot be the straggler. On Arrival, choose a board edge. You may move up to three additional spaces towards your chosen board edge after {m} action.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 538,
+    "name": "Joyless",
+    "type": "Impairment", //Ability of Impairment
+    "description": "You cannot surge.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 539,
+    "name": "One Two",
+    "type": "Ability", //Ability of Impairment
+    "description": "When you die, do not gain the benefits of your Death Principle. Two survivors emerge from your corpse.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 540,
+    "name": "Sinister Confusion",
+    "type": "Impairment", //Ability of Impairment
+    "description": "When you activate a weapon, choose either -2 accuracy or -3 strength for your attack.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 541,
+    "name": "Sizzling Blood",
+    "type": "Impairment", //Ability of Impairment
+    "description": "During the showdown, when you gain a bleeding token, also gain a -1 evasion token.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 542,
+    "name": "Warmed up",
+    "type": "Ability", //Ability of Impairment
+    "description": "You never suffer the effects of cold. On Arrival, gain +1 movement and +1 speed token. When you are a returning survivor, +5 {v}. Only you may spend these endeavors.",
+    "expansion": "Pariah",
+    "searchableText": ""
+  },
+  {
+    "id": 543,
+    "name": "Hyperalgesia",
+    "type": "Disorder",
+    "description": "When you suffer damage, lose 1 survival. Limit once per a round.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 544,
+    "name": "Cowardice",
+    "type": "Disorder",
+    "description": "Ignore your postive evasion attribute modifiers.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 545,
+    "name": "Battle Drunk",
+    "type": "Disorder",
+    "description": "The first time you wound the monster each round, gain +1 strength and -1 accuracy token.s \nWhen you are knocked down, archive all your strength and accuracy tokens.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 546,
+    "name": "Vault Key",
+    "type": "Secret Fighting Art",
+    "description": "This cannot be removed for any reason. \nGain 3 addtional secret fighting art slots. \nWhen you gain understanding, a wave of physical agony accopanies comprehension. Suffer that much damage to each hit location.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 547,
+    "name": "Story of the Libary",
+    "type": "Secret Fighting Art",
+    "description": "East history. Durning the settlement phase, you may return a consequence innovation to the Innovation Deck to gain the benefits of {s} *Age 2*, ignoring once per a lifetime restrictions. If you returned {T} *Records,* gain the benefits of {s} *Age 4* instead.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 548,
+    "name": "Story of the Forged",
+    "type": "Secret Fighting Art",
+    "description": "When you suffer a random severe injury, gaiin the following based on its hit location: \n{+}: +1 permeanent evasion | {-}: +1 permanent speed | {,}: +1 permanent strength | {.}: +1 permanent luck | {/}: +1 permanent movement",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 549,
+    "name": "Story of the Forsaker",
+    "type": "Secret Fighting Art",
+    "description": "When another survivor dies during the showdown, you attacks gain *Sharp* for the rest of the showdown. \nWhile you are the only survivor on the showdown board, gain {q} at the start of your act.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 550,
+    "name": "Joint Array I",
+    "type": "Knowledge",
+    "philosophyLinked": "Monster",
+    "mainDesc": "*Theory*",
+    "observationText": "When another survivor with *Joint Array* wounds the monster",
+    "toRankCount": 4,
+    "rankUpText": "",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 551,
+    "name": "Joint Array II",
+    "type": "Knowledge",
+    "philosophyLinked": "Monster",
+    "mainDesc": "When you attack, if another survivor with *Joint Array* has already inflicted a wound this round, cancel reactions on your first selected hit location.",
+    "observationText": "When another survivor uses *Joint Array* to cancel a reaction",
+    "toRankCount": 3,
+    "rankUpText": "",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 552,
+    "name": "Joint Array III",
+    "type": "Knowledge",
+    "philosophyLinked": "Monster",
+    "mainDesc": "At the start of the survivors' turn choose one effect to apply until the end of the round: When you attack, if no other survivor has inflicted a wound this round, gain +4 strength until the end of the attack. | When you attack, if another survivor with *Joint Array* has already inflicted a wound this round, cancel reactions on your first selected hit location.",
+    "observationText": "",
+    "toRankCount": 0,
+    "rankUpText": "",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 553,
+    "name": "Astrocyte Excitation",
+    "type": "Ability", //Ability of Impairment
+    "description": "You add +4 to your roll results during {s} *Vaultless*.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 554,
+    "name": "Hyper Defense",
+    "type": "Ability", //Ability of Impairment
+    "description": "Durning your act, you may gain a bleeding token to perform *Block 1* at no activation cost. Limit once per a round..",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 555,
+    "name": "Improbable Survivor",
+    "type": "Ability", //Ability of Impairment
+    "description": "When you suffer a severe injury, gain +1 luck token.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 556,
+    "name": "Perfect Kidneys",
+    "type": "Ability", //Ability of Impairment
+    "description": "at the end of your act, remove a negative attribute token. When you suffer the Bleeding Kidneys severe injury, lose this ability.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 557,
+    "name": "Red String of Fate",
+    "type": "Ability", //Ability of Impairment
+    "description": "When you draw a trap, cancel it, discard it, then reshuffle the hit location discard into the hitlocation deck and draw a new card. Limit once per lifetime.",
+    "expansion": "Red Witches",
+    "searchableText": ""
+  },
+  {
+    "id": 558,
+    "name": "Reflexive Shooter",
+    "type": "Ability", //Ability of Impairment
+    "description": "Ignore Cumbersome on bows in your gear grid and reduce their range by 2.",
+    "expansion": "Red Witches",
+    "searchableText": ""
   }
   // --- End Ability Items ---
 ];
