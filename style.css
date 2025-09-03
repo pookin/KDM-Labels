@@ -127,24 +127,19 @@
         max-height: 80vh; 
         display: flex; 
         flex-direction: column;
+        overflow-y: auto; /* Allow all modals to scroll if content overflows */
     }
     .dialog-modal.hidden {
         display: none;
     }
     .dialog-content {
         padding: 20px;
-        /* overflow-y: auto; Replaced by individual dialog control */
         flex-grow: 1; 
     }
 
     /* Specific for Help Dialog */
-    #helpDialog {
-        overflow-y: auto; /* Allow help dialog to scroll if content overflows */
-    }
-
     #helpDialog .dialog-content {
-         /* Help dialog content itself should not have its own scrollbar if the dialog scrolls */
-        overflow-y: visible;
+         /* The dialog itself scrolls now, so this is not needed. */
     }
 
     #helpDialog .dialog-header {
