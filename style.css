@@ -133,9 +133,41 @@
     }
     .dialog-content {
         padding: 20px;
-        overflow-y: auto; 
+        /* overflow-y: auto; Replaced by individual dialog control */
         flex-grow: 1; 
     }
+
+    /* Specific for Help Dialog */
+    #helpDialog {
+        overflow-y: auto; /* Allow help dialog to scroll if content overflows */
+    }
+
+    #helpDialog .dialog-content {
+         /* Help dialog content itself should not have its own scrollbar if the dialog scrolls */
+        overflow-y: visible;
+    }
+
+    #helpDialog .dialog-header {
+        position: sticky;
+        top: 0;
+        background-color: #34495e; /* Match dialog background */
+        z-index: 1; /* Keep header above scrolling content */
+        padding-bottom: 10px;
+        margin-bottom: 10px; /* Space before content starts */
+        border-bottom: 1px solid #4a6fa5; /* Consistent with other h3 */
+    }
+
+    #helpDialog p a,
+    #helpDialog ul li a {
+        color: #87CEFA; /* LightSkyBlue */
+        text-decoration: underline;
+    }
+
+    #helpDialog p a:hover,
+    #helpDialog ul li a:hover {
+        color: #ADD8E6; /* LightBlue */
+    }
+
     .dialog-close-btn {
         position: absolute;
         top: 10px;
@@ -292,11 +324,161 @@
       width: 100%; 
     }
 
-    .settings-section {
+    /* Styles for new Label Settings structure */
+    .settings-group {
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #4a6fa5;
+    }
+    .settings-group:last-of-type { /* Might need to adjust if actions are not last */
+        /* border-bottom: none; remove this if actions are within a group */
+    }
+     #labelSettingsDialog .settings-group:has(~ .settings-actions) { /* More robust way to remove border from last settings group before actions */
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .group-label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #ecf0f1; /* Ensure visibility */
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 15px; /* Space between radio options */
+      align-items: center;
+    }
+    .radio-group input[type="radio"] {
+      margin-right: 3px;
+    }
+    .radio-group label {
+      margin-right: 10px; /* Space after label text if needed */
+      font-weight: normal; /* Override general label bolding if any */
+      color: #ecf0f1;
+    }
+
+    .input-pair, .input-quad {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px; /* Gap between label, input, and unit */
+    }
+    .input-pair label, .input-quad label {
+      flex-basis: 60px; /* Adjust as needed for label width */
+      flex-shrink: 0;
+      font-weight: normal;
+      color: #ecf0f1;
+    }
+    .input-pair input[type="number"], .input-quad input[type="number"] {
+      flex-grow: 1;
+      width: auto; /* Allow flex to control width */
+      max-width: 100px; /* Prevent excessive growth */
+      padding: 6px; /* Slightly smaller padding */
+      margin-right: 0; /* Remove old margin */
+      margin-bottom: 0; /* Remove old margin */
+    }
+    .unit-display {
+      flex-basis: 30px; /* Width for "mm" or "in" */
+      flex-shrink: 0;
+      text-align: left;
+      color: #bdc3c7; /* Subtler color for unit */
+    }
+    /* End of new Label Settings structure styles */
+
+    /* Styles for Margin & Preview Grid Layout */
+    .margin-preview-grid-container {
+      display: grid;
+      grid-template-columns: auto 1fr auto; /* Left input, Label Preview, Right input */
+      grid-template-rows: auto 1fr auto;    /* Top input, Label Preview, Bottom input */
+      grid-template-areas:
+        ".    margin-top    ."
+        "margin-left label-preview margin-right"
+        ".    margin-bottom .";
+      align-items: center; /* Center items vertically in their grid cells */
+      justify-items: center; /* Center items horizontally in their grid cells */
+      gap: 5px; /* Gap between grid items */
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #2c3e50;
+      border-radius: 4px;
+      /* border: 1px dashed #5d8aa8; /* Optional: if container needs a border */
+    }
+
+    .input-quad.grid-margin-top { grid-area: margin-top; }
+    .input-quad.grid-margin-left { grid-area: margin-left; justify-self: end; } /* Align to the right of its cell */
+    .input-quad.grid-margin-right { grid-area: margin-right; justify-self: start; } /* Align to the left of its cell */
+    .input-quad.grid-margin-bottom { grid-area: margin-bottom; }
+
+    iframe.grid-label-preview { /* Changed selector to target iframe */
+      grid-area: label-preview;
+      background-color: #ecf0f1; /* Fallback background */
+      border: 1px solid #7f8c8d; /* Border for the iframe itself */
+      box-sizing: border-box;
+      transition: width 0.2s ease-out, height 0.2s ease-out;
+      overflow: hidden; /* Prevent scrollbars on the iframe itself */
+      /* Width and height will be set by JavaScript */
+      min-width: 100px;
+      min-height: 50px;
+      /* Removed: text-align, display: flex, align-items, justify-content, font-size, color, padding */
+      /* These properties should be controlled by the content within the iframe (label_render.html) */
+    }
+
+    /* Adjustments for input-quads in the grid if needed */
+    .margin-preview-grid-container .input-quad {
+      flex-direction: column; /* Stack label, input, unit vertically */
+      align-items: center; /* Center them within the input-quad */
+      gap: 2px; /* Smaller gap for vertical stacking */
+      margin-bottom: 0; /* Remove default margin from input-quad */
+    }
+    .margin-preview-grid-container .input-quad label {
+      flex-basis: auto; /* Reset flex-basis */
+      font-size: 0.75em; /* Smaller label text for margins */
+    }
+    .margin-preview-grid-container .input-quad input[type="number"] {
+      max-width: 60px; /* Smaller input boxes for margins */
+      padding: 4px;
+    }
+    .margin-preview-grid-container .input-quad .unit-display {
+      font-size: 0.7em; /* Smaller unit display */
+    }
+    /* End Styles for Margin & Preview Grid Layout */
+
+    /* OBSOLETE STYLES TO REMOVE (from previous preview design) */
+    /*
+    .calibration-preview-container { ... }
+    .middle-row-preview { ... }
+    .margin-display { ... }
+    .margin-display.top { ... }
+    .margin-display.bottom { ... }
+    .margin-display.left { ... }
+    .margin-display.right { ... }
+    */
+    /* Note: .embedded-calibration-label is reused and restyled, so not fully obsolete */
+
+
+    .settings-section { /* General style for sections *within* a dialog that need separation */
       margin-top: 20px;
       padding-top: 15px;
       border-top: 1px solid #4a6fa5;
     }
+    /* Override for the main content container within Content Filters if it uses .settings-section */
+    #contentFiltersInDialog.settings-section {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    /* Ensure the h3 title in dialogs is well-placed if it's the first element */
+    .dialog-content > .settings-section > h3:first-child,
+    .dialog-content > h3:first-child {
+        margin-top: 0; /* Explicitly ensure no top margin if it's the first title */
+    }
+    /* If #contentFiltersInDialog is NOT a settings-section, but directly holds h3 */
+    /* We might not need the above if h3 already has margin-top:0, which it does. */
+    /* The key is removing the settings-section's top spacing effects. */
+
     .filter-group {
       margin-bottom: 15px;
     }
@@ -326,15 +508,40 @@
       border-radius: 4px;
       border: 1px solid #5d8aa8;
     }
+/* Styling for the div that wraps each checkbox and its label */
+.checkbox-group > div {
+  display: flex; /* Align checkbox and label on the same line */
+  align-items: center; /* Vertically align them nicely */
+  padding: 2px 0; /* Optional: add some padding around each item */
+}
     .checkbox-group label {
-      display: block;
+  /* display: block; */ /* Remove display:block */
       color: #ecf0f1;
       cursor: pointer;
+  margin-left: 4px; /* Add some space between checkbox and label text */
+  flex-grow: 1; /* Allow label to take available space */
     }
     .checkbox-group input[type="checkbox"] {
-      margin-right: 8px;
-      vertical-align: middle;
+  margin-right: 0; /* Reset margin, using gap or margin on label now */
+  vertical-align: middle; /* Keep this for good alignment */
+  flex-shrink: 0; /* Prevent checkbox from shrinking */
     }
+
+/* Style for save feedback message */
+.save-feedback {
+  text-align: center;
+  padding: 8px;
+  margin-top: 10px;
+  background-color: #27ae60; /* Green for success */
+  color: white;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: opacity 0.5s ease-in-out;
+}
+.save-feedback.hidden {
+  display: none; /* Or opacity: 0; visibility: hidden; if using transitions for appearance */
+}
+/* End Style for save feedback message */
 
     /* Tablet Styles */
     @media (min-width: 600px) {
