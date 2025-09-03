@@ -160,7 +160,7 @@
             let processedText = text;
             processedText = processedText.replace(/{([^}]+)}/g, '<span class="kdm-icon">$1</span>');
             processedText = processedText.replace(/\*(.*?)\*/g, '<strong>$1</strong>'); // Single asterisk for bold
-            processedText = processedText.replace(/\n/g, '<br><br>');
+            processedText = processedText.replace(/\n/g, '<br>');
             return processedText;
         }
 
