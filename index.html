@@ -15,7 +15,7 @@
 
   <div id="mainMenu" class="menu-panel hidden">
     <ul class="menu-item-list">
-      <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Label Settings</a></li>
+      <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Settings</a></li>
       <li><a href="#" id="openContentFiltersBtn" class="menu-link-item">Content Filters</a></li>
       <li><a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheet</a></li>
       <li><a href="#" id="helpBtn" class="menu-link-item">Help</a></li>
@@ -45,10 +45,17 @@
 
   <div id="labelSettingsDialog" class="dialog-modal hidden">
     <div class="dialog-header-sticky">
-        <h3 class="dialog-title">Label Settings</h3>
+        <h3 class="dialog-title">Settings</h3>
         <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
     </div>
     <div class="dialog-content">
+      <div class="settings-group">
+        <label class="group-label">Preferences:</label>
+        <div class="input-pair">
+            <label for="autoPrint" style="flex-basis: auto;">Auto Print on Select:</label>
+            <input id="autoPrint" type="checkbox" title="Automatically print after a new label is selected and rendered.">
+        </div>
+      </div>
       <div class="settings-group">
         <label class="group-label">Unit:</label>
         <div class="radio-group">
@@ -109,15 +116,16 @@
         </div>
       </div>
 
+      <p>Tip: When printing, ensure your printer settings match the label size defined, that any "Scale to Fit" options are turned OFF, and margins are set to "default" for accurate sizing.</p>
+
       <div class="settings-group">
-        <label class="group-label">Preferences:</label>
+        <label class="group-label">Data Management:</label>
         <div class="input-pair">
-            <label for="autoPrint" style="flex-basis: auto;">Auto Print on Select:</label>
-            <input id="autoPrint" type="checkbox" title="Automatically print after a new label is selected and rendered.">
+            <button id="resetKnowledgeBtn" class="btn btn-warning">Reset Knowledge Levels</button>
         </div>
+        <p style="font-size: 0.8em; color: #bdc3c7; margin-top: 5px;">This will clear all saved "last printed" knowledge levels, resetting them to Level I.</p>
       </div>
 
-      <p>Tip: When printing, ensure your printer settings match the label size defined, that any "Scale to Fit" options are turned OFF, and margins are set to "default" for accurate sizing.</p>
       <div class="settings-actions">
           <button id="save" class="btn">Save Settings</button>
           <button id="printCalibrationLabelBtn" class="btn">Print Calibration Label</button>

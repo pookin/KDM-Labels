@@ -275,6 +275,13 @@
       box-sizing: border-box;
     }
     .btn:hover { background: #4a6fa5; }
+
+    .btn-warning {
+        background-color: #c0392b; /* A reddish color */
+    }
+    .btn-warning:hover {
+        background-color: #e74c3c;
+    }
     
     #labelSettingsDialog .settings label, 
     #contentFiltersDialog .settings label { 

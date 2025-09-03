@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const helpBtn = document.getElementById('helpBtn'); // Added for Help
   const helpDialog = document.getElementById('helpDialog'); // Added for Help Dialog
   const filterSaveFeedback = document.getElementById('filterSaveFeedback'); // Added for filter save feedback
+  const resetKnowledgeBtn = document.getElementById('resetKnowledgeBtn');
 
   // Assign DOM elements for filter containers here (these are inside contentFiltersDialog)
   expansionCheckboxesContainer = document.getElementById('expansionCheckboxes');
@@ -91,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
       marginBottom: 1,// mm - Standard default
       marginLeft: 1,  // mm - Standard default
       preferredUnit: 'mm',
-      autoPrint: false
+      autoPrint: true
   };
   let settings = { ...defaultSettings }; // Initialize settings with defaults
 
@@ -959,6 +960,30 @@ document.addEventListener('DOMContentLoaded', function() {
             printLabel();
           }, 250); // 250ms delay, adjust if needed
       });
+  }
+
+  if (resetKnowledgeBtn) {
+    resetKnowledgeBtn.addEventListener('click', () => {
+      const confirmation = confirm("Are you sure you want to reset all saved knowledge levels? This action cannot be undone.");
+      if (confirmation) {
+        let itemsRemoved = 0;
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key.startsWith('lastPrinted_')) {
+            localStorage.removeItem(key);
+            itemsRemoved++;
+            // Since removeItem can affect the key index, it's safer to re-iterate or go backwards
+            i--;
+          }
+        }
+        alert(`${itemsRemoved} knowledge level entries have been reset.`);
+        // Optionally, re-render suggestions if the current view might be affected
+        if (searchInput) {
+            const currentQuery = searchInput.value;
+            renderSuggestions(search(currentQuery));
+        }
+      }
+    });
   }
 
   // Initial Population and Setup for filters
