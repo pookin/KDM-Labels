@@ -260,9 +260,6 @@
           <input id="marginBottom" type="number" value="1" step="0.1" title="Bottom Margin"><span>mm</span>
           <input id="marginLeft" type="number" value="1" step="0.1" title="Left Margin"><span>mm</span>
       </div>
-      <br>
-      <label for="autoPrint" style="display: inline-block; width: 150px;">Auto Print on Select:</label>
-      <input id="autoPrint" type="checkbox" title="Automatically print after a new label is selected and rendered.">
       <div class="settings-actions">
           <button id="save" class="btn">Save Settings</button>
           <button id="showCalibrationLabelBtn" class="btn">Show Calibration Label</button>
@@ -287,7 +284,6 @@
       const marginBottomInput = document.getElementById('marginBottom');
       const marginLeftInput = document.getElementById('marginLeft');
       const showCalibrationLabelBtn = document.getElementById('showCalibrationLabelBtn');
-      const autoPrintCheckbox = document.getElementById('autoPrint');
 
       const romanNumeralRegex = /\s+(I|II|III)$/; 
       const philosophyKnowledgeMap = { "The First Step": "Path of the First Step", "The Second Step": "Path of the Second Step", "The Third Step": "Path of the Third Step" };
@@ -295,8 +291,7 @@
       let defaultSettings = {
           width: 50.8, height: 25.4,
           marginTop: 1, marginRight: 1, marginBottom: 1, marginLeft: 1,
-          unit: 'mm',
-          autoPrint: false
+          unit: 'mm'
       };
       let loadedSettings = JSON.parse(localStorage.getItem('labelSettings'));
       let settings = { ...defaultSettings };
@@ -313,7 +308,6 @@
               settings.marginBottom = loadedSettings.marginBottom !== undefined ? loadedSettings.marginBottom : defaultSettings.marginBottom;
               settings.marginLeft = loadedSettings.marginLeft !== undefined ? loadedSettings.marginLeft : defaultSettings.marginLeft;
           }
-          settings.autoPrint = loadedSettings.autoPrint !== undefined ? loadedSettings.autoPrint : defaultSettings.autoPrint;
       }
       
       if (widthInput) widthInput.value = settings.width;
@@ -322,7 +316,6 @@
       if (marginRightInput) marginRightInput.value = settings.marginRight;
       if (marginBottomInput) marginBottomInput.value = settings.marginBottom;
       if (marginLeftInput) marginLeftInput.value = settings.marginLeft;
-      if (autoPrintCheckbox) autoPrintCheckbox.checked = settings.autoPrint;
 
       let selectedIndex = -1;
       
@@ -498,21 +491,6 @@
     }
 
       // --- Event Listeners ---
-      window.addEventListener('message', function(event) {
-        // IMPORTANT: Check the origin of the message for security
-        const targetOrigin = window.location.origin === 'null' || window.location.protocol === 'file:' ? '*' : window.location.origin;
-        if (targetOrigin !== '*' && event.origin !== targetOrigin) {
-            console.warn(`[KDMLabels] Discarding message from unexpected origin: ${event.origin}`);
-            return;
-        }
-
-        if (event.source === previewFrame.contentWindow && event.data.action === 'labelRendered') {
-            if (settings.autoPrint) {
-                printLabel();
-            }
-        }
-      });
-
       if (searchInput) {
         searchInput.addEventListener('input', debounce(e => {
             const results = search(e.target.value);
@@ -550,7 +528,6 @@
             if (marginRightInput) settings.marginRight = parseFloat(marginRightInput.value);
             if (marginBottomInput) settings.marginBottom = parseFloat(marginBottomInput.value);
             if (marginLeftInput) settings.marginLeft = parseFloat(marginLeftInput.value);
-            if (autoPrintCheckbox) settings.autoPrint = autoPrintCheckbox.checked;
             localStorage.setItem('labelSettings', JSON.stringify(settings));
             updatePreviewSize();
             const currentSelectedItemName = searchInput.value;

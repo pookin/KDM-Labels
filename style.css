@@ -132,6 +132,27 @@
     .dialog-modal.hidden {
         display: none;
     }
+
+    .dialog-header-sticky {
+        position: sticky;
+        top: 0;
+        background-color: #34495e; /* Match modal background */
+        z-index: 10;
+        padding: 15px 20px;
+        border-bottom: 1px solid #4a6fa5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .dialog-title {
+        margin: 0;
+        font-size: 1.25em;
+        border-bottom: none;
+        padding-bottom: 0;
+        color: #ecf0f1;
+    }
+
     .dialog-content {
         padding: 20px;
         flex-grow: 1; 
@@ -140,16 +161,6 @@
     /* Specific for Help Dialog */
     #helpDialog .dialog-content {
          /* The dialog itself scrolls now, so this is not needed. */
-    }
-
-    #helpDialog .dialog-header {
-        position: sticky;
-        top: 0;
-        background-color: #34495e; /* Match dialog background */
-        z-index: 1; /* Keep header above scrolling content */
-        padding-bottom: 10px;
-        margin-bottom: 10px; /* Space before content starts */
-        border-bottom: 1px solid #4a6fa5; /* Consistent with other h3 */
     }
 
     #helpDialog p a,
@@ -164,9 +175,6 @@
     }
 
     .dialog-close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
         background: #5d8aa8;
         color: #ecf0f1;
         border: none;
@@ -177,6 +185,7 @@
         line-height: 30px; 
         text-align: center;
         cursor: pointer;
+        flex-shrink: 0; /* Prevent the button from shrinking */
     }
     .dialog-close-btn:hover {
         background: #4a6fa5;

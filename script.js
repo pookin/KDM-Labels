@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const marginRightInput = document.getElementById('marginRight');
   const marginBottomInput = document.getElementById('marginBottom');
   const marginLeftInput = document.getElementById('marginLeft');
+  const autoPrintCheckbox = document.getElementById('autoPrint');
   const printCalibrationLabelBtn = document.getElementById('printCalibrationLabelBtn'); // Renamed from showCalibrationLabelBtn
 
   // Unit switching elements
@@ -89,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
       marginRight: 1, // mm - Standard default
       marginBottom: 1,// mm - Standard default
       marginLeft: 1,  // mm - Standard default
-      preferredUnit: 'mm'
+      preferredUnit: 'mm',
+      autoPrint: false
   };
   let settings = { ...defaultSettings }; // Initialize settings with defaults
 
@@ -146,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         if (unitMMRadio) unitMMRadio.checked = true; // Default
     }
+    if (autoPrintCheckbox) autoPrintCheckbox.checked = settings.autoPrint;
     updateUnitDisplays(settings.preferredUnit);
     updatePreviewSize(); // Ensure preview uses correct unit if it depends on global settings object
   }
@@ -758,6 +761,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // --- Event Listeners ---
 
+  window.addEventListener('message', function(event) {
+    // IMPORTANT: Check the origin of the message for security
+    const targetOrigin = window.location.origin === 'null' || window.location.protocol === 'file:' ? '*' : window.location.origin;
+    if (targetOrigin !== '*' && event.origin !== targetOrigin) {
+        console.warn(`[script.js] Discarding message from unexpected origin: ${event.origin}`);
+        return;
+    }
+
+    if (event.source === previewFrame.contentWindow && event.data.action === 'labelRendered') {
+        if (settings.autoPrint) {
+            printLabel();
+        }
+    }
+  });
+
   // Function to open a dialog
   function openDialog(dialogElement) {
     if (dialogElement && dialogOverlay) {
@@ -899,6 +917,7 @@ document.addEventListener('DOMContentLoaded', function() {
         settings.marginRight = parseFloat(marginRightInput.value);
         settings.marginBottom = parseFloat(marginBottomInput.value);
         settings.marginLeft = parseFloat(marginLeftInput.value);
+        if (autoPrintCheckbox) settings.autoPrint = autoPrintCheckbox.checked;
         // settings.preferredUnit is already up-to-date via handleUnitChange
 
         localStorage.setItem('labelSettings', JSON.stringify(settings));

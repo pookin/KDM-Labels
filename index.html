@@ -44,10 +44,11 @@
   <div id="dialogOverlay" class="dialog-overlay hidden"></div>
 
   <div id="labelSettingsDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Label Settings</h3>
+        <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
+    </div>
     <div class="dialog-content">
-      <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
-      <h3>Label Settings</h3>
-
       <div class="settings-group">
         <label class="group-label">Unit:</label>
         <div class="radio-group">
@@ -107,6 +108,15 @@
           </div>
         </div>
       </div>
+
+      <div class="settings-group">
+        <label class="group-label">Preferences:</label>
+        <div class="input-pair">
+            <label for="autoPrint" style="flex-basis: auto;">Auto Print on Select:</label>
+            <input id="autoPrint" type="checkbox" title="Automatically print after a new label is selected and rendered.">
+        </div>
+      </div>
+
       <p>Tip: When printing, ensure your printer settings match the label size defined, that any "Scale to Fit" options are turned OFF, and margins are set to "default" for accurate sizing.</p>
       <div class="settings-actions">
           <button id="save" class="btn">Save Settings</button>
@@ -116,10 +126,12 @@
   </div>
 
   <div id="contentFiltersDialog" class="dialog-modal hidden">
-    <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Content Filters</h3>
+        <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
+    </div>
     <div class="dialog-content">
       <div class="settings-section" id="contentFiltersInDialog"> 
-        <h3>Content Filters</h3>
         <div class="filter-group" id="expansionFilters">
           <h4>Expansions</h4>
           <div class="filter-controls">
@@ -146,9 +158,11 @@
   </div>
 
   <div id="helpDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Help</h3>
+        <button class="dialog-close-btn" data-dialog-id="helpDialog">X</button>
+    </div>
     <div class="dialog-content">
-      <button class="dialog-close-btn" data-dialog-id="helpDialog">X</button>
-      <h3 class="dialog-header">Help</h3>
       <p><strong>Search:</strong> Type in the search box to find KDM items like Fighting Arts, Philosophies, Disorders, etc.</p>
       <p>Note: For Knowlages a checkmark will apear next to the last level you printed. When priting Philosophies it will use the last printed level for the tenent knowlage.</p>
       <p><strong>Menu (☰):</strong></p>
