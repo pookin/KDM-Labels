@@ -324,25 +324,30 @@
         }
 
         window.addEventListener('message', function(event) {
+            // Check if the message has the expected structure.
             if (event.data && typeof event.data === 'object' && event.data.item && event.data.settings) {
                 const item = event.data.item;
                 const settings = event.data.settings;
                 const tenetKnowledgeItem = event.data.tenetKnowledgeItem || null;
-                const weaponViewType = event.data.weaponViewType || 'specialist'; // Ensure this is fetched
+                const weaponViewType = event.data.weaponViewType || 'specialist';
 
                 applyPageSettings(settings);
                 if (item.type === 'Calibration') { document.body.style.backgroundColor = 'black'; }
                 else { document.body.style.backgroundColor = 'white'; }
 
-                document.getElementById('label-content-wrapper').innerHTML = renderItemHTML(item, settings, tenetKnowledgeItem, weaponViewType); // Pass weaponViewType
+                document.getElementById('label-content-wrapper').innerHTML = renderItemHTML(item, settings, tenetKnowledgeItem, weaponViewType);
 
-                // Notify the parent window that rendering is complete
-                if (window.parent) {
-                    const targetOrigin = window.location.origin === 'null' || window.location.protocol === 'file:' ? '*' : window.location.origin;
-                    window.parent.postMessage({ action: 'labelRendered' }, targetOrigin);
-                }
+                // Wait for fonts to be ready before notifying the parent, to prevent printing blank icons.
+                document.fonts.ready.then(() => {
+                    if (window.parent) {
+                        const targetOrigin = window.location.origin === 'null' || window.location.protocol === 'file:' ? '*' : window.location.origin;
+                        window.parent.postMessage({ action: 'labelRendered' }, targetOrigin);
+                    }
+                });
             } else {
-                document.getElementById('label-content-wrapper').innerHTML = '<p style="color:black; font-size:7pt;">Error: Invalid data from parent.</p>';
+                // This is not an error. It's likely a message from a browser extension or some other source.
+                // We simply ignore messages that don't match our expected format.
+                // console.log('label_render.html: Received a message with an unexpected format.', event.data);
             }
         });
         // --- END OF CRITICAL CHANGES ---
