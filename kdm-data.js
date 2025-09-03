@@ -5052,7 +5052,7 @@ var dataset = [
   },
   {
     "id": 510,
-    "name": "Adrenaline IIII",
+    "name": "Adrenaline IV",
     "type": "Knowledge",
     "philosophyLinked": "Disintegration",
     "mainDesc": "*+3 systemic pressure*\nAt the start of the act you may: Gain {m} that must be used to move. | Gain {q} that must be used to activate a weapon. | Gain {m} or {q}. | Gain either a +1 strength token, or add {#} to all hit locations. Limit once per showdown, per option.",

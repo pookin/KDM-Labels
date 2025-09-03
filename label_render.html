@@ -119,7 +119,9 @@
         .knowledge-observation-text { font-style:italic; text-align:center; margin-bottom: 0.5mm; line-height: 1.1; }
         .philosophy-page-3 .knowledge-observation-text { font-size: 5.5pt; }
         .label-page > .knowledge-footer-content > .knowledge-observation-text, .label-page > div > .knowledge-footer-content > .knowledge-observation-text { font-size: 6pt; }
-        .knowledge-to-rank-boxes-container { display:flex; justify-content:center; align-items:center; margin-top:0.5mm; margin-bottom:0.5mm;}
+        .knowledge-to-rank-boxes-container { display:flex; flex-direction:column; justify-content:center; align-items:center; margin-top:0.5mm; margin-bottom:0.5mm;}
+        .knowledge-rank-box-row { display: flex; justify-content: center; flex-wrap: nowrap; }
+        .knowledge-rank-box-row + .knowledge-rank-box-row { margin-top: -0.5pt; /* Overlap borders */ }
         .knowledge-rank-checkbox { display:inline-block; width:2.5mm; height:2.5mm; border:0.5pt solid #000; margin:0 0.5mm;}
         .knowledge-rankup-text { text-align: center; line-height: 1.1; padding-top:0.5mm; }
         .philosophy-page-3 .knowledge-rankup-text { font-size: 5.5pt; }
@@ -287,10 +289,25 @@
         }
 
         function formatKnowledgeLabel(item){
-            const rankCount = item.toRankCount || 0; let boxes = ''; for (let i = 0; i < rankCount; i++) { boxes += '<span class="knowledge-rank-checkbox"></span>';}
+            const rankCount = item.toRankCount || 0;
+            let boxesHTML = '';
+            if (rankCount > 0) {
+                if (rankCount > 12) {
+                    let row1 = '';
+                    let row2 = '';
+                    for (let i = 0; i < 12; i++) { row1 += '<span class="knowledge-rank-checkbox"></span>'; }
+                    for (let i = 12; i < rankCount; i++) { row2 += '<span class="knowledge-rank-checkbox"></span>'; }
+                    boxesHTML = `<div class="knowledge-rank-box-row">${row1}</div><div class="knowledge-rank-box-row">${row2}</div>`;
+                } else {
+                    let row = '';
+                    for (let i = 0; i < rankCount; i++) { row += '<span class="knowledge-rank-checkbox"></span>'; }
+                    boxesHTML = `<div class="knowledge-rank-box-row">${row}</div>`;
+                }
+            }
+
             let footerContentHTML = '';
             if (item.observationText) { footerContentHTML += `<div class="knowledge-observation-text"><em>${processSpecialFormatting(item.observationText)}</em></div>`; }
-            if (rankCount > 0) { footerContentHTML += `<div class="knowledge-to-rank-boxes-container">${boxes}</div>`; }
+            if (boxesHTML) { footerContentHTML += `<div class="knowledge-to-rank-boxes-container">${boxesHTML}</div>`; }
             if (item.rankUpText) { footerContentHTML += `<div class="knowledge-rankup-text">${processSpecialFormatting(item.rankUpText)}</div>`; }
             return `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div><div class="LabelBody">${processSpecialFormatting(item.mainDesc || '')}</div>${footerContentHTML ? `<div class="knowledge-footer-content">${footerContentHTML}</div>` : ''}`;
         }
