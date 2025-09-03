@@ -122,6 +122,7 @@
         .knowledge-to-rank-boxes-container { display:flex; flex-direction:column; justify-content:center; align-items:center; margin-top:0.5mm; margin-bottom:0.5mm;}
         .knowledge-rank-box-row { display: flex; justify-content: center; flex-wrap: nowrap; }
         .knowledge-rank-box-row + .knowledge-rank-box-row { margin-top: -0.5pt; /* Overlap borders */ }
+        .knowledge-to-rank-boxes-container.two-rows { margin-top: 0.1mm; margin-bottom: 0.1mm; }
         .knowledge-rank-checkbox { display:inline-block; width:2.5mm; height:2.5mm; border:0.5pt solid #000; margin:0 0.5mm;}
         .knowledge-rankup-text { text-align: center; line-height: 1.1; padding-top:0.5mm; }
         .philosophy-page-3 .knowledge-rankup-text { font-size: 5.5pt; }
@@ -307,7 +308,10 @@
 
             let footerContentHTML = '';
             if (item.observationText) { footerContentHTML += `<div class="knowledge-observation-text"><em>${processSpecialFormatting(item.observationText)}</em></div>`; }
-            if (boxesHTML) { footerContentHTML += `<div class="knowledge-to-rank-boxes-container">${boxesHTML}</div>`; }
+            if (boxesHTML) {
+                const containerClass = rankCount > 12 ? 'knowledge-to-rank-boxes-container two-rows' : 'knowledge-to-rank-boxes-container';
+                footerContentHTML += `<div class="${containerClass}">${boxesHTML}</div>`;
+            }
             if (item.rankUpText) { footerContentHTML += `<div class="knowledge-rankup-text">${processSpecialFormatting(item.rankUpText)}</div>`; }
             return `<div class="LabelTitle">${processSpecialFormatting(item.name)}</div><div class="LabelBody">${processSpecialFormatting(item.mainDesc || '')}</div>${footerContentHTML ? `<div class="knowledge-footer-content">${footerContentHTML}</div>` : ''}`;
         }
