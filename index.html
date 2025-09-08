@@ -29,14 +29,29 @@
       <li id="survivorSheetMenu" class="menu-item-has-submenu">
         <a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheets</a>
         <ul id="survivorSheetSubMenu" class="submenu">
-          <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet.pdf" target="_blank">Standard</a></li>
-          <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet_OneSided.pdf" target="_blank">Standard (One Sided)</a></li>
-          <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet.pdf" target="_blank">Arc</a></li>
-          <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_OneSided.pdf" target="_blank">Arc (One Sided)</a></li>
-          <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor.pdf" target="_blank">Arc (With Armor)</a></li>
-          <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor_OneSided.pdf" target="_blank">Arc (With Armor, One Sided)</a></li>
-          <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet.pdf" target="_blank">Path of Stars</a></li>
-          <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet_OneSided.pdf" target="_blank">Path of Stars (One Sided)</a></li>
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">Standard</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet.pdf" target="_blank">Standard</a></li>
+              <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet_OneSided.pdf" target="_blank">Standard (One Sided)</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">Arc</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet.pdf" target="_blank">Arc</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_OneSided.pdf" target="_blank">Arc (One Sided)</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor.pdf" target="_blank">Arc (With Armor)</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor_OneSided.pdf" target="_blank">Arc (With Armor, One Sided)</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">People of the Stars</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet.pdf" target="_blank">People of the Stars</a></li>
+              <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet_OneSided.pdf" target="_blank">People of the Stars (One Sided)</a></li>
+            </ul>
+          </li>
         </ul>
       </li>
       <li><a href="#" id="helpBtn" class="menu-link-item">Help</a></li>
@@ -60,8 +75,8 @@
   </div>
 
   <footer id="appFooter">
-    <button id="print" class="btn">Print</button>
     <button id="exportJpg" class="btn">Export as JPG</button>
+    <button id="print" class="btn">Print</button>
   </footer>
 
   <div id="dialogOverlay" class="dialog-overlay hidden"></div>
@@ -77,6 +92,10 @@
         <div class="input-pair">
             <label for="autoPrint" style="flex-basis: auto;">Auto Print on Select:</label>
             <input id="autoPrint" type="checkbox" title="Automatically print after a new label is selected and rendered.">
+        </div>
+        <div class="input-pair">
+            <label for="showExportJpg" style="flex-basis: auto;">Enable JPG Export:</label>
+            <input id="showExportJpg" type="checkbox" title="Show the 'Export as JPG' button in the footer.">
         </div>
       </div>
       <div class="settings-group">

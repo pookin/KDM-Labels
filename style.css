@@ -95,11 +95,15 @@
 
     .menu-panel .submenu {
       list-style: none;
-      padding-left: 15px;
+      padding-left: 0; /* Changed for nesting */
       margin: 0;
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease-in-out;
+    }
+
+    .menu-panel .submenu .submenu { /* Nested submenus */
+        padding-left: 15px;
     }
 
     .menu-panel .submenu.open {
@@ -299,6 +303,7 @@
       z-index: 1000;
       display: flex;
       justify-content: flex-end; 
+      gap: 10px;
       box-sizing: border-box;
     }
 

@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const marginBottomInput = document.getElementById('marginBottom');
   const marginLeftInput = document.getElementById('marginLeft');
   const autoPrintCheckbox = document.getElementById('autoPrint');
+  const showExportJpgCheckbox = document.getElementById('showExportJpg');
   const printCalibrationLabelBtn = document.getElementById('printCalibrationLabelBtn'); // Renamed from showCalibrationLabelBtn
 
   // Unit switching elements
@@ -97,7 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
       marginBottom: 1,// mm - Standard default
       marginLeft: 1,  // mm - Standard default
       preferredUnit: 'mm',
-      autoPrint: true
+      autoPrint: true,
+      showExportJpg: false
   };
   let settings = { ...defaultSettings }; // Initialize settings with defaults
 
@@ -155,8 +157,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (unitMMRadio) unitMMRadio.checked = true; // Default
     }
     if (autoPrintCheckbox) autoPrintCheckbox.checked = settings.autoPrint;
+    if (showExportJpgCheckbox) showExportJpgCheckbox.checked = settings.showExportJpg;
     updateUnitDisplays(settings.preferredUnit);
     updatePreviewSize(); // Ensure preview uses correct unit if it depends on global settings object
+    updateExportJpgButtonVisibility();
+  }
+
+  function updateExportJpgButtonVisibility() {
+    if (exportJpgBtn) {
+      exportJpgBtn.style.display = settings.showExportJpg ? 'inline-block' : 'none';
+    }
   }
 
 
@@ -468,6 +478,22 @@ document.addEventListener('DOMContentLoaded', function() {
       survivorSheetSubMenu.classList.toggle('open');
     });
   }
+
+  const submenuToggles = document.querySelectorAll('.submenu-toggle');
+  submenuToggles.forEach(toggle => {
+    toggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const parentLi = toggle.parentElement;
+      const submenu = toggle.nextElementSibling;
+
+      if (parentLi && submenu && submenu.classList.contains('submenu')) {
+        parentLi.classList.toggle('open');
+        submenu.classList.toggle('open');
+      }
+    });
+  });
 
   function renderSuggestions(filteredItems) {
       if (!suggestionBox || !searchInput) return;
@@ -801,10 +827,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (contentFiltersDialog && !contentFiltersDialog.classList.contains('hidden')) {
       contentFiltersDialog.classList.add('hidden');
     }
-    // Add future dialogs here for closing, e.g., helpDialog
-    const helpDialog = document.getElementById('helpDialog'); // Get it here as it might not exist when script first runs
     if (helpDialog && !helpDialog.classList.contains('hidden')) {
         helpDialog.classList.add('hidden');
+    }
+    if (patchNotesDialog && !patchNotesDialog.classList.contains('hidden')) {
+        patchNotesDialog.classList.add('hidden');
     }
   }
 
@@ -965,9 +992,11 @@ document.addEventListener('DOMContentLoaded', function() {
         settings.marginBottom = parseFloat(marginBottomInput.value);
         settings.marginLeft = parseFloat(marginLeftInput.value);
         if (autoPrintCheckbox) settings.autoPrint = autoPrintCheckbox.checked;
+        if (showExportJpgCheckbox) settings.showExportJpg = showExportJpgCheckbox.checked;
         // settings.preferredUnit is already up-to-date via handleUnitChange
 
         localStorage.setItem('labelSettings', JSON.stringify(settings));
+        updateExportJpgButtonVisibility();
         updatePreviewSize(); // This will now use settings.preferredUnit correctly
 
         // Provide some visual feedback for saving (optional, can be enhanced later)
