@@ -207,12 +207,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Update UI input fields with new converted values
       updateInputFieldsFromSettings();
-      // Note: Save button will persist these new settings.
+      saveSettings();
     }
   }
-
-  if (unitMMRadio) unitMMRadio.addEventListener('change', handleUnitChange);
-  if (unitInchesRadio) unitInchesRadio.addEventListener('change', handleUnitChange);
 
 
   // Initial load of settings
@@ -1015,43 +1012,55 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Event listeners for Label Settings save and calibration (ensure these elements exist)
-  if (saveBtn) {
-    saveBtn.addEventListener('click', () => {
-        // Values in input fields are already in settings.preferredUnit due to handleUnitChange
-        // Update the global settings object directly from input fields
-        settings.width = parseFloat(widthInput.value);
-        settings.height = parseFloat(heightInput.value);
-        settings.marginTop = parseFloat(marginTopInput.value);
-        settings.marginRight = parseFloat(marginRightInput.value);
-        settings.marginBottom = parseFloat(marginBottomInput.value);
-        settings.marginLeft = parseFloat(marginLeftInput.value);
-        if (autoPrintCheckbox) settings.autoPrint = autoPrintCheckbox.checked;
-        if (showExportJpgCheckbox) settings.showExportJpg = showExportJpgCheckbox.checked;
-        // settings.preferredUnit is already up-to-date via handleUnitChange
-
-        localStorage.setItem('labelSettings', JSON.stringify(settings));
-        updateExportJpgButtonVisibility();
-        updatePreviewSize(); // This will now use settings.preferredUnit correctly
-
-        // Provide some visual feedback for saving (optional, can be enhanced later)
-        const originalText = saveBtn.textContent;
-        saveBtn.textContent = 'Saved!';
-        setTimeout(() => {
-            saveBtn.textContent = originalText;
-        }, 1500);
-
-        const currentSelectedItemName = searchInput ? searchInput.value : "";
-        let itemToReselect = null;
-        if (currentSelectedItemName === "--- PRINT CALIBRATION LABEL ---") {
-             itemToReselect = { name: "--- PRINT CALIBRATION LABEL ---", type: "Calibration" };
-        } else if (currentSelectedItemName && window.dataset) {
-            itemToReselect = window.dataset.find(i => i.name === currentSelectedItemName);
-        }
-        if (itemToReselect) { selectItem(itemToReselect); }
-    });
+  // --- Auto-saving Settings Logic ---
+  function saveSettings() {
+    localStorage.setItem('labelSettings', JSON.stringify(settings));
+    // Provide some visual feedback for saving (optional, can be enhanced later)
+    if (filterSaveFeedback) { // Re-using the filter save feedback element
+      showFilterSaveFeedback();
+    }
   }
 
+  function setupAutoSavingListeners() {
+    const inputsToWatch = [
+      { el: widthInput, key: 'width', isFloat: true },
+      { el: heightInput, key: 'height', isFloat: true },
+      { el: marginTopInput, key: 'marginTop', isFloat: true },
+      { el: marginRightInput, key: 'marginRight', isFloat: true },
+      { el: marginBottomInput, key: 'marginBottom', isFloat: true },
+      { el: marginLeftInput, key: 'marginLeft', isFloat: true },
+      { el: autoPrintCheckbox, key: 'autoPrint', isCheckbox: true },
+      { el: showExportJpgCheckbox, key: 'showExportJpg', isCheckbox: true }
+    ];
+
+    inputsToWatch.forEach(({ el, key, isCheckbox, isFloat }) => {
+      if (el) {
+        el.addEventListener('change', () => {
+          settings[key] = isCheckbox ? el.checked : (isFloat ? parseFloat(el.value) : el.value);
+          saveSettings();
+
+          // Trigger relevant UI updates
+          if (['width', 'height', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft'].includes(key)) {
+            updatePreviewSize();
+            updateEmbeddedCalibrationPreview();
+          } else if (key === 'showExportJpg') {
+            updateExportJpgButtonVisibility();
+          }
+        });
+      }
+    });
+
+    // Unit change is handled separately due to value conversions
+    if (unitMMRadio) unitMMRadio.addEventListener('change', handleUnitChange);
+    if (unitInchesRadio) unitInchesRadio.addEventListener('change', handleUnitChange);
+  }
+
+  // Call this function to attach all listeners
+  setupAutoSavingListeners();
+
+  // The 'change' event on the checkbox now provides immediate UI feedback
+  // The old standalone listener for this is now integrated into the generic setup
+  /*
   if (showExportJpgCheckbox) {
     showExportJpgCheckbox.addEventListener('change', () => {
       settings.showExportJpg = showExportJpgCheckbox.checked;
