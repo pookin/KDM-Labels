@@ -5531,6 +5531,62 @@ var dataset = [
     "description": "Ignore Cumbersome on bows in your gear grid and reduce their range by 2.",
     "expansion": "Red Witches",
     "searchableText": ""
+  },
+  {
+    "id": 559,
+    "name": "Heart of the Sword",
+    "type": "Ability", //Ability of Impairment
+    "description": "The Storm constellation ability. If you gain weapon proficiency during the Aftermath, gain an additional 3 levels. You cough up a hunk of your own solidified blood and gain 1 Iron strange resource.",
+    "expansion": "Dragon King",
+    "searchableText": ""
+  },
+  {
+    "id": 560,
+    "name": "Limb-maker",
+    "type": "Ability", //Ability of Impairment
+    "description": "The Sculptor constellation ability. Once per settlement phase, spend 2 (E} to carve a prosthetic limb. Remove a survivor's dismembered severe injury and add 1 Bone basic resource to the settlement storage.",
+    "expansion": "Dragon King",
+    "searchableText": ""
+  },
+  {
+    "id": 561,
+    "name": "Presage",
+    "type": "Ability", //Ability of Impairment
+    "description": "The Witch constellation ability. Each time you attack, before drawing hit locations, loudly say a name. You lightly bite the eye in your cheek to see what it sees. If you draw any hit locations with that name, gain +3 insanity and +10 strength when attempting to wound them.",
+    "expansion": "Dragon King",
+    "searchableText": ""
+  },
+  {
+    "id": 562,
+    "name": "Psychovore",
+    "type": "Ability", //Ability of Impairment
+    "description": "The Reaper constellation ability. Once per showdown, you may eat an adjacent survivor's disorder. If you do, remove the disorder. They gain 1 bleeding token and you gain +1 permanent strength. At the end of the showdown, if you haven't eaten a disorder, you die.",
+    "expansion": "Dragon King",
+    "searchableText": ""
+  },
+  {
+    "id": 563,
+    "name": "Rooted to All",
+    "type": "Ability", //Ability of Impairment
+    "description": "The Absolute constellation ability. If you are standing at the start of your act, reveal the top 2 cards of the AI deck and put them back in any order.",
+    "expansion": "Dragon King",
+    "searchableText": ""
+  },
+  {
+    "id": 564,
+    "name": "Twelve Fingers",
+    "type": "Ability", //Ability of Impairment
+    "description": "The Gambler constellation ability. You cannot carry two-handed gear. On a Perfect hit, your right hand pulses. Gain +5 insanity and +1 luck for the attack. However, for each natural 1 rolled when attempting to hit, your left hand shakes. Suffer 5 brain damage and -1 luck for the attack.",
+    "expansion": "Dragon King",
+    "searchableText": ""
+  },
+  {
+    "id": 565,
+    "name": "Way of the Rust",
+    "type": "Ability", //Ability of Impairment
+    "description": "The Rust constellation ability. Your bleeding tokens are also +1 evasion tokens.",
+    "expansion": "Dragon King",
+    "searchableText": ""
   }
   // --- End Ability Items ---
 ];
