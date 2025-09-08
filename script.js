@@ -1058,16 +1058,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Call this function to attach all listeners
   setupAutoSavingListeners();
 
-  // The 'change' event on the checkbox now provides immediate UI feedback
-  // The old standalone listener for this is now integrated into the generic setup
-  /*
-  if (showExportJpgCheckbox) {
-    showExportJpgCheckbox.addEventListener('change', () => {
-      settings.showExportJpg = showExportJpgCheckbox.checked;
-      updateExportJpgButtonVisibility();
-    });
-  }
-
   if (printCalibrationLabelBtn) {
       printCalibrationLabelBtn.addEventListener('click', function() {
           const calibrationItem = { name: "--- PRINT CALIBRATION LABEL ---", type: "Calibration" };
