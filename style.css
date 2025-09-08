@@ -55,14 +55,14 @@
       margin: 0;
     }
     .menu-panel .menu-item-list li {
-      /* Optional: border-bottom: 1px solid #4a6fa5; */ /* Can add if separators are desired */
+      border-bottom: 1px solid #4a6fa5; /* Can add if separators are desired */
     }
     .menu-panel .menu-item-list li:last-child {
       border-bottom: none;
     }
     .menu-panel .menu-item-list .menu-link-item {
       display: block;
-      padding: 10px 5px; 
+      padding: 10px;
       color: #ecf0f1; 
       text-decoration: none;
       background-color: transparent; 

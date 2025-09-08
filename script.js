@@ -1017,6 +1017,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  if (showExportJpgCheckbox) {
+    showExportJpgCheckbox.addEventListener('change', () => {
+      settings.showExportJpg = showExportJpgCheckbox.checked;
+      updateExportJpgButtonVisibility();
+    });
+  }
+
   if (printCalibrationLabelBtn) {
       printCalibrationLabelBtn.addEventListener('click', function() {
           const calibrationItem = { name: "--- PRINT CALIBRATION LABEL ---", type: "Calibration" };
