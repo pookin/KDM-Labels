@@ -934,7 +934,7 @@ document.addEventListener('DOMContentLoaded', function() {
     exportJpgBtn.addEventListener('click', exportLabelAsJpg);
   }
 
-  function exportLabelAsJpg() {
+  async function exportLabelAsJpg() {
     if (!previewFrame || !previewFrame.contentWindow) {
       console.error("[EXPORT] Aborting: previewFrame or contentWindow missing.");
       alert("Please select a label to export first.");
@@ -942,34 +942,69 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const iframeDoc = previewFrame.contentWindow.document;
-    const labelContentWrapper = iframeDoc.getElementById('label-content-wrapper');
+    const labelPages = iframeDoc.querySelectorAll('.label-page');
+    const selectedItemName = searchInput.value || 'label';
+    const safeFilename = selectedItemName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
 
-    if (!labelContentWrapper) {
-        console.error("[EXPORT] Aborting: #label-content-wrapper not found in iframe.");
-        alert("Could not find the label content to export.");
-        return;
+    if (labelPages.length === 0) {
+      alert("No label content found to export.");
+      return;
     }
 
-    html2canvas(labelContentWrapper, {
-      scale: 3, // Higher scale for better quality
-      useCORS: true, // If you have external images/fonts
-      backgroundColor: '#ffffff' // Set a background color, as transparent areas will be black in JPG
-    }).then(canvas => {
-      const jpgUrl = canvas.toDataURL('image/jpeg', 0.9); // 0.9 is quality
+    const canvasOptions = {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    };
 
-      const link = document.createElement('a');
-      link.href = jpgUrl;
-      const selectedItemName = searchInput.value || 'label';
-      const safeFilename = selectedItemName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-      link.download = `${safeFilename}.jpg`;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }).catch(err => {
+    if (labelPages.length === 1) {
+      // Single page export
+      try {
+        const canvas = await html2canvas(labelPages[0], canvasOptions);
+        const jpgUrl = canvas.toDataURL('image/jpeg', 0.9);
+        const link = document.createElement('a');
+        link.href = jpgUrl;
+        link.download = `${safeFilename}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (err) {
         console.error("[EXPORT] html2canvas error:", err);
         alert("An error occurred while exporting the label.");
-    });
+      }
+    } else {
+      // Multi-page export to Zip
+      try {
+        const zip = new JSZip();
+
+        const promises = Array.from(labelPages).map((page, index) => {
+          return html2canvas(page, canvasOptions).then(canvas => {
+            return new Promise(resolve => {
+              canvas.toBlob(blob => {
+                zip.file(`${safeFilename}_${index + 1}.jpg`, blob);
+                resolve();
+              }, 'image/jpeg', 0.9);
+            });
+          });
+        });
+
+        await Promise.all(promises);
+
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(zipBlob);
+        link.download = `${safeFilename}.zip`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+
+      } catch (err) {
+        console.error("[EXPORT] ZIP export error:", err);
+        alert("An error occurred while creating the ZIP file.");
+      }
+    }
   }
 
   // This is the main menu toggle
