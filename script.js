@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const suggestionBox = document.getElementById('list');
   const previewFrame = document.getElementById('preview');
   const printBtn = document.getElementById('print');
+  const exportJpgBtn = document.getElementById('exportJpg');
 
   // Elements within Label Settings Dialog (even though dialogs aren't fully functional yet, IDs are there)
   const saveBtn = document.getElementById('save');
@@ -61,9 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const dialogOverlay = document.getElementById('dialogOverlay');
   const closeDialogBtns = document.querySelectorAll('.dialog-close-btn');
 
-  const survivorSheetBtn = document.getElementById('survivorSheetBtn'); // Added for Survivor Sheet
-  const helpBtn = document.getElementById('helpBtn'); // Added for Help
-  const helpDialog = document.getElementById('helpDialog'); // Added for Help Dialog
+  const survivorSheetBtn = document.getElementById('survivorSheetBtn');
+  const survivorSheetMenu = document.getElementById('survivorSheetMenu');
+  const survivorSheetSubMenu = document.getElementById('survivorSheetSubMenu');
+  const helpBtn = document.getElementById('helpBtn');
+  const helpDialog = document.getElementById('helpDialog');
+  const patchNotesBtn = document.getElementById('patchNotesBtn');
+  const patchNotesDialog = document.getElementById('patchNotesDialog');
   const filterSaveFeedback = document.getElementById('filterSaveFeedback'); // Added for filter save feedback
   const resetKnowledgeBtn = document.getElementById('resetKnowledgeBtn');
 
@@ -454,14 +459,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Event listener for Survivor Sheet
-  if (survivorSheetBtn) {
+  // Event listener for Survivor Sheet menu toggle
+  if (survivorSheetBtn && survivorSheetMenu && survivorSheetSubMenu) {
     survivorSheetBtn.addEventListener('click', (event) => {
       event.preventDefault();
-      window.open('KDM_ARC_Sheet.pdf', '_blank');
-      if (mainMenu && !mainMenu.classList.contains('hidden')) {
-        mainMenu.classList.add('hidden'); // Close menu
-      }
+      event.stopPropagation();
+      survivorSheetMenu.classList.toggle('open');
+      survivorSheetSubMenu.classList.toggle('open');
     });
   }
 
@@ -899,6 +903,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (printBtn) { printBtn.addEventListener('click', printLabel); }
 
+  if (exportJpgBtn) {
+    exportJpgBtn.addEventListener('click', exportLabelAsJpg);
+  }
+
+  function exportLabelAsJpg() {
+    if (!previewFrame || !previewFrame.contentWindow) {
+      console.error("[EXPORT] Aborting: previewFrame or contentWindow missing.");
+      alert("Please select a label to export first.");
+      return;
+    }
+
+    const iframeDoc = previewFrame.contentWindow.document;
+    const labelContentWrapper = iframeDoc.getElementById('label-content-wrapper');
+
+    if (!labelContentWrapper) {
+        console.error("[EXPORT] Aborting: #label-content-wrapper not found in iframe.");
+        alert("Could not find the label content to export.");
+        return;
+    }
+
+    html2canvas(labelContentWrapper, {
+      scale: 3, // Higher scale for better quality
+      useCORS: true, // If you have external images/fonts
+      backgroundColor: '#ffffff' // Set a background color, as transparent areas will be black in JPG
+    }).then(canvas => {
+      const jpgUrl = canvas.toDataURL('image/jpeg', 0.9); // 0.9 is quality
+
+      const link = document.createElement('a');
+      link.href = jpgUrl;
+      const selectedItemName = searchInput.value || 'label';
+      const safeFilename = selectedItemName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      link.download = `${safeFilename}.jpg`;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }).catch(err => {
+        console.error("[EXPORT] html2canvas error:", err);
+        alert("An error occurred while exporting the label.");
+    });
+  }
+
   // This is the main menu toggle
   if (menuBtn && mainMenu) {
     menuBtn.addEventListener('click', (event) => {
@@ -1005,12 +1051,30 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSuggestions(initialResults);
   }
 
+  // Event listener for Patch Notes button
+  if (patchNotesBtn) {
+    patchNotesBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDialog(patchNotesDialog);
+    });
+  }
+
   // Show help modal on first visit
   const visitedFlag = 'kdmLabelPrinter_hasVisited';
   if (!localStorage.getItem(visitedFlag)) {
     if (helpDialog && typeof openDialog === 'function') { // Ensure elements and function are available
         openDialog(helpDialog);
         localStorage.setItem(visitedFlag, 'true');
+    }
+  }
+
+  // Show patch notes on first visit after an update
+  const currentVersion = '1.1.0';
+  const lastVersionSeen = localStorage.getItem('kdmLabelPrinter_lastVersion');
+  if (lastVersionSeen !== currentVersion) {
+    if (patchNotesDialog && typeof openDialog === 'function') {
+      openDialog(patchNotesDialog);
+      localStorage.setItem('kdmLabelPrinter_lastVersion', currentVersion);
     }
   }
 });

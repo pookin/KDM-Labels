@@ -6,6 +6,7 @@
   <title>KDM Label Printer</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G31CF8ZP7V"></script>
 <script>
@@ -25,8 +26,21 @@
     <ul class="menu-item-list">
       <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Settings</a></li>
       <li><a href="#" id="openContentFiltersBtn" class="menu-link-item">Content Filters</a></li>
-      <li><a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheet</a></li>
+      <li id="survivorSheetMenu" class="menu-item-has-submenu">
+        <a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheets</a>
+        <ul id="survivorSheetSubMenu" class="submenu">
+          <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet.pdf" target="_blank">Standard</a></li>
+          <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet_OneSided.pdf" target="_blank">Standard (One Sided)</a></li>
+          <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet.pdf" target="_blank">Arc</a></li>
+          <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_OneSided.pdf" target="_blank">Arc (One Sided)</a></li>
+          <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor.pdf" target="_blank">Arc (With Armor)</a></li>
+          <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor_OneSided.pdf" target="_blank">Arc (With Armor, One Sided)</a></li>
+          <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet.pdf" target="_blank">Path of Stars</a></li>
+          <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet_OneSided.pdf" target="_blank">Path of Stars (One Sided)</a></li>
+        </ul>
+      </li>
       <li><a href="#" id="helpBtn" class="menu-link-item">Help</a></li>
+      <li><a href="#" id="patchNotesBtn" class="menu-link-item">Patch Notes</a></li>
     </ul>
   </div>
 
@@ -47,6 +61,7 @@
 
   <footer id="appFooter">
     <button id="print" class="btn">Print</button>
+    <button id="exportJpg" class="btn">Export as JPG</button>
   </footer>
 
   <div id="dialogOverlay" class="dialog-overlay hidden"></div>
@@ -205,6 +220,25 @@
       <h3>Contact and Support</h3>
       <p>If you find an issue with the site, please email me at <a href="josh@rule-3.com">josh@rule-3.com</a></p>
       <p>If you like to support me check out my <a href="https://rule-3.com">shop</a></p>
+    </div>
+  </div>
+
+  <div id="patchNotesDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Patch Notes</h3>
+        <button class="dialog-close-btn" data-dialog-id="patchNotesDialog">X</button>
+    </div>
+    <div class="dialog-content">
+      <h4>Version 1.1.0 (Current)</h4>
+      <ul>
+        <li>Added a new survivor sheet submenu with more options.</li>
+        <li>Added this patch notes window!</li>
+        <li>Added the ability to export labels as JPG.</li>
+      </ul>
+      <h4>Version 1.0.0</h4>
+      <ul>
+        <li>Initial release.</li>
+      </ul>
     </div>
   </div>
 
