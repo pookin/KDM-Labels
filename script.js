@@ -49,6 +49,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // const previewMarginDisplayBottom = document.getElementById('previewMarginDisplayBottom'); // Obsolete
   // const previewMarginDisplayLeft = document.getElementById('previewMarginDisplayLeft'); // Obsolete
 
+  // ID Assignment
+  let currentId = 1;
+  for (const type in window.dataset) {
+    window.dataset[type].forEach(item => {
+      item.id = currentId++;
+    });
+  }
+
   const menuBtn = document.getElementById('menuBtn');
   const mainMenu = document.getElementById('mainMenu'); // This is the panel with menu item links
 
@@ -381,10 +389,12 @@ document.addEventListener('DOMContentLoaded', function() {
   function search(query) {
     const trimmedQuery = query.trim().toLowerCase();
 
-    if (!window.dataset || !Array.isArray(window.dataset)) {
-      console.error("Dataset not loaded or is not an array.");
+    if (!window.dataset || typeof window.dataset !== 'object') {
+      console.error("Dataset not loaded or is not an object.");
       return [];
     }
+
+    const allItems = Object.values(window.dataset).flat();
 
     const filterablePhilosophyNames = new Set();
     if (philosophyCheckboxesContainer) {
@@ -392,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
         philosophyCheckboxes.forEach(cb => filterablePhilosophyNames.add(cb.value));
     }
 
-    return window.dataset.flatMap(originalItem => {
+    return allItems.flatMap(originalItem => {
       if (!originalItem || typeof originalItem.name !== 'string' || typeof originalItem.type !== 'string') {
         return []; // Skip invalid items
       }
@@ -467,11 +477,12 @@ document.addEventListener('DOMContentLoaded', function() {
       selectedIndex = -1;
 
       const queryIsEmpty = searchInput.value.trim() === '';
-      if (queryIsEmpty && (!filteredItems || filteredItems.length === (window.dataset ? window.dataset.length : 0))) {
+      const allItems = Object.values(window.dataset).flat();
+      if (queryIsEmpty && (!filteredItems || filteredItems.length === allItems.length)) {
           suggestionBox.style.display = 'none';
           return;
       }
-      if (queryIsEmpty && filteredItems && filteredItems.length > 0 && filteredItems.length < (window.dataset ? window.dataset.length : 0) ){
+      if (queryIsEmpty && filteredItems && filteredItems.length > 0 && filteredItems.length < allItems.length ){
          // Query is empty, but filters ARE active, so show the filtered list.
       } else if (queryIsEmpty){
           suggestionBox.style.display = 'none';
@@ -537,7 +548,8 @@ document.addEventListener('DOMContentLoaded', function() {
       // The itemFromSuggestion is a shallow copy with modified name and new displayType/originalName.
       // We need to send the *actual* full original item to the iframe.
       if (itemFromSuggestion.displayType && itemFromSuggestion.originalName && window.dataset) {
-        const foundOriginal = window.dataset.find(i => i.name === itemFromSuggestion.originalName && i.type === 'Weapon');
+        const allItems = Object.values(window.dataset).flat();
+        const foundOriginal = allItems.find(i => i.name === itemFromSuggestion.originalName && i.type === 'Weapon');
         if (foundOriginal) {
             originalItemData = foundOriginal;
         } else {
@@ -642,8 +654,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       const labelTitle = searchInput.value;
-      if (labelTitle && window.dataset && Array.isArray(window.dataset)) {
-          const currentItem = window.dataset.find(i => i.name === labelTitle);
+      if (labelTitle && window.dataset && typeof window.dataset === 'object') {
+          const allItems = Object.values(window.dataset).flat();
+          const currentItem = allItems.find(i => i.name === labelTitle);
           if (currentItem && currentItem.type === 'Knowledge') {
               const baseNameRegex = /\s+(I|II|III)$/;
               let baseName = labelTitle;
@@ -676,7 +689,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function populateExpansionFilters() {
       if (!window.dataset || !expansionCheckboxesContainer) return; // expansionCheckboxesContainer is now global-like
       const expansionNames = new Set([CORE_GAME_EXPANSION_NAME]);
-      window.dataset.forEach(item => {
+      const allItems = Object.values(window.dataset).flat();
+      allItems.forEach(item => {
           if (item.expansion && typeof item.expansion === 'string' && item.expansion.trim() !== "") {
               expansionNames.add(item.expansion.trim());
           }
@@ -690,8 +704,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function populatePhilosophyFilters() {
       if (!window.dataset || !philosophyCheckboxesContainer) return; // philosophyCheckboxesContainer is now global-like
       const philosophyNames = new Set();
-      window.dataset.forEach(item => {
-          if (item.type === 'Philosophy' && item.name && typeof item.name === 'string' && item.name.trim() !== "") {
+      const philosophyItems = window.dataset['Philosophy'] || [];
+      philosophyItems.forEach(item => {
+          if (item.name && typeof item.name === 'string' && item.name.trim() !== "") {
               philosophyNames.add(item.name.trim());
           }
       });
