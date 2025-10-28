@@ -5531,6 +5531,46 @@ var dataset = [
     "description": "Ignore Cumbersome on bows in your gear grid and reduce their range by 2.",
     "expansion": "Red Witches",
     "searchableText": ""
+  },
+  {
+    "id": 559,
+    "name": "Marrow Hunger",
+    "type": "Impairment",
+    "description": "If the *Murder* or *Skull Eater* settlement events are drawn, nominate this survivor.",
+    "expansion": null,
+    "searchableText": "marrow hunger impairment if the murder or skull eater settlement events are drawn, nominate this survivor."
+  },
+  {
+    "id": 560,
+    "name": "Endless Babble",
+    "type": "Impairment",
+    "description": "When you *depart*, *departing survivors* gain +1 insanity. You cannot *encourage*.",
+    "expansion": null,
+    "searchableText": "endless babble impairment when you *depart*, *departing survivors* gain +1 insanity. you cannot encourage."
+  },
+  {
+    "id": 561,
+    "name": "Stone Face Engraver",
+    "type": "Ability",
+    "description": "When a survivor adopts a philosophy, they draw an additional card and select one to adopt.",
+    "expansion": null,
+    "searchableText": "stone face engraver ability when a survivor adopts a philosophy, they draw an additional card and select one to adopt."
+  },
+  {
+    "id": 562,
+    "name": "Mentor",
+    "type": "Ability",
+    "description": "During the settlement phase, spend {v} to nominate a survivor with less Hunt XP than you. They gain +2 lumi and +2 Hunt XP. Limit once per lantern year.",
+    "expansion": null,
+    "searchableText": "mentor ability during the settlement phase, spend {v} to nominate a survivor with less hunt xp than you. they gain +2 lumi and +2 hunt xp. limit once per lantern year."
+  },
+  {
+    "id": 563,
+    "name": "Codependent",
+    "type": "Disorder",
+    "description": "You cannot gain understanding, except from the Parish settlement events, rulebook, etc.",
+    "expansion": null,
+    "searchableText": "codependent disorder guided by the truth of another. you cannot gain understanding, except from the parish settlement events, rulebook, etc."
   }
   // --- End Ability Items ---
 ];
