@@ -570,26 +570,27 @@ document.addEventListener('DOMContentLoaded', function() {
       if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && typeof window.dataset !== 'undefined') {
           const baseKnowledgeName = itemForLogic.tenetKnowledge; // Changed 'item' to 'itemForLogic'
           let knowledgeToFetchFullName = null;
+          const allItems = Object.values(window.dataset).flat();
           try {
               const lastPrintedFull = localStorage.getItem(`lastPrinted_${baseKnowledgeName}`);
               if (lastPrintedFull) {
-                  const lastPrintedItemExists = window.dataset.find(k => k.name === lastPrintedFull && k.type === 'Knowledge');
+                  const lastPrintedItemExists = allItems.find(k => k.name === lastPrintedFull && k.type === 'Knowledge');
                   if (lastPrintedItemExists) knowledgeToFetchFullName = lastPrintedFull;
               }
           } catch(e) { console.warn("LocalStorage access error for tenetKnowledge:", e); }
 
           if (!knowledgeToFetchFullName) {
               const defaultLevelName = `${baseKnowledgeName} I`;
-              const defaultLevelItem = window.dataset.find(k => k.name === defaultLevelName && k.type === 'Knowledge');
+              const defaultLevelItem = allItems.find(k => k.name === defaultLevelName && k.type === 'Knowledge');
               if (defaultLevelItem) {
                   knowledgeToFetchFullName = defaultLevelName;
               } else {
-                  const directMatchItem = window.dataset.find(k => k.name === baseKnowledgeName && k.type === 'Knowledge');
+                  const directMatchItem = allItems.find(k => k.name === baseKnowledgeName && k.type === 'Knowledge');
                   if (directMatchItem) knowledgeToFetchFullName = baseKnowledgeName;
               }
           }
           if (knowledgeToFetchFullName) {
-              const fetchedData = window.dataset.find(k => k.name === knowledgeToFetchFullName && k.type === 'Knowledge');
+              const fetchedData = allItems.find(k => k.name === knowledgeToFetchFullName && k.type === 'Knowledge');
               if (fetchedData) tenetKnowledgeItemData = JSON.parse(JSON.stringify(fetchedData));
           }
       }
@@ -931,7 +932,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentSelectedItemName === "--- PRINT CALIBRATION LABEL ---") {
              itemToReselect = { name: "--- PRINT CALIBRATION LABEL ---", type: "Calibration" };
         } else if (currentSelectedItemName && window.dataset) {
-            itemToReselect = window.dataset.find(i => i.name === currentSelectedItemName);
+            const allItems = Object.values(window.dataset).flat();
+            itemToReselect = allItems.find(i => i.name === currentSelectedItemName);
         }
         if (itemToReselect) { selectItem(itemToReselect); }
     });
