@@ -475,6 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!suggestionBox || !searchInput) return;
       suggestionBox.innerHTML = '';
       selectedIndex = -1;
+      suggestionBox.style.display = 'none';
 
       const queryIsEmpty = searchInput.value.trim() === '';
       const allItems = Object.values(window.dataset).flat();
@@ -512,16 +513,13 @@ document.addEventListener('DOMContentLoaded', function() {
               }
 
               if (item.type === 'Knowledge') {
-                  const levelMatch = item.name.match(romanNumeralRegex);
-                  if (levelMatch) {
-                      const baseName = item.name.replace(romanNumeralRegex, '').trim();
-                      try {
-                        const lastPrintedFullName = localStorage.getItem(`lastPrinted_${baseName}`);
-                        if (lastPrintedFullName && lastPrintedFullName === item.name) {
-                            iconHTML = '<span class="lp-icon">✓</span>';
-                        }
-                      } catch (e) { console.warn("LocalStorage access error in renderSuggestions:", e); }
-                  }
+                  const baseName = item.name.replace(romanNumeralRegex, '').trim();
+                  try {
+                      const lastPrintedFullName = localStorage.getItem(`lastPrinted_${baseName}`);
+                      if (lastPrintedFullName && lastPrintedFullName === item.name) {
+                          iconHTML = '<span class="lp-icon">✓</span>';
+                      }
+                  } catch (e) { console.warn("LocalStorage access error in renderSuggestions:", e); }
               }
               div.innerHTML = baseText + iconHTML;
 
@@ -535,11 +533,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function selectItem(itemFromSuggestion) { // Renamed item to itemFromSuggestion for clarity
+      console.log('selectItem called with:', itemFromSuggestion);
       if (!previewFrame || !searchInput) { console.error("selectItem: previewFrame or searchInput missing."); return; }
       if (!itemFromSuggestion || typeof itemFromSuggestion.name === 'undefined') { console.error("selectItem: Invalid item.", itemFromSuggestion); return; }
 
       if (suggestionBox) { suggestionBox.style.display = 'none'; }
       searchInput.value = itemFromSuggestion.name; // Keep the suffixed name in the search bar
+      suggestionBox.style.display = 'none';
 
       let originalItemData = itemFromSuggestion;
       let weaponViewType = itemFromSuggestion.displayType; // Will be 'specialist' or 'mastery' for weapons
@@ -568,14 +568,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const itemForLogic = (itemFromSuggestion.displayType && itemFromSuggestion.originalName) ? originalItemData : itemFromSuggestion;
 
       if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && typeof window.dataset !== 'undefined') {
-          const baseKnowledgeName = itemForLogic.tenetKnowledge; // Changed 'item' to 'itemForLogic'
+          const baseKnowledgeName = itemForLogic.tenetKnowledge;
           let knowledgeToFetchFullName = null;
           const allItems = Object.values(window.dataset).flat();
+
           try {
               const lastPrintedFull = localStorage.getItem(`lastPrinted_${baseKnowledgeName}`);
               if (lastPrintedFull) {
                   const lastPrintedItemExists = allItems.find(k => k.name === lastPrintedFull && k.type === 'Knowledge');
-                  if (lastPrintedItemExists) knowledgeToFetchFullName = lastPrintedFull;
+                  if (lastPrintedItemExists) {
+                      knowledgeToFetchFullName = lastPrintedFull;
+                  }
               }
           } catch(e) { console.warn("LocalStorage access error for tenetKnowledge:", e); }
 
@@ -586,12 +589,20 @@ document.addEventListener('DOMContentLoaded', function() {
                   knowledgeToFetchFullName = defaultLevelName;
               } else {
                   const directMatchItem = allItems.find(k => k.name === baseKnowledgeName && k.type === 'Knowledge');
-                  if (directMatchItem) knowledgeToFetchFullName = baseKnowledgeName;
+                  if (directMatchItem) {
+                      knowledgeToFetchFullName = baseKnowledgeName;
+                  }
               }
           }
+
           if (knowledgeToFetchFullName) {
               const fetchedData = allItems.find(k => k.name === knowledgeToFetchFullName && k.type === 'Knowledge');
-              if (fetchedData) tenetKnowledgeItemData = JSON.parse(JSON.stringify(fetchedData));
+              if (fetchedData) {
+                  tenetKnowledgeItemData = JSON.parse(JSON.stringify(fetchedData));
+                  searchInput.value = fetchedData.name; // Update search input with knowledge name
+                  const results = search(searchInput.value);
+                  renderSuggestions(results);
+              }
           }
       }
       // const selectedWeaponView = document.querySelector('input[name="weaponView"]:checked')?.value || 'specialist'; // No longer needed
@@ -659,13 +670,12 @@ document.addEventListener('DOMContentLoaded', function() {
           const allItems = Object.values(window.dataset).flat();
           const currentItem = allItems.find(i => i.name === labelTitle);
           if (currentItem && currentItem.type === 'Knowledge') {
-              const baseNameRegex = /\s+(I|II|III)$/;
-              let baseName = labelTitle;
-              if (baseNameRegex.test(labelTitle)) {
-                  baseName = labelTitle.replace(baseNameRegex, '').trim();
+              const baseName = currentItem.name.replace(romanNumeralRegex, '').trim();
+              try {
+                  localStorage.setItem(`lastPrinted_${baseName}`, currentItem.name);
+              } catch (e) {
+                  console.warn("LocalStorage error in printLabel:", e);
               }
-              try { localStorage.setItem(`lastPrinted_${baseName}`, labelTitle); }
-              catch (e) { console.warn("LocalStorage error in printLabel:", e); }
           }
       }
   }
@@ -978,12 +988,4 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSuggestions(initialResults);
   }
 
-  // Show help modal on first visit
-  const visitedFlag = 'kdmLabelPrinter_hasVisited';
-  if (!localStorage.getItem(visitedFlag)) {
-    if (helpDialog && typeof openDialog === 'function') { // Ensure elements and function are available
-        openDialog(helpDialog);
-        localStorage.setItem(visitedFlag, 'true');
-    }
-  }
 });
