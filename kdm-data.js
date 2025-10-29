@@ -1,567 +1,540 @@
 // kdm-data.js
-console.log("kdm-data.js: Loading pre-formatted dataset...");
+console.log("kdm-data.js: Loading restructured dataset...");
 
 var dataset = {
-  "Ability": [
-    {
-      "name": "Feinting Shot",
-      "type": "Ability",
-      "description": "Spend {m}{q} to move your survivor 3 spaces away from the monster. Activate and attack with a bow or arrow in your gear grid. This attack gains +3 accuracy and +3 range.",
-      "expansion": null,
-      "searchableText": "feinting shot ability spend {m}{q} to move your survivor 3 spaces away from the monster. activate and attack with a bow or arrow in your gear grid. this attack gains +3 accuracy and +3 range. "
-    },
-    {
-      "name": "Hit Song",
-      "type": "Ability",
-      "description": "Spend {m}{q} to full move forward and attack. If you moved at least 4 spaces, the first time you wound during this attack, *encourage* all survivors.",
-      "expansion": null,
-      "searchableText": "hit song ability spend {m}{q} to full move forward and attack. if you moved at least 4 spaces, the first time you wound during this attack, *encourage* all survivors. "
-    },
-    {
-      "name": "Immortal Spin",
-      "type": "Ability",
-      "description": "Spend {m}{q} to move 3 spaces forward. If you do, activate a melee weapon with +1 strength for each of your bleeding tokens.",
-      "expansion": null,
-      "searchableText": "immortal spin ability spend {m}{q} to move 3 spaces forward. if you do, activate a melee weapon with +1 strength for each of your bleeding tokens. "
-    },
-    {
-      "name": "Guardless",
-      "type": "Ability",
-      "description": "A survivor with guardless may not *dodge*, block, deflect, or ignore hits. Attack rolls can still miss guardless survivors, as they still factor their evasion in.",
-      "expansion": null,
-      "searchableText": "guardless ability a survivor with guardless may not *dodge*, block, deflect, or ignore hits. attack rolls can still miss guardless survivors, as they still factor their evasion in. "
-    },
-    {
-      "name": "Rush",
-      "type": "Ability",
-      "description": "When a survivor hits 3+ times in a single attack, they Rush for that attack.",
-      "expansion": null,
-      "searchableText": "rush ability when a survivor hits 3+ times in a single attack, they rush for that attack. "
-    },
-    {
-      "name": "Subconscious",
-      "type": "Ability",
-      "description": "You can use this while *frenzied*.",
-      "expansion": null,
-      "searchableText": "subconscious ability you can use this while *frenzied*. "
-    },
-    {
-      "name": "Astute",
-      "type": "Ability",
-      "description": "On *Arrival*, if possible, add an Acanthus Plant terrain card to the showdown.",
-      "expansion": null,
-      "searchableText": "astute ability on *Arrival*, if possible, add an acanthus plant terrain card to the showdown. "
-    },
-    {
-      "name": "Caratosis",
-      "type": "Ability",
-      "description": "Before making an attack roll, you may declare \"Caratosis X\" in a loud, booming voice. If you do, that attack gains X automatic hits. X cannot be more than your total red affinities. When the attack ends, gain +X Hunt XP.",
-      "expansion": null,
-      "searchableText": "caratosis ability before making an attack roll, you may declare \"caratosis x\" in a loud, booming voice. if you do, that attack gains x automatic hits. x cannot be more than your total red affinities. when the attack ends, gain +x hunt xp. "
-    },
-    {
-      "name": "Dormenatus",
-      "type": "Ability",
-      "description": "When you suffer damage, you may declare \"Dormenatus X\" in a loud, booming voice. If you do, add X armor points to each hit location. X cannot be more than your total green affinities. After the damage is resolved, gain +X Hunt XP.",
-      "expansion": null,
-      "searchableText": "dormenatus ability when you suffer damage, you may declare \"dormenatus x\" in a loud, booming voice. if you do, add x armor points to each hit location. x cannot be more than your total green affinities. after the damage is resolved, gain +x hunt xp. "
-    },
-    {
-      "name": "Forgettable",
-      "type": "Ability",
-      "description": "Gain +2 evasion. Forgettable survivors cannot be *encouraged*.",
-      "expansion": null,
-      "searchableText": "forgettable ability gain +2 evasion. forgettable survivors cannot be *encouraged*. "
-    },
-    {
-      "name": "Homing Instinct",
-      "type": "Ability",
-      "description": "Add +5 to your rolls on the {s} *Run Away* story event.",
-      "expansion": null,
-      "searchableText": "homing instinct ability add +5 to your rolls on the {a} *Run Away* story event. "
-    },
-    {
-      "name": "Internal Tempo",
-      "type": "Ability",
-      "description": "You ignore the monster's accuracy tokens and always treat your evasion as 0. Your gear loses the *noisy* keyword while it is in your gear grid.",
-      "expansion": null,
-      "searchableText": "internal tempo ability you ignore the monster's accuracy tokens and always treat your evasion as 0. your gear loses the *noisy* keyword while it is in your gear grid. "
-    },
-    {
-      "name": "Iridescent Hide",
-      "type": "Ability",
-      "description": "When you *depart*, add {!} to each hit location for each different-colored affinity in your gear grid.",
-      "expansion": null,
-      "searchableText": "iridescent hide ability when you *depart*, add {!} to each hit location for each different-colored affinity in your gear grid. "
-    },
-    {
-      "name": "Lucernae",
-      "type": "Ability",
-      "description": "Before making a wound attempt, you may declare \"Lucernae X\" in a loud, booming voice. If you do, that wound attempt gains +X luck. X cannot be more than your total blue affinities. When the attack ends, gain +X Hunt XP.",
-      "expansion": null,
-      "searchableText": "lucernae ability before making a wound attempt, you may declare \"lucernae x\" in a loud, booming voice. if you do, that wound attempt gains +x luck. x cannot be more than your total blue affinities. when the attack ends, gain +x hunt xp. "
-    },
-    {
-      "name": "Myopic Fighter",
-      "type": "Ability",
-      "description": "Gain +2 acc. You may only attack with daggers and katars.",
-      "expansion": null,
-      "searchableText": "myopic fighter ability gain +2 acc. you may only attack with daggers and katars. "
-    },
-    {
-      "name": "Nightmare Blood",
-      "type": "Ability",
-      "description": "Whenever you gain a bleeding token, add {!} to all hit locations.",
-      "expansion": null,
-      "searchableText": "nightmare blood ability whenever you gain a bleeding token, add {!}to all hit locations. "
-    },
-    {
-      "name": "Nightmare Membrane",
-      "type": "Ability",
-      "description": "You may spend {q}{m} to exchange any 1 of your tokens for a +1 strength token.",
-      "expansion": null,
-      "searchableText": "nightmare membrane ability you may spend {a}{m} to exchange any 1 of your tokens for a +1 strength token. "
-    },
-    {
-      "name": "Nightmare Spurs",
-      "type": "Ability",
-      "description": "Once per showdown, you may spend all your survival (at least 1) to lose all your +1 strength tokens and gain that many +1 luck tokens.",
-      "expansion": null,
-      "searchableText": "nightmare spurs ability once per showdown, you may spend all your survival (at least 1) to lose all your +1 strength tokens and gain that many +1 luck tokens. "
-    },
-    {
-      "name": "Oracle's Eye",
-      "type": "Ability",
-      "description": "At the start of the showdown, look through the AI deck, then shuffle it.",
-      "expansion": null,
-      "searchableText": "oracle's eye ability at the start of the showdown, look through the ai deck, then shuffle it. "
-    },
-    {
-      "name": "Pristine",
-      "type": "Ability",
-      "description": "When you suffer a dismembered severe injury, ignore it and gain a bleeding token instead.",
-      "expansion": null,
-      "searchableText": "pristine ability when you suffer a dismembered severe injury, ignore it and gain a bleeding token instead. "
-    },
-    {
-      "name": "Reflection",
-      "type": "Ability",
-      "description": "Your complete affinities and incomplete affinity halves count as all colors. You may *dodge* at any time and as many times as you like each round. When you attack from a blind spot, add +1d10 to all wound attempts for that attack.",
-      "expansion": null,
-      "searchableText": "reflection ability your complete affinities and incomplete affinity halves count as all colors. you may *dodge* at any time and as many times as you like each round. when you attack from a blind spot, add +1d10 to all wound attempts for that attack. "
-    },
-    {
-      "name": "Refraction",
-      "type": "Ability",
-      "description": "Your complete affinities and incomplete affinity halves count as all colors. During the Showdown, after you perform a survival action, gain +1 survival.",
-      "expansion": null,
-      "searchableText": "refraction ability your complete affinities and incomplete affinity halves count as all colors. during the showdown, after you perform a survival action, gain +1 survival. "
-    },
-    {
-      "name": "Rival's Scar",
-      "type": "Ability",
-      "description": "This survivor gains +1 permanent strength and suffers -1 permanent evasion.",
-      "expansion": null,
-      "searchableText": "rival's scar ability this survivor gains +1 permanent strength and suffers -1 permanent evasion. "
-    },
-    {
-      "name": "Super Hair",
-      "type": "Ability",
-      "description": "You may spend {q} to freely exchange any tokens with adjacent survivors who have Super Hair.",
-      "expansion": null,
-      "searchableText": "super hair ability you may spend {a} to freely exchange any tokens with adjacent survivors who have super hair. "
-    },
-    {
-      "name": "True Peace",
-      "type": "Ability",
-      "description": "Set your systemic pressure and torment to 0.",
-      "expansion": null,
-      "searchableText": "true peace ability set your systemic pressure and torment to 0. "
-    },
-    {
-      "name": "Veteran",
-      "type": "Ability",
-      "description": "During the Aftermath, gain +1 Hunt XP.",
-      "expansion": null,
-      "searchableText": "veteran ability during the aftermath, gain +1 hunt xp. "
-    },
-    {
-      "name": "Winged Escape",
-      "type": "Ability",
-      "description": "Once per showdown, you may archive a Cyclops Fly vermin resource to discard the Trap and reshuffle the hit location deck.",
-      "expansion": null,
-      "searchableText": "winged escape ability once per showdown, you may archive a cyclops fly vermin resource to discard the trap and reshuffle the hit location deck. "
-    },
-    {
-      "name": "Unburdened",
-      "type": "Ability",
-      "description": "You may only wear Cloth (no other armor or accessories). Gain +2 strength from your resolve.",
-      "expansion": null,
-      "searchableText": "unburdened ability you may only wear cloth (no other armor or accessories). gain +2 strength from your resolve. "
-    },
-    {
-      "name": "Acid Palms",
-      "type": "Ability",
-      "description": "Add 1d10 strength to wound attempts when attacking with Fist & Tooth.",
-      "expansion": null,
-      "searchableText": "acid palms ability add 1d10 strength to wound attempts when attacking with fist & tooth. "
-    },
-    {
-      "name": "Advanced Play",
-      "type": "Ability",
-      "description": "You may set aside 2 dice with the High Roller knowledge. These dice must be from separate attacks.",
-      "expansion": null,
-      "searchableText": "advanced play ability you may set aside 2 dice with the high roller knowledge. these dice must be from separate attacks. "
-    },
-    {
-      "name": "Ageless",
-      "type": "Ability",
-      "description": "You may hunt if you are retired. When you gain Hunt XP, you may instead choose not to gain it.",
-      "expansion": null,
-      "searchableText": "ageless ability you may hunt if you are retired. when you gain hunt xp, you may instead choose not to gain it. "
-    },
-    {
-      "name": "Analyze",
-      "type": "Ability",
-      "description": "At the start of the survivors' turn, if you are adjacent to the monster, reveal the top AI card, then place it back on top of the deck.",
-      "expansion": null,
-      "searchableText": "analyze ability at the start of the survivors' turn, if you are adjacent to the monster, reveal the top ai card, then place it back on top of the deck. "
-    },
-    {
-      "name": "Astute Psyche",
-      "type": "Ability",
-      "description": "When you make an observation about a knowledge, make two observations instead.",
-      "expansion": null,
-      "searchableText": "astute psyche ability when you make an observation about a knowledge, make two observations instead. "
-    },
-    {
-      "name": "Bitter Frenzy",
-      "type": "Ability",
-      "description": "You may spend survival and use fighting arts, weapon specialization, and weapon mastery while *frenzied*.",
-      "expansion": null,
-      "searchableText": "bitter *frenzy* ability you may spend survival and use fighting arts, weapon specialization, and weapon mastery while *frenzied*. "
-    },
-    {
-      "name": "Bounding Legs",
-      "type": "Ability",
-      "description": "When you spend {m}, you must place yourself in an unoccupied space 5 spaces away from your current space and gain a +1 speed token for the rest of the round.",
-      "expansion": null,
-      "searchableText": "bounding legs ability when you spend {m}, you must place yourself in an unoccupied space 5 spaces away from your current space and gain a +1 speed token for the rest of the round. "
-    },
-    {
-      "name": "Bullfrog Neck",
-      "type": "Ability",
-      "description": "Add +1 to your head severe injury roll results. Double your courage for any rolls that would take it into account.",
-      "expansion": null,
-      "searchableText": "bullfrog neck ability add +1 to your head severe injury roll results. double your courage for any rolls that would take it into account. "
-    },
-    {
-      "name": "Burnt Nerves",
-      "type": "Ability",
-      "description": "You are immune to bash.",
-      "expansion": null,
-      "searchableText": "burnt nerves ability you are immune to bash. "
-    },
-    {
-      "name": "Cheer Captain",
-      "type": "Ability",
-      "description": "Spend {v}{v} to cause *departing survivors* to suffer the *frenzy* brain trauma twice and ignore bash for the rest of the lantern year. Limit once per lantern year.",
-      "expansion": null,
-      "searchableText": "cheer captain ability spend {v}{v} to cause *departing survivors* to suffer the *frenzy* brain trauma twice and ignore bash for the rest of the lantern year. limit once per lantern year. "
-    },
-    {
-      "name": "Cutthroat",
-      "type": "Ability",
-      "description": "On a *perfect hit*, gain {q} after your attack ends, which must be spent immediately. Limit once per round.",
-      "expansion": null,
-      "searchableText": "cutthroat ability on a *perfect hit*, gain {q} after your attack ends, which must be spent immediately. limit once per round. "
-    },
-    {
-      "name": "Dark Calling",
-      "type": "Ability",
-      "description": "Increase your range of *perfect hits* by 1. When you are a *returning survivor*, roll 1d10. If the result is less than or equal to your HuntXP, you leave the settlement forever.",
-      "expansion": null,
-      "searchableText": "dark calling ability increase your range of *perfect hits* by 1. when you are a *returning survivor*, roll 1d10. if the result is less than or equal to your huntxp, you leave the settlement forever. "
-    },
-    {
-      "name": "Dead Again",
-      "type": "Ability",
-      "description": "When you die, do not gain the benefits of your Death principle. Instead, gain +1 population. This new survivor adopts the Deadism philosophy, gains Dead Again, and has your name.",
-      "expansion": null,
-      "searchableText": "dead again ability when you die, do not gain the benefits of your death principle. instead, gain +1 population. this new survivor adopts the deadism philosophy, gains dead again, and has your name. "
-    },
-    {
-      "name": "Destructive Vow",
-      "type": "Ability",
-      "description": "At the end of your act, gain +3 insanity if you have attacked this round. Otherwise, suffer 3 brain damage.",
-      "expansion": null,
-      "searchableText": "destructive vow ability at the end of your act, gain +3 insanity if you have attacked this round. otherwise, suffer 3 brain damage. "
-    },
-    {
-      "name": "Discourse Savant",
-      "type": "Ability",
-      "description": "When you roll on a table while ranking up your philosophy, you may choose your roll result instead of rolling.",
-      "expansion": null,
-      "searchableText": "discourse savant ability when you roll on a table while ranking up your philosophy, you may choose your roll result instead of rolling. "
-    },
-    {
-      "name": "Dream Keeper's Legacy",
-      "type": "Ability",
-      "description": "During the showdown, if you have at least 1 permanent luck, you may set your luck to 0 and physically flip any token.",
-      "expansion": null,
-      "searchableText": "dream keeper's legacy ability during the showdown, if you have at least 1 permanent luck, you may set your luck to 0 and physically flip any token. "
-    },
-    {
-      "name": "Engorged Cure",
-      "type": "Ability",
-      "description": "Once per showdown, you may archive a Nightmare Tick vermin resource to remove all your bleeding tokens and fully *heal* yourself.",
-      "expansion": null,
-      "searchableText": "engorged cure ability once per showdown, you may archive a nightmare tick vermin resource to remove all your bleeding tokens and fully *heal* yourself. "
-    },
-    {
-      "name": "Extra Long Arms",
-      "type": "Ability",
-      "description": "Your Fist & Tooth has reach 2.",
-      "expansion": null,
-      "searchableText": "extra long arms ability your fist & tooth has reach 2. "
-    },
-    {
-      "name": "Fated Battle",
-      "type": "Ability",
-      "description": "At the start of a showdown with the picked monster, gain +1 speed token.",
-      "expansion": null,
-      "searchableText": "fated battle ability at the start of a showdown with the picked monster, gain +1 speed token. "
-    },
-    {
-      "name": "Flipper Feet",
-      "type": "Ability",
-      "description": "Gain +1 movement and +1 evasion. You cannot wear leg armor.",
-      "expansion": null,
-      "searchableText": "flipper feet ability gain +1 movement and +1 evasion. you cannot wear leg armor. "
-    },
-    {
-      "name": "Fortune Sight",
-      "type": "Ability",
-      "description": "On *Arrival*, gain +1 accuracy tokens equal to your permanent luck.",
-      "expansion": null,
-      "searchableText": "fortune sight ability on *Arrival*, gain +1 accuracy tokens equal to your permanent luck. "
-    },
-    {
-      "name": "Founder's Eye",
-      "type": "Ability",
-      "description": "A permanent design with intricate line work too fine for the naked eye to see. Gain +1 to all rolls on the Arc *Intimacy* story event.",
-      "expansion": null,
-      "searchableText": "founder's eye ability a permanent design with intricate line work too fine for the naked eye to see. gain +1 to all rolls on the arc *Intimacy* story event. "
-    },
-    {
-      "name": "Game Master",
-      "type": "Ability",
-      "description": "When you are the monster controller and the monster draws {O}, instead draw 2 cards and select 1 to perform, placing the other back on top of the {O} deck.",
-      "expansion": null,
-      "searchableText": "game master ability when you are the monster controller and the monster draws {o}, instead draw 2 cards and select 1 to perform, placing the other back on top of the {o} deck. "
-    },
-    {
-      "name": "Gravel Guts",
-      "type": "Ability",
-      "description": "Add +1 to your body severe injury roll results. Ignore monster *knockback* actions.",
-      "expansion": null,
-      "searchableText": "gravel guts ability add +1 to your body severe injury roll results. ignore monster *knockback* actions. "
-    },
-    {
-      "name": "Grounded",
-      "type": "Ability",
-      "description": "Once per lantern year, at any time, you may set your insanity to 0, 1, or 2.",
-      "expansion": null,
-      "searchableText": "grounded ability once per lantern year, at any time, you may set your insanity to 0, 1, or 2. "
-    },
-    {
-      "name": "Hemostasis",
-      "type": "Ability",
-      "description": "It takes an additional bleeding token to kill you. This ability can be gained multiple times.",
-      "expansion": null,
-      "searchableText": "hemostasis ability it takes an additional bleeding token to kill you. this ability can be gained multiple times. "
-    },
-    {
-      "name": "Inevitable",
-      "type": "Ability",
-      "description": "When you gain this, choose a weapon. It gains Sharp. Record this on your survivor record sheet. Erase it when the gear is archived.",
-      "expansion": null,
-      "searchableText": "inevitable ability when you gain this, choose a weapon. it gains sharp. record this on your survivor record sheet. erase it when the gear is archived. "
-    },
-    {
-      "name": "Iron Will",
-      "type": "Ability",
-      "description": "You cannot be knocked down. Reduce all *knockback* you suffer to *knockback* 1.",
-      "expansion": null,
-      "searchableText": "iron will ability you cannot be knocked down. reduce all *knockback* you suffer to *knockback* 1. "
-    },
-    {
-      "name": "Juice Hunter",
-      "type": "Ability",
-      "description": "Once per hunt phase, when you are the event revealer, you may take a detour to search for a nest of lantern bugs. Roll a random hunt event. Afterwards, you return with bug juice and all survivors gain +1d5 survival.",
-      "expansion": null,
-      "searchableText": "juice hunter ability once per hunt phase, when you are the event revealer, you may take a detour to search for a nest of lantern bugs. roll a random hunt event. afterwards, you return with bug juice and all survivors gain +1d5 survival. "
-    },
-    {
-      "name": "Largesse",
-      "type": "Ability",
-      "description": "During your act, if you are Honorable, you may give an adjacent survivor one of your survival. Limit once per round.",
-      "expansion": null,
-      "searchableText": "largesse ability during your act, if you are honorable, you may give an adjacent survivor one of your survival. limit once per round. "
-    },
-    {
-      "name": "Legendcaller",
-      "type": "Ability",
-      "description": "Once a lifetime, on a hunt board space after Overwhelming Darkness, in place of rolling a random hunt event, use \"53\" as your result.",
-      "expansion": null,
-      "searchableText": "legendcaller ability once a lifetime, on a hunt board space after overwhelming darkness, in place of rolling a random hunt event, use \"53\" as your result. "
-    },
-    {
-      "name": "Levinblood",
-      "type": "Ability",
-      "description": "At the end of your attack with a weapon with the metal keyword, if you hit the monster, it is shocked and suffers an automatic wound.",
-      "expansion": null,
-      "searchableText": "levinblood ability at the end of your attack with a weapon with the metal keyword, if you hit the monster, it is shocked and suffers an automatic wound. "
-    },
-    {
-      "name": "Leyline Walker",
-      "type": "Ability",
-      "description": "While there is no armor or accessory gear in your gear grid, gain +3 evasion.",
-      "expansion": null,
-      "searchableText": "leyline walker ability while there is no armor or accessory gear in your gear grid, gain +3 evasion. "
-    },
-    {
-      "name": "Life Exchange",
-      "type": "Ability",
-      "description": "In the Aftermath, gain 1 additional Hunt XP. You may not wear other gear. If you trigger the White Secret story event, you cease to exist. When you retire, you cease to exist.",
-      "expansion": null,
-      "searchableText": "life exchange ability in the aftermath, gain 1 additional hunt xp. you may not wear other gear. if you trigger the white secret story event, you cease to exist. when you retire, you cease to exist. "
-    },
-    {
-      "name": "Crystal Skin ",
-      "type": "Ability",
-      "description": "You ignore cursed and cannot wear armor. When you depart gain 3 to all hit locations. Suffer -2 to the result of all severe injury rolls. When you participate in Intimacy, newborns gain Crystal Skin in addition to any other roll results. ",
-      "expansion": null,
-      "searchableText": "crystal skin you ignore cursed and cannot wear armor. when you depart gain 3 to all hit locations. suffer -2 to the result of all severe injury rolls. when you participate in intimacy, newborns gain crystal skin in addition to any other roll results. "
-    },
-    {
-      "name": "Rooted to All",
-      "type": "Ability",
-      "description": "If you are standing at teh start of yoru act, reveal the top 2 cards of the AI deck and put them back in any order.",
-      "expansion": null,
-      "searchableText": ""
-    },
-    {
-      "name": "Lone Drifter",
-      "type": "Ability",
-      "description": "You may *dash* 1 addtional time per round. You cannot perform any survival action except for *dash*. At the start of your act, gain survival up to the settlement limit",
+  "Philosophy": [
+    {
+      "name": "Ambitionism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Spoiled",
+      "tenetKnowledge": null,
+      "description": "If you are a *returning survivor* and CC did not increase during the *Aftermath*, skip the next hunt and sulk.",
+      "expansion": null,
+      "searchableText": "ambitionism philosophy spoiled if you are a *returning survivor* and cc did not increase during the aftermath, skip the next hunt and sulk. 2,6,10,14,16"
+    },
+    {
+      "name": "Blessed First",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Woebegone",
+      "tenetKnowledge": "Fortune & Misfortune",
+      "description": "While Luck is on the showdown board, the other survivors feel his deep foreboding. Their weapons gain *Unwieldy*.",
+      "expansion": null,
+      "searchableText": "blessed first philosophy woebegone while luck is on the showdown board, the other survivors weapons gain unwieldy. 2,6,10,14,16"
+    },
+    {
+      "name": "Champion",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        4,
+        6,
+        12,
+        16
+      ],
+      "nerosis": "Compelled",
+      "tenetKnowledge": "Chosen",
+      "description": "An internal need guides you to greatness. You must *depart* if able to do so. If you are unable to *depart* for any reason (you are retired, must skip the next hunt, etc.), you *depart* anyway, but set your insanity and survival to 0.",
+      "expansion": null,
+      "searchableText": "champion philosophy compelled you must *depart* if able to do so. if you are unable to *depart* for any reason, you *depart* anyway, but set your insanity and survival to 0. 2,4,6,12,16"
+    },
+    {
+      "name": "Collectivism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Selfless",
+      "tenetKnowledge": "All for One",
+      "description": "While you are alive, increase the settlement's survival limit by +1. Each collectivist can increase the limit.\nWhen you *depart*, set your survival to 0 after applying all bonuses.",
+      "expansion": null,
+      "searchableText": "collectivism philosophy selfless while you are alive, increase the settlement's survival limit by +1. each collectivist can increase the limit. when you *depart*, set your survival to 0 after applying all bonuses. 2,6,10,14,16"
+    },
+    {
+      "name": "Deadism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        4,
+        10,
+        12,
+        16
+      ],
+      "nerosis": "Disembodied",
+      "tenetKnowledge": "Death Poet",
+      "description": "Nothing matters. You cannot gain insanity.",
+      "expansion": null,
+      "searchableText": "deadism philosophy disembodied nothing matters. you cannot gain insanity. 2,4,10,12,16"
+    },
+    {
+      "name": "Dreamism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        4,
+        7,
+        10,
+        16
+      ],
+      "nerosis": "Sleepless",
+      "tenetKnowledge": "Guardian",
+      "description": "You cannot slee soundly unless you are at the feet of the Dream Keeper, bathed in the snores of the dreamers it holds aloft. \nYou cannot gain survival during the hunt or showdown.",
+      "expansion": null,
+      "searchableText": "dreamism philosophy sleepless you cannot gain survival during the hunt or showdown. 2,4,7,10,16"
+    },
+    {
+      "name": "Faceism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        4,
+        7,
+        10,
+        16
+      ],
+      "nerosis": "Fixated",
+      "tenetKnowledge": "Physiognomy",
+      "description": "You can attack the monster only from its facing or when it is knocked down.",
+      "expansion": null,
+      "searchableText": "faceism philosophy fixated you can attack the monster only from its facing or when it is knocked down. 2,4,7,10,16"
+    },
+    {
+      "name": "Gourmandism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Ravenous",
+      "tenetKnowledge": "Health",
+      "description": "You may spend {q} to *consume* a piece of gear or resource with the *consumable* keyword. Archive it.\nDuring the *Aftermath*, if you did not perform this, suffer -1 strength.",
+      "expansion": null,
+      "searchableText": "gourmandism philosophy ravenous you may spend {q} to *consume* a piece of gear or resource with the *consumable* keyword. archive it. during the aftermath, if you did not perform this, suffer -1 strength. 2,6,10,14,16"
+    },
+    {
+      "name": "Homicidalism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Murderer",
+      "tenetKnowledge": "Dark Impulse",
+      "description": "During the hunt or showdown, if you are ever alone with another survivor, you murder them; keep track of your *body count*. Before resolving each rank of Homicidalism, roll 1d10 and subtract your *body count* from the roll result. On a 1 or lower, the settlement kills you.",
+      "expansion": null,
+      "searchableText": "homicidalism philosophy murderer during the hunt or showdown, if you are ever alone with another survivor, you murder them; keep track of your body count. before resolving each rank, roll 1d10 and subtract your body count from the roll result. on a 1 or lower, the settlement kills you. 2,6,10,14,16"
+    },
+    {
+      "name": "Impermanism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        4,
+        7,
+        10,
+        16
+      ],
+      "nerosis": "Unrestrained",
+      "tenetKnowledge": "Shatterstar",
+      "description": "It was always going to break. All weapons, except Fist & Tooth, have *Frail* while they are in your gear grid. \nIf you wound a Super-Dense hit location with Fist & Tooth, suffer the *broken arm* severe injury at the end of the attack.",
+      "expansion": null,
+      "searchableText": "impermanism philosophy unrestrained all weapons, except f&t, have frail while they are in your gear grid. if you wound a super-dense hit location with f&t, suffer the broken arm severe injury at the end of the attack. 2,4,7,10,16"
+    },
+    {
+      "name": "Lanternism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        4,
+        7,
+        10,
+        16
+      ],
+      "nerosis": "Phototaxis",
+      "tenetKnowledge": "Death Collector",
+      "description": "You are bound by the light. While there is a *Fallen Lantern* terrain tile on the board, you cannot spend survival.",
+      "expansion": null,
+      "searchableText": "lanternism philosophy phototaxis you are bound by the light. while there is a fallen lantern terrain tile on the board, you cannot spend survival. 2,4,7,10,16"
+    },
+    {
+      "name": "Marrowism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Arrogance",
+      "tenetKnowledge": "Osteophage",
+      "description": "Why follow in any other footsteps? When you gain knowledge at the Forum that is not from Marrowism, it cost +2 Lumi.\nYou cannot refuse a Majestic Invitation from a Bone Eater.",
+      "expansion": null,
+      "searchableText": "marrowism philosophy arrogance when you gain knowledge at the forum that is not from marrowism, it cost +2 lumi. you cannot refuse a majestic invitation from a bone eater. 2,6,10,14,16"
+    },
+    {
+      "name": "Optimism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Important",
+      "tenetKnowledge": "Positivity",
+      "description": "When you *depart*, if your total number of armor points (after all bonuses) is higher than each other departing survivor's, gain survival up to the limit. Otherwise, loose all survival.",
+      "expansion": null,
+      "searchableText": "optimism philosophy important when you *depart*, if your total number of armor points is higher than each other *departing survivor*'s, gain survival up to the limit. otherwise, loose all survival. 2,6,10,14,16"
+    },
+    {
+      "name": "Regalism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Inferiority Complex",
+      "tenetKnowledge": "Find the Castle",
+      "description": "You feel inferior and must confirm this bias. \nYou may not *depart* if you have the highest strength among all *departing survivors*.",
+      "expansion": null,
+      "searchableText": "regalism philosophy inferiority complex you may not *depart* if you have the highest strength among all *departing survivors*. 2,6,10,14,16"
+    },
+    {
+      "name": "Romanticism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Dilettante",
+      "tenetKnowledge": "Wanderlust",
+      "description": "When you *depart*, gain a random knowledge from the knowledge deck. If you have no empty slots, you must replace an existing knowledge.",
+      "expansion": null,
+      "searchableText": "romanticism philosophy dilettante when you *depart*, gain a random knowledge from the knowledge deck. if you have no empty slots, you must replace an existing knowledge. 2,6,10,14,16"
+    },
+    {
+      "name": "Survivalism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        4,
+        7,
+        10,
+        16
+      ],
+      "nerosis": "Selfish",
+      "tenetKnowledge": "Tenacity",
+      "description": "When you *encourage* another survivor, roll 1d10. On a 6+, you do not *encourage*. Keep your survival. You cannot *encourage* again this round. \nIf it possible for your survivor to use *Meat Shield* to avoid harm, they must use it.",
+      "expansion": null,
+      "searchableText": "survivalism philosophy selfish when you *encourage* another survivor, roll 1d10. on a 6+, you do not *encourage*. keep your survival. you cannot *encourage* again this round. if it possible for your survivor to use meat shield to avoid harm, they must use it. 2,4,7,10,16"
+    },
+    {
+      "name": "Verminism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Frailty",
+      "tenetKnowledge": "Hissing Arms",
+      "description": "No matter how protected you are, you know your insides are vulnerable. \n+1 systemic pressure",
+      "expansion": null,
+      "searchableText": "verminism philosophy frailty +1 systemic pressure 2,6,10,14,16"
+    },
+    {
+      "name": "Gatherism",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        5,
+        8,
+        12,
+        16
+      ],
+      "nerosis": "Inquisitive",
+      "tenetKnowledge": "Invasive",
+      "description": "Obsessive curiosity. When the survivors are prompted to *investigate* during the hunt, you must do so (multiple Gatherists roll off if necessary). \nWhile you are on or adjacent to terrain during the showdown, you cannot spend survival.",
+      "expansion": "Gatherism",
+      "searchableText": "gatherism philosophy obsessive curiosity. when the survivors are prompted to *investigate* during the hunt, you must do so (multiple gatherists roll off if necessary). while you are on or adjacent to terrain during the showdown, you cannot spend survival. obsessive curiosity. when the survivors are prompted to *investigate* during the hunt, you must do so (multiple gatherists roll off if necessary). while you are on or adjacent to terrain during the showdown, you cannot spend survival. inquisitive gatherism"
+    },
+    {
+      "name": "Effervescence",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        4,
+        6,
+        13,
+        16
+      ],
+      "nerosis": "Compound Grief",
+      "tenetKnowledge": "Reframe",
+      "description": "On *Arrival*, Candy gains a random disorder, if all her disorder slots are already filled, she instead gains +1 systemic pressure and suffers -1 ♥",
+      "expansion": "Candy & Cola",
+      "searchableText": "effervescence philosophy on *arrival*, candy gains a random disorder, if all her disorder slots are already filled, she instead gains +1 systemic pressure and suffers -1 ♥ on *arrival*, candy gains a random disorder, if all her disorder slots are already filled, she instead gains +1 systemic pressure and suffers -1 ♥ compound grief candy & cola"
+    },
+    {
+      "name": "Disintegration",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        5,
+        9,
+        16
+      ],
+      "nerosis": "Rotter",
+      "tenetKnowledge": "Adrenaline",
+      "description": "When you *depart,* set your armor points at each hit location to 0 after factoring all bonuses. When you are a returning survivor, you devour another. Suffer -1 population, the settlement does not gain benefits of their death principle.",
+      "expansion": "Goth",
+      "searchableText": "disintegration philosophy when you *depart,* set your armor points at each hit location to 0 after factoring all bonuses. when you are a returning survivor, you devour another. suffer -1 population, the settlement does not gain benefits of their death principle. when you *depart,* set your armor points at each hit location to 0 after factoring all bonuses. when you are a returning survivor, you devour another. suffer -1 population, the settlement does not gain benefits of their death principle. rotter goth"
+    },
+    {
+      "name": "Consumption",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        6,
+        10,
+        14,
+        16
+      ],
+      "nerosis": "Cravings",
+      "tenetKnowledge": "Dubious Fare",
+      "description": "If Aeneas is *Hungry*, she consumes and archives 1 consumable resource or gear in the settlement (including settlement storage) at the start of the Develop Step of the settlement phase",
+      "expansion": "Aeneas",
+      "searchableText": "consumption philosophy if aeneas is *hungry*, she consumes and archives 1 consumable resource or gear in the settlement (including settlement storage) at the start of the develop step of the settlement phase if aeneas is *hungry*, she consumes and archives 1 consumable resource or gear in the settlement (including settlement storage) at the start of the develop step of the settlement phase cravings aeneas"
+    },
+    {
+      "name": "Hyper Light",
+      "type": "Philosophy",
+      "milestoneNumbers": [
+        2,
+        4,
+        8,
+        14,
+        16
+      ],
+      "nerosis": "Afflicted",
+      "tenetKnowledge": "Chain Dash",
+      "description": "At the end of your act, if you did not *dash* this round, you are knocked down and gain a bleeding token.",
       "expansion": "Death Drifter",
-      "searchableText": ""
-    },
+      "searchableText": "hyper light philosophy at the end of your act, if you did not *dash* this round, you are knocked down and gain a bleeding token. at the end of your act, if you did not *dash* this round, you are knocked down and gain a bleeding token. afflicted death drifter"
+    }
+  ],
+  "Weapon": [
     {
-      "name": "Bile Body",
-      "type": "Ability",
-      "description": "On Arrival, gain a +1 evasion token. When you suffer a severe injury, adjacent monsters and survivors are knocked down. Limit once per showdown.",
-      "expansion": "Pariah",
-      "searchableText": ""
-    },
-    {
-      "name": "Boost Heart",
-      "type": "Ability",
-      "description": "At the start of your act, gain +1 strength token. When you are knocked down, lose all your +1 strength tokens. When you have five or more +1 strength tokens, your heart bursts. Dead",
-      "expansion": "Pariah",
-      "searchableText": ""
-    },
-    {
-      "name": "Ferrous Feed",
-      "type": "Ability",
-      "description": "During your act, consume and archive 1 of your attribute tokens to suffer bleed 1.",
-      "expansion": "Pariah",
-      "searchableText": ""
-    },
-    {
-      "name": "Fused",
-      "type": "Ability",
-      "description": "When you suffer a severe body injury, the monster suffers an automatic hit that inflicts a critical wound.",
-      "expansion": "Pariah",
-      "searchableText": ""
-    },
-    {
-      "name": "Heart Strings",
-      "type": "Ability",
-      "description": "You cannot be the straggler. On Arrival, choose a board edge. You may move up to three additional spaces towards your chosen board edge after {m} action.",
-      "expansion": "Pariah",
-      "searchableText": ""
-    },
-    {
-      "name": "One Two",
-      "type": "Ability",
-      "description": "When you die, do not gain the benefits of your Death Principle. Two survivors emerge from your corpse.",
-      "expansion": "Pariah",
-      "searchableText": ""
-    },
-    {
-      "name": "Warmed up",
-      "type": "Ability",
-      "description": "You never suffer the effects of cold. On Arrival, gain +1 movement and +1 speed token. When you are a returning survivor, +5 {v}. Only you may spend these endeavors.",
-      "expansion": "Pariah",
-      "searchableText": ""
-    },
-    {
-      "name": "Astrocyte Excitation",
-      "type": "Ability",
-      "description": "You add +4 to your roll results during {s} *Vaultless*.",
-      "expansion": "Red Witches",
-      "searchableText": ""
-    },
-    {
-      "name": "Hyper Defense",
-      "type": "Ability",
-      "description": "Durning your act, you may gain a bleeding token to perform *Block 1* at no activation cost. Limit once per a round..",
-      "expansion": "Red Witches",
-      "searchableText": ""
-    },
-    {
-      "name": "Improbable Survivor",
-      "type": "Ability",
-      "description": "When you suffer a severe injury, gain +1 luck token.",
-      "expansion": "Red Witches",
-      "searchableText": ""
-    },
-    {
-      "name": "Perfect Kidneys",
-      "type": "Ability",
-      "description": "at the end of your act, remove a negative attribute token. When you suffer the Bleeding Kidneys severe injury, lose this ability.",
-      "expansion": "Red Witches",
-      "searchableText": ""
-    },
-    {
-      "name": "Red String of Fate",
-      "type": "Ability",
-      "description": "When you draw a trap, cancel it, discard it, then reshuffle the hit location discard into the hitlocation deck and draw a new card. Limit once per lifetime.",
-      "expansion": "Red Witches",
-      "searchableText": ""
-    },
-    {
-      "name": "Reflexive Shooter",
-      "type": "Ability",
-      "description": "Ignore Cumbersome on bows in your gear grid and reduce their range by 2.",
-      "expansion": "Red Witches",
-      "searchableText": ""
-    },
-    {
-      "name": "Stone Face Engraver",
-      "type": "Ability",
-      "description": "When a survivor adopts a philosophy, they draw an additional card and select one to adopt.",
+      "name": "Axe",
+      "type": "Weapon",
+      "spec": "If your wound attempt fails, you may ignore it and attempt to wound the selected {N} again. Limit, once per attack.",
+      "mastery": "When you wound a monster at a location with a persistent injury, that wound becomes a critical wound.",
+      "specialistLevels": [
+        3,
+        8
+      ],
       "expansion": null,
-      "searchableText": "stone face engraver ability when a survivor adopts a philosophy, they draw an additional card and select one to adopt."
+      "searchableText": "axe weapon if your wound attempt fails, you may ignore it and attempt to wound the selected hit location again. limit, once per attack. when you wound a monster at a location with a persistent injury, that wound becomes a critical wound."
     },
     {
-      "name": "Mentor",
-      "type": "Ability",
-      "description": "During the settlement phase, spend {v} to nominate a survivor with less Hunt XP than you. They gain +2 lumi and +2 Hunt XP. Limit once per lantern year.",
+      "name": "Bow",
+      "type": "Weapon",
+      "spec": "When attacking with a bow you may reroll any misses once.",
+      "mastery": "Gain *Deadly 2* and ignore *Cumbersome*",
+      "specialistLevels": [
+        3,
+        8
+      ],
       "expansion": null,
-      "searchableText": "mentor ability during the settlement phase, spend {v} to nominate a survivor with less hunt xp than you. they gain +2 lumi and +2 hunt xp. limit once per lantern year."
+      "searchableText": "bow weapon when attacking with a bow you may reroll any misses once. gain deadly 2 and ignore *cumbersome*"
+    },
+    {
+      "name": "Club",
+      "type": "Weapon",
+      "spec": "On a *perfect hit* double your wound attempt total on the first selected hit location.\nLimit once per attack.",
+      "mastery": "If successful wound attempt total is greater than or equal to twice the monster's toughness, inflict an additional wound.",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "club weapon on a *perfect hit* double your wound attempt total on the first selected hit location. limit once per attack. if successful wound attempt total is greater than or equal to twice the monster's toughness, inflict an additional wound."
+    },
+    {
+      "name": "Dagger",
+      "type": "Weapon",
+      "spec": "If a wound attempt fails, after performing any reactions, you may discard another drawn {N} to attempt to wound that {N} again. Limit, once per attack.",
+      "mastery": "After a wounded {N} is discarded, if adjacent to the attacker and wounded monster you may spend 1 survival to re-draw the wounded {N} and attempt to wound with a dagger.",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "dagger weapon if a wound attempt fails, after performing any reactions, you may discard another drawn hit location card to attempt to wound that hit location again. limit, once per attack. after a wounded hit location is discarded, if adjacent to the attacker and wounded monster you may spend 1 survival to re-draw the wounded hit location and attempt to wound with a dagger."
+    },
+    {
+      "name": "Fist & Tooth",
+      "type": "Weapon",
+      "spec": "You may stand (if knocked down) at the start of the monster's turn or the survivors' turn.\nLimit once per round",
+      "mastery": "+2 permanent accuracy and str",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "fist & tooth weapon you may stand (if knocked down) at the start of the monster's turn or the survivors' turn. limit once per round +2 permanent accuracy and strength"
+    },
+    {
+      "name": "Grand Weapon",
+      "type": "Weapon",
+      "spec": "+1 Acc.\nIf you critically wound the monster is knocked down.",
+      "mastery": "When you have a *perfect hit*, cancel all reactions for that attack.",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "grand weapon weapon +1 acc. if you critically wound the monster is knocked down. when you have a *perfect hit*, cancel all reactions for that attack."
+    },
+    {
+      "name": "Katana",
+      "type": "Weapon",
+      "spec": "Cannot select this weapon type. If you are *blind* and have 4+ ranks: On your first *perfect hit* each attack, do not draw a {H}. The monster suffers 1 wound.",
+      "mastery": "Leave the settlement, can set another survivor weapon type to Katana",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "katana weapon cannot select this weapon type. if you are *blind* and have 4+ ranks: on your first *perfect hit* each attack, do not draw a hit location. the monster suffers 1 wound. leave the settlement, can set another survivor weapon type to katana"
+    },
+    {
+      "name": "Katar",
+      "type": "Weapon",
+      "spec": "Cancel reactions on the first selected {N}",
+      "mastery": "+1 evasion token on a *perfect hit*.\nWhen you are knocked down remove all +1 evasion tokens",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "katar weapon cancel reactions on the first selected hit location +1 evasion token on a *perfect hit*. when you are knocked down remove all +1 evasion tokens"
+    },
+    {
+      "name": "Shield",
+      "type": "Weapon",
+      "spec": "No longer knocked down after collision with monster.\n{!} to all hit locations",
+      "mastery": "While adjacent to a survivor that is targeted by a monster, you may swap spaces on the board and become the target instead.",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "shield weapon no longer knocked down after collision with monster. +{!} to all hit locations while adjacent to a survivor that is targeted by a monster, you may swap spaces on the board and become the target instead."
+    },
+    {
+      "name": "Spear",
+      "type": "Weapon",
+      "spec": "If you draw the trap, roll 1d10 . On a 7+ cancel the trap. Discard it, then reshuffle the {N} deck and draw a new card. Limit once per round.",
+      "mastery": "When you hit the monster you may spend 1 survival to gain the *priority target* token. If they made the hit from directly behind another survivor, that survivor gains it instead.",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "spear weapon if you draw the trap, roll 1d10 . on a 7+ cancel the trap. discard it, then reshuffle the hl deck and draw a new card. limit once per round. when you hit the monster you may spend 1 survival to gain the *priority target* token. if they made the hit from directly behind another survivor, that survivor gains it instead."
+    },
+    {
+      "name": "Sword",
+      "type": "Weapon",
+      "spec": "After drawing hit location, make a wound attempt and then select a {N} to resolve with that result. Limit once per attack.",
+      "mastery": "+1 Acc, Str and speed",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "sword weapon after drawing hit location, make a wound attempt and then select a hit location to resolve with that result. limit once per attack. +1 acc, str and speed"
+    },
+    {
+      "name": "Sword - Willow",
+      "type": "Weapon",
+      "spec": "Swords in your gear grid gain Block 1 and the two-handed keyword. When you block or deflect a hit with a sword, gain +1 survival. Limit once per round.",
+      "mastery": "After resolving a monster's {O}, if you ignored a hit with block or defect, you may spend 1 survival to activate a sword and attack. Limit once per round.",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "sword - willow weapon swords in your gear grid gain block 1 and the two-handed keyword. when you block or deflect a hit with a sword, gain +1 survival. limit once per round. after resolving a monster's ai, if you ignored a hit with block or defect, you may spend 1 survival to activate a sword and attack. limit once per round."
+    },
+    {
+      "name": "Twilight Sword",
+      "type": "Weapon",
+      "spec": "Rank 2 - Ignore *Cumbersome*, Rank 4 - Ignore slow and gain +2 speed, Rank 6 - Gain Deadly",
+      "mastery": "Leave the settlement, may give the twilight sword to another survivor.",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "twilight sword weapon rank 2 - ignore *cumbersome*, rank 4 - ignore slow and gain +2 speed, rank 6 - gain deadly leave the settlement, may give the twilight sword to another survivor."
+    },
+    {
+      "name": "Whip",
+      "type": "Weapon",
+      "spec": "Instead of moving the top card of the AI deck into the wound stack, you may move the top card of the AI discard pile. Limit once per Attack",
+      "mastery": "Gain +5 strength when attacking with a whip",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "whip weapon instead of moving the top card of the ai deck into the wound stack, you may move the top card of the ai discard pile. limit once per attack gain +5 strength when attacking with a whip"
+    },
+    {
+      "name": "Scythe",
+      "type": "Weapon",
+      "spec": "When you critically wound with a scythe. roll 1d10. On a 6+, shuffle the hit location deck (do not shuffle unresolved hit locations). Limit, once per attack",
+      "mastery": "At teh start of a Scythe Master's act, if they are insane, they gain +1 {q}, which they may only spend to activate scythes.",
+      "specialistLevels": [
+        3,
+        8
+      ],
+      "expansion": null,
+      "searchableText": "whip weapon instead of moving the top card of the ai deck into the wound stack, you may move the top card of the ai discard pile. limit once per attack gain +5 strength when attacking with a whip"
     }
   ],
   "Character Trait": [
@@ -683,7 +656,7 @@ var dataset = {
       "traitSubType": "Legendary Ability",
       "description": "Ignore *Cumbersome* on weapons. When you *depart*, subtract {!} from all hit locations.",
       "expansion": null,
-      "searchableText": "the fang character trait legendary ability ignore *Cumbersome* on weapons. when you *depart*, subtract {!} from all hit locations."
+      "searchableText": "the fang character trait legendary ability ignore *cumbersome* on weapons. when you *depart*, subtract {!} from all hit locations."
     },
     {
       "name": "The Gaiety",
@@ -699,7 +672,7 @@ var dataset = {
       "traitSubType": "Ability",
       "description": "On *Arrival* gain a {R} Fresh Acanthus.",
       "expansion": null,
-      "searchableText": "the gatherer character trait ability on *Arrival* gain a fresh acanthus."
+      "searchableText": "the gatherer character trait ability on *arrival* gain a fresh acanthus."
     },
     {
       "name": "The Glamorous",
@@ -731,7 +704,7 @@ var dataset = {
       "traitSubType": "Impairment",
       "description": "Gain +1 strength and the *Marrow Hunger* impairment.",
       "expansion": null,
-      "searchableText": "the hunger character trait impairment gain +1 strength and the *Marrow Hunger* impairment."
+      "searchableText": "the hunger character trait impairment gain +1 strength and the *marrow hunger* impairment."
     },
     {
       "name": "The Impetuous",
@@ -739,7 +712,7 @@ var dataset = {
       "traitSubType": "Impairment",
       "description": "On *Arrival*, suffer the *frenzy* brain trauma. Limit once per lantern year.",
       "expansion": null,
-      "searchableText": "the impetuous character trait impairment on *Arrival*, suffer the *frenzy* brain trauma. limit once per lantern year."
+      "searchableText": "the impetuous character trait impairment on *arrival*, suffer the *frenzy* brain trauma. limit once per lantern year."
     },
     {
       "name": "The Last Stand",
@@ -763,7 +736,7 @@ var dataset = {
       "traitSubType": "Impairment",
       "description": "You cannot participate in *Intimacy* or *Partnership*.",
       "expansion": null,
-      "searchableText": "the lonely character trait impairment you cannot participate in *Intimacy* or partnership."
+      "searchableText": "the lonely character trait impairment you cannot participate in *intimacy* or partnership."
     },
     {
       "name": "The Mad",
@@ -771,7 +744,7 @@ var dataset = {
       "traitSubType": "Ability",
       "description": "On *Arrival*, gain +3 insanity.",
       "expansion": null,
-      "searchableText": "the mad character trait ability on *Arrival*, gain +3 insanity."
+      "searchableText": "the mad character trait ability on *arrival*, gain +3 insanity."
     },
     {
       "name": "The Magama",
@@ -894,519 +867,6 @@ var dataset = {
       "searchableText": "weapon master character trait legendary ability gain weapon proficiency ranks at twice the speed. when you reach a weapon mastery, you leave the settlement to further hone your craft, never to be seen again."
     }
   ],
-  "Disorder": [
-    {
-      "name": "Absent Seizures",
-      "type": "Disorder",
-      "description": "The first time you would suffer a brain trauma each showdown, you are instead knocked down and forget a fighting art [erase it]",
-      "expansion": "Gorm",
-      "searchableText": "absent seizures disorder the first time you would suffer a brain trauma each showdown, you are instead knocked down and forget a fighting art [erase it] gorm"
-    },
-    {
-      "name": "Aichmophobia",
-      "type": "Disorder",
-      "description": "You cannot activate or *depart* with axes, swords, spears, daggers, scythes, or katars in your gear grid.",
-      "expansion": "",
-      "searchableText": "aichmophobia disorder you cannot activate or *depart* with axes, swords, spears, daggers, scythes, or katars in your gear grid."
-    },
-    {
-      "name": "Anxiety",
-      "type": "Disorder",
-      "description": "At the start of the showdown, gain the *priority target* token unless you have *stinky* gear in your gear grid.",
-      "expansion": "",
-      "searchableText": "anxiety disorder at the start of the showdown, gain the *priority target* token unless you have *stinky* gear in your gear grid."
-    },
-    {
-      "name": "Apathetic",
-      "type": "Disorder",
-      "description": "You cannot use or gain survival. You cannot gain courage. \nCure this disorder if you have 8+ understanding.",
-      "expansion": "",
-      "searchableText": "apathetic disorder you cannot use or gain survival. you cannot gain courage. cure this disorder if you have 8+ understanding."
-    },
-    {
-      "name": "Arithmophillia",
-      "type": "Disorder",
-      "description": "When you gain this disorder, roll 1d5. Your movement is that number. \nIgnore all other movement modifiers",
-      "expansion": "DK",
-      "searchableText": "arithmophillia disorder when you gain this disorder, roll 1d5. your movement is that number. ignore all other movement modifiers dk"
-    },
-    {
-      "name": "Atelophobia",
-      "type": "Disorder",
-      "description": "When there are no *perfect hits* in your attack, suffer 1 brain damage.",
-      "expansion": "",
-      "searchableText": "atelophobia disorder when there are no *perfect hits* in your attack, suffer 1 brain damage."
-    },
-    {
-      "name": "Binge Eating",
-      "type": "Disorder",
-      "description": "You cannot *depart* unless you have *consumable* gear in your gear grid. \nYou must *consume* if a choice to *consume* arises.",
-      "expansion": "",
-      "searchableText": "binge eating disorder you cannot *depart* unless you have *consumable* gear in your gear grid. you must *consume* if a choice to *consume* arises."
-    },
-    {
-      "name": "Bloodlust",
-      "type": "Disorder",
-      "description": "Whenever a survivor gains a bleeding token, suffer the *frenzy* brain trauma. Limit once per round.",
-      "expansion": "CC",
-      "searchableText": "bloodlust disorder whenever a survivor gains a bleeding token, suffer the *frenzy* brain trauma. limit once per round. cc"
-    },
-    {
-      "name": "Brain Smog",
-      "type": "Disorder",
-      "description": "You Cannot *surge* or *concentrate*",
-      "expansion": "Smog",
-      "searchableText": "brain smog disorder you cannot *surge* or *concentrate* smog"
-    },
-    {
-      "name": "Chimeric Delusion",
-      "type": "Disorder",
-      "description": "You cannot *depart* to hunt the Frogdog. \nYour delusion prevents you from speaking. You cannot *encourage* or participate in *Intimacy*.",
-      "expansion": "Frogdog",
-      "searchableText": "chimeric delusion disorder you cannot *depart* to hunt the frogdog. your delusion prevents you from speaking. you cannot *encourage* or participate in *Intimacy*. frogdog"
-    },
-    {
-      "name": "Controlophobia",
-      "type": "Disorder",
-      "description": "While you are the monster controller, double any damage you suffer.",
-      "expansion": "Spidi",
-      "searchableText": "controlophobia disorder while you are the monster controller, double any damage you suffer. spidi"
-    },
-    {
-      "name": "Coprolalia",
-      "type": "Disorder",
-      "description": "All your gear is *noisy*. You are always a threat unless you are knocked down, even if an effect says otherwise.",
-      "expansion": "",
-      "searchableText": "coprolalia disorder all your gear is *noisy*. you are always a threat unless you are knocked down, even if an effect says otherwise."
-    },
-    {
-      "name": "Delicious",
-      "type": "Disorder",
-      "description": "You are still considered a threat when you are knocked down [unless you use an effect that says otherwise].",
-      "expansion": "LG",
-      "searchableText": "delicious disorder you are still considered a threat when you are knocked down [unless you use an effect that says otherwise]. lg"
-    },
-    {
-      "name": "Delirium",
-      "type": "Disorder",
-      "description": "All your gear is *noisy*. \nOn *Arrival*, draw two random survivor attribute tokens, honoring the side they are drawn on.",
-      "expansion": "Frogdog",
-      "searchableText": "delirium disorder all your gear is *noisy*. on *Arrival*, draw two random survivor attribute tokens, honoring the side they are drawn on. frogdog"
-    },
-    {
-      "name": "Destined",
-      "type": "Disorder",
-      "description": "If you do not *depart*, lose all survival and insanity.",
-      "expansion": "DK",
-      "searchableText": "destined disorder if you do not *depart*, lose all survival and insanity. dk"
-    },
-    {
-      "name": "Directional Dyslexia",
-      "type": "Disorder",
-      "description": "Your {m} can only be spent to move in a single straight line.",
-      "expansion": "King",
-      "searchableText": "directional dyslexia disorder your (m) can only be spent to move in a single straight line. king"
-    },
-    {
-      "name": "Dishonorable",
-      "type": "Disorder",
-      "description": "You cannot *depart* unless you are *insane*. \nGain +1 speed while attacking a monster that is knocked down or from its blind spot.",
-      "expansion": "BK",
-      "searchableText": "dishonorable disorder you cannot *depart* unless you are *insane*. gain +1 speed while attacking a monster that is knocked down or from its blind spot. bk"
-    },
-    {
-      "name": "Emotionless",
-      "type": "Disorder",
-      "description": "You cannot gain +1 strength tokens.",
-      "expansion": "SS",
-      "searchableText": "emotionless disorder you cannot gain +1 strength tokens. ss"
-    },
-    {
-      "name": "Enfeebled",
-      "type": "Disorder",
-      "description": "It takes ones less bleeding token to kill you.",
-      "expansion": "LG",
-      "searchableText": "enfeebled disorder it takes ones less bleeding token to kill you. lg"
-    },
-    {
-      "name": "Eproctophilia",
-      "type": "Disorder",
-      "description": "When you gain a stink token, gain +1 insanity. \nYou must *depart* with *stinky* gear in your gear grid.",
-      "expansion": "Frogdog",
-      "searchableText": "eproctophilia disorder when you gain a stink token, gain +1 insanity. you must *depart* with *stinky* gear in your gear grid. frogdog"
-    },
-    {
-      "name": "Ergophobia",
-      "type": "Disorder",
-      "description": "When you are a *returning survivor*, you do not generate {v}. \nYou cannot endeavor.",
-      "expansion": "",
-      "searchableText": "ergophobia disorder when you are a *returning survivor*, you do not generate {*}. you cannot endeavor."
-    },
-    {
-      "name": "Fear of the Dark",
-      "type": "Disorder",
-      "description": "You retire. \nIf you gain this disorder during a hunt or showdown, you put a brave face until you return to the settlement, vowing never to leave the Lantern Hoard again.",
-      "expansion": "",
-      "searchableText": "fear of the dark disorder if you gain this disorder during a hunt or showdown, you put a brave face until you return to the settlement, vowing never to leave the lantern hoard again."
-    },
-    {
-      "name": "Flower Addiction",
-      "type": "Disorder",
-      "description": "You may only *depart* to hunt the flower Knight. \nAfter you *depart*, cure this disorder.",
-      "expansion": "FK",
-      "searchableText": "flower addiction disorder you may only *depart*y to hunt the flower knight. after you *depart*, cure this disorder. fk"
-    },
-    {
-      "name": "Ghostly Beauty",
-      "type": "Disorder",
-      "description": "Double all insanity you gain. \nDouble all survival you spend.",
-      "expansion": "FK",
-      "searchableText": "ghostly beauty disorder double all insanity you gain. double all survival you spend. fk"
-    },
-    {
-      "name": "Hemophobia",
-      "type": "Disorder",
-      "description": "During the showdown, whenever a survivor [including you] gains a bleeding token, you are knocked down.",
-      "expansion": "",
-      "searchableText": "hemophobia disorder during the showdown, whenever a survivor [including you] gains a bleeding token, you are knocked down."
-    },
-    {
-      "name": "Hoarder",
-      "type": "Disorder",
-      "description": "Whenever you are a *returning survivor*, archive 1 resource gained from the last showdown and gain +1 courage.",
-      "expansion": "",
-      "searchableText": "hoarder disorder whenever you are a *returning survivor*, archive 1 resource gained from the last showdown and gain +1 courage."
-    },
-    {
-      "name": "Honorable",
-      "type": "Disorder",
-      "description": "You cannot attack a monster from its blind spot or if it is knocked down.",
-      "expansion": "",
-      "searchableText": "honorable disorder you cannot attack a monster from its blind spot or if it is knocked down."
-    },
-    {
-      "name": "Hyper-Sensitivity",
-      "type": "Disorder",
-      "description": "You may *dodge* one additional time per a round. \nWhenever you are hit by an attack, you must *dodge* at least once, if possible.",
-      "expansion": "Slenderman",
-      "searchableText": "hyper-sensitivity disorder you may *dodge* one additional time per a round. whenever you are hit by an attack, you must *dodge* at least once, if possible. slenderman"
-    },
-    {
-      "name": "Hyperactive",
-      "type": "Disorder",
-      "description": "During the showdown, you must move at least 1 space every round.",
-      "expansion": "",
-      "searchableText": "hyperactive disorder during the showdown, you must move at least 1 space every round."
-    },
-    {
-      "name": "Immortal",
-      "type": "Disorder",
-      "description": "While you are *insane*, convert all damage dealt to your hit locations to brain damage. nYou are so busy reveling in your own glory that you cannot spend survival while *insane*.",
-      "expansion": "",
-      "searchableText": "immortal disorder while you are *insane*, convert all damage dealt to your hit locations to brain damage. you are so busy reveling in your own glory that you cannot spend survival while *insane*."
-    },
-    {
-      "name": "Indecision",
-      "type": "Disorder",
-      "description": "If you are the event revealer of hunt events that call you to make a roll, roll twice and use the lower result.",
-      "expansion": "",
-      "searchableText": "indecision disorder if you are the event revealer of hunt events that call you to make a roll, roll twice and use the lower result."
-    },
-    {
-      "name": "Maladroit",
-      "type": "Disorder",
-      "description": "When you end your movement on terrain, you are knocked down.",
-      "expansion": "BK",
-      "searchableText": "maladroit disorder when you end your movement on terrain, you are knocked down. bk"
-    },
-    {
-      "name": "Megalophobia",
-      "type": "Disorder",
-      "description": "you may not *depart* for hunts or showdowns with monsters that occupy more than 4 spaces on the showdown board.",
-      "expansion": "Gorm",
-      "searchableText": "megalophobia disorder you may not *depart* for hunts or showdowns with monsters that occupy more than 4 spaces on the showdown board. gorm"
-    },
-    {
-      "name": "Monster Panic",
-      "type": "Disorder",
-      "description": "Whenever you suffer brain damage from an *Intimidate* action, suffer 1 additional brain damage.",
-      "expansion": "",
-      "searchableText": "monster panic disorder whenever you suffer brain damage from an *knockback* action, suffer 1 additional brain damage."
-    },
-    {
-      "name": "Motion Sickness",
-      "type": "Disorder",
-      "description": "Whenever you suffer *knockback* gain 1 bleeding token.",
-      "expansion": "DBK",
-      "searchableText": "motion sickness disorder whenever you suffer *knockback* gain 1 bleeding token. dbk"
-    },
-    {
-      "name": "Narcissistic",
-      "type": "Disorder",
-      "description": "You may not wear armor at the head location. If you are wearing armor at the head location when you gain this disorder, archive it.",
-      "expansion": "FK",
-      "searchableText": "narcissistic disorder you may not wear armor at the head location. if you are wearing armor at the head location when you gain this disorder, archive it. fk"
-    },
-    {
-      "name": "Overprotective",
-      "type": "Disorder",
-      "description": "When an adjacent survivor is knocked down, you are also knocked down as you rush to their aid.",
-      "expansion": "SS",
-      "searchableText": "overprotective disorder when an adjacent survivor is knocked down, you are also knocked down as you rush to their aid. ss"
-    },
-    {
-      "name": "Pacifist",
-      "type": "Disorder",
-      "description": "You Cannot activate weapons to attack. Ignore this if you are *frenzied*.",
-      "expansion": "Smog",
-      "searchableText": "pacifist disorder you cannot activate weapons to attack. ignore this if you are *frenzied*. smog"
-    },
-    {
-      "name": "Performance Anxiety",
-      "type": "Disorder",
-      "description": "You cannot be nominated for *Intimacy*. \nCure this disorder if you have 8+ courage.",
-      "expansion": "DK",
-      "searchableText": "performance anxiety disorder you cannot be nominated for *Intimacy*. cure this disorder if you have 8+ courage. dk"
-    },
-    {
-      "name": "Phobophobia",
-      "type": "Disorder",
-      "description": "At the start of your act, if you have 0 insanity, gain the *Terrified* survivor status card.",
-      "expansion": "CC",
-      "searchableText": "phobophobia disorder at the start of your act, if you have 0 insanity, gain the terrified survivor status card. cc"
-    },
-    {
-      "name": "Photophilia",
-      "type": "Disorder",
-      "description": "You cannot *depart* without a lantern in your gear grid.",
-      "expansion": "",
-      "searchableText": "photophilia disorder you cannot *depart* without a lantern in your gear grid."
-    },
-    {
-      "name": "Post-Traumatic Stress",
-      "type": "Disorder",
-      "description": "Next settlement phase, you do not contribute or participate in any endeavors.\nSkip the next hunt to recover.",
-      "expansion": "",
-      "searchableText": "post-traumatic stress disorder next settlement phase, you do not contribute or participate in any endeavors.<br>skip the next hunt to recover."
-    },
-    {
-      "name": "Prey",
-      "type": "Disorder",
-      "description": "You may not spend survival unless you are *insane*.",
-      "expansion": "",
-      "searchableText": "prey disorder you may not spend survival unless you are *insane*."
-    },
-    {
-      "name": "Prima Donna",
-      "type": "Disorder",
-      "description": "Each survivor turn, you must take your act first (roll off each turn if multiple survivors have this disorder).",
-      "expansion": "LK",
-      "searchableText": "prima donna disorder each survivor turn, you must take your act first (roll off each turn if multiple survivors have this disorder). lk"
-    },
-    {
-      "name": "Ptophobia",
-      "type": "Disorder",
-      "description": "When you suffer *knockback* suffer {l} brain damage.",
-      "expansion": "BK",
-      "searchableText": "ptophobia disorder when you suffer *knockback* suffer * brain damage. bk"
-    },
-    {
-      "name": "Quixotic",
-      "type": "Disorder",
-      "description": "If you are *insane* when you *depart* gain +1 survival and +1 strength token.",
-      "expansion": "",
-      "searchableText": "quixotic disorder if you are *insane* when you *depart* gain +1 survival and +1 strength token."
-    },
-    {
-      "name": "Rageholic",
-      "type": "Disorder",
-      "description": "Whenever you suffer a severe injury, also suffer the *frenzy* brain trauma.",
-      "expansion": "",
-      "searchableText": "rageholic disorder whenever you suffer a severe injury, also suffer the *frenzy* brain trauma."
-    },
-    {
-      "name": "Revenge",
-      "type": "Disorder",
-      "description": "Whenever a survivor dies during the showdown, suffer *frenzy* brain trauma.",
-      "expansion": "Spidi",
-      "searchableText": "revenge disorder whenever a survivor dies during the showdown, suffer *frenzy* brain trauma. spidi"
-    },
-    {
-      "name": "Schadenfreude",
-      "type": "Disorder",
-      "description": "When another survivor suffers a severe injury, you are overcome with glee. You are knocked down and gain +1 insanity.",
-      "expansion": "Atnas",
-      "searchableText": "schadenfreude disorder when another survivor suffers a severe injury, you are overcome with glee. you are knocked down and gain +1 insanity. atnas"
-    },
-    {
-      "name": "Secretive",
-      "type": "Disorder",
-      "description": "When you are a *returning survivor*, you quickly become preoccupied with your own affairs. You must skip the next hunt to deal with them.",
-      "expansion": "",
-      "searchableText": "secretive disorder when you are a *returning survivor*, you quickly become preoccupied with your own affairs. you must skip the next hunt to deal with them."
-    },
-    {
-      "name": "Seizures",
-      "type": "Disorder",
-      "description": "During the showdown, whenever you suffer damage to your head location, you are knocked down.",
-      "expansion": "",
-      "searchableText": "seizures disorder during the showdown, whenever you suffer damage to your head location, you are knocked down."
-    },
-    {
-      "name": "Shallow Lungs",
-      "type": "Disorder",
-      "description": "When you *encourage*, you are knocked down.",
-      "expansion": "LK",
-      "searchableText": "shallow lungs disorder when you *encourage*, you are knocked down. lk"
-    },
-    {
-      "name": "Somniphobia",
-      "type": "Disorder",
-      "description": "On *Arrival*, lose half of your survival, rounded down.",
-      "expansion": "",
-      "searchableText": "somniphobia disorder on *Arrival*, lose half of your survival, rounded down."
-    },
-    {
-      "name": "Spiral Ganglia",
-      "type": "Disorder",
-      "description": "At the start of the showdown, gain the *Darkness Awareness* survivor status card.",
-      "expansion": "Slenderman",
-      "searchableText": "spiral ganglia disorder at the start of the showdown, gain the darkness awareness survivor status card. slenderman"
-    },
-    {
-      "name": "Squeamish",
-      "type": "Disorder",
-      "description": "You cannot *depart* with any *stinky* gear in your gear grid. If a status or effect would cause you to become *stinky*, lose all your survival.",
-      "expansion": "",
-      "searchableText": "squeamish disorder you cannot *depart* with any *stinky* gear in your gear grid. if a status or effect would cause you to become *stinky*, lose all your survival."
-    },
-    {
-      "name": "Stage Fright",
-      "type": "Disorder",
-      "description": "Whenever you become *doomed* or gain the *priority target* token, lose 1 survival.",
-      "expansion": "LK",
-      "searchableText": "stage fright disorder whenever you become *doomed* or gain the *priority target* token, lose 1 survival. lk"
-    },
-    {
-      "name": "Stark Raving",
-      "type": "Disorder",
-      "description": "You are always *insane*, regardless of your insanity.",
-      "expansion": "LG",
-      "searchableText": "stark raving disorder you are always *insane*, regardless of your insanity. lg"
-    },
-    {
-      "name": "Subjugated",
-      "type": "Disorder",
-      "description": "When you are knocked down, you are *dominated*. nWhen you *depart* to hunt the King remove this disorder.",
-      "expansion": "King",
-      "searchableText": "subjugated disorder when you are knocked down, you are dominated. when you *depart* to hunt the king remove this disorder. king"
-    },
-    {
-      "name": "Sun-Drunk",
-      "type": "Disorder",
-      "description": "When you have any +1 strength tokens, you cannot *dash*, *dodge* or {s} *Run Away*.",
-      "expansion": "SS",
-      "searchableText": "sun-drunk disorder when you have any +1 strength tokens, you cannot *dash*, *dodge* or {a} *Run Away*. ss"
-    },
-    {
-      "name": "Superstitious",
-      "type": "Disorder",
-      "description": "You cannot activate or *depart* with other gear in your gear grid.",
-      "expansion": "DK",
-      "searchableText": "superstitious disorder you cannot activate or *depart* with other gear in your gear grid. dk"
-    },
-    {
-      "name": "Tiny Arachnophobia",
-      "type": "Disorder",
-      "description": "You cannot carry any gear with the amber keyword. You cannot gain any resources with the silk keyword.",
-      "expansion": "Spidi",
-      "searchableText": "tiny arachnophobia disorder you cannot carry any gear with the amber keyword. you cannot gain any resources with the silk keyword. spidi"
-    },
-    {
-      "name": "Traumatized",
-      "type": "Disorder",
-      "description": "Whenever you end your act adjacent to a monster, you are knocked down.",
-      "expansion": "",
-      "searchableText": "traumatized disorder whenever you end your act adjacent to a monster, you are knocked down."
-    },
-    {
-      "name": "Tunnel Vision",
-      "type": "Disorder",
-      "description": "When you spend {q}, you may only activate weapons.",
-      "expansion": "LG",
-      "searchableText": "tunnel vision disorder when you spend {q}, you may only activate weapons. lg"
-    },
-    {
-      "name": "Unlucky",
-      "type": "Disorder",
-      "description": "You cannot critically wound.",
-      "expansion": "LK",
-      "searchableText": "unlucky disorder you cannot critically wound. lk"
-    },
-    {
-      "name": "Vermin Obsession",
-      "type": "Disorder",
-      "description": "While there is a *Bug Patch* terrain tile on the showdown board, you are so overwhelmed that you cannot spend survival.",
-      "expansion": "DBK",
-      "searchableText": "vermin obsession disorder while there is a bug patch terrain tile on the showdown board, you are so overwhelmed that you cannot spend survival. dbk"
-    },
-    {
-      "name": "Vestiphobia",
-      "type": "Disorder",
-      "description": "You cannot wear armor at the body location. If you are wearing armor at the body location when you gain this disorder, archive it as you tear it off your person!",
-      "expansion": "",
-      "searchableText": "vestiphobia disorder you cannot wear armor at the body location. if you are wearing armor at the body location when you gain this disorder, archive it as you tear it off your person!"
-    },
-    {
-      "name": "Weak Spot",
-      "type": "Disorder",
-      "description": "When you gain this disorder, roll a random hit location and record it. You cannot *depart* unless you have armor at this hit location.",
-      "expansion": "",
-      "searchableText": "weak spot disorder when you gain this disorder, roll a random hit location and record it. you cannot *depart* unless you have armor at this hit location."
-    },
-    {
-      "name": "Weltschmerz",
-      "type": "Disorder",
-      "description": "You cannot *depart* unless you have updated the death count this lantern year.",
-      "expansion": "Atnas",
-      "searchableText": "weltschmerz disorder you cannot *depart* unless you have updated the death count this lantern year. atnas"
-    },
-    {
-      "name": "Anhedonia",
-      "type": "Disorder",
-      "description": "You are always sane. \nYou cannot gain fighting arts, secret fighting arts, or abilities.",
-      "expansion": "Pariah",
-      "searchableText": ""
-    },
-    {
-      "name": "Hyperalgesia",
-      "type": "Disorder",
-      "description": "When you suffer damage, lose 1 survival. Limit once per a round.",
-      "expansion": "Red Witches",
-      "searchableText": ""
-    },
-    {
-      "name": "Cowardice",
-      "type": "Disorder",
-      "description": "Ignore your postive evasion attribute modifiers.",
-      "expansion": "Red Witches",
-      "searchableText": ""
-    },
-    {
-      "name": "Battle Drunk",
-      "type": "Disorder",
-      "description": "The first time you wound the monster each round, gain +1 strength and -1 accuracy token.s \nWhen you are knocked down, archive all your strength and accuracy tokens.",
-      "expansion": "Red Witches",
-      "searchableText": ""
-    },
-    {
-      "name": "Codependent",
-      "type": "Disorder",
-      "description": "You cannot gain understanding, except from the Parish settlement events, rulebook, etc.",
-      "expansion": null,
-      "searchableText": "codependent disorder guided by the truth of another. you cannot gain understanding, except from the parish settlement events, rulebook, etc."
-    }
-  ],
   "Fighting Art": [
     {
       "name": "Abyssal Sadist",
@@ -1426,14 +886,14 @@ var dataset = {
       "name": "Ambidextrous",
       "type": "Fighting Art",
       "description": "All melee weapons in your gear grid gain *paired*. Ambidextrous cannot be used if there are any shields, two-handed, or heavy gear in your gear grid.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "ambidextrous fighting art all melee weapons in your gear grid gain paired. ambidextrous cannot be used if there are any shields, two-handed, or heavy gear in your gear grid. "
     },
     {
       "name": "Berserker",
       "type": "Fighting Art",
       "description": "Once per a showdown you may spend an {q} to suffer *bash* and the *frenzy* brain trauma.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "berserker fighting art once per a showdown you may spend an activation to suffer bash and the *frenzy* brain trauma. "
     },
     {
@@ -1482,28 +942,28 @@ var dataset = {
       "name": "Clutch Fighter",
       "type": "Fighting Art",
       "description": "While you have 3 or more blood tokens gain +1 strength and +1 acc.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "clutch fighter fighting art while you have 3 or more blood tokens gain +1 strength and +1 acc. "
     },
     {
       "name": "Combo Master",
       "type": "Fighting Art",
       "description": "On a *perfect hit* make 1 additional attack roll.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "combo master fighting art on a *perfect hit* make 1 additional attack roll. "
     },
     {
       "name": "Crazed",
       "type": "Fighting Art",
       "description": "On a *Perfect hit*, gain +1 insanity",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "crazed fighting art on a *perfect hit*, gain +1 insanity "
     },
     {
       "name": "Crossarm Block",
       "type": "Fighting Art",
       "description": "Whenever you are hit, after hit locations are rolled, you may change 1 result to the arms hit location.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "crossarm block fighting art whenever you are hit, after hit locations are rolled, you may change 1 result to the arms hit location. "
     },
     {
@@ -1517,7 +977,7 @@ var dataset = {
       "name": "Double Dash",
       "type": "Fighting Art",
       "description": "During your act, once per a round, you may spend an {q} to gain a {m}.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "double *dash* fighting art during your act, once per a round, you may spend an activation to gain a movement. "
     },
     {
@@ -1531,7 +991,7 @@ var dataset = {
       "name": "Extra Sense",
       "type": "Fighting Art",
       "description": "You may *dodge* 1 additional time per round.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "extra sense fighting art you may *dodge* 1 additional time per round. "
     },
     {
@@ -1594,21 +1054,21 @@ var dataset = {
       "name": "Invigorator",
       "type": "Fighting Art",
       "description": "Gain +1 accuracy and +1 speed while you have no insanity",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "invigorator fighting art gain +1 accuracy and +1 speed while you have no insanity "
     },
     {
       "name": "Last Man Standing",
       "type": "Fighting Art",
       "description": "While you are the only survivor on the showdown board, you may not gain bleeding tokens or be knocked down.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "last man standing fighting art while you are the only survivor on the showdown board, you may not gain bleeding tokens or be knocked down. "
     },
     {
       "name": "Leader",
       "type": "Fighting Art",
       "description": "Whenever you *encourage* a survivor, they gain +1 speed token until the end of the round. \nOnce per a hunt another survivor can use your understanding and courage to resolve a hunt or story event.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "leader fighting art whenever you *encourage* a survivor, they gain +1 speed token until the end of the round. "
     },
     {
@@ -1629,14 +1089,14 @@ var dataset = {
       "name": "Mighty Strike",
       "type": "Fighting Art",
       "description": "On a *Perfect hit*, gain +2 strength until the end of the attack.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "mighty strike fighting art on a *perfect hit*, gain +2 strength until the end of the attack. "
     },
     {
       "name": "Monster Claw Style",
       "type": "Fighting Art",
       "description": "Your *First & Tooth* attacks gain +1 acc, +1 strength and *savage*",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "monster claw style fighting art your first & tooth attacks gain +1 acc, +1 strength and savage "
     },
     {
@@ -1650,7 +1110,7 @@ var dataset = {
       "name": "Orator of Death",
       "type": "Fighting Art",
       "description": "Once per showdown, you may spend an {q} to have all non-deaf survivors gain +2 insanity. \nWhen you die, you *encourage* survivors with your last words.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "orator of death fighting art once per showdown, you may spend an activation to have all non-deaf survivors gain +2 insanity. when you die, you *encourage* survivors with your last words. "
     },
     {
@@ -1706,7 +1166,7 @@ var dataset = {
       "name": "Rhythm Chaser",
       "type": "Fighting Art",
       "description": "On *Arrival*, gain +1 evasion token. When you are knocked down, if you don't have an instrument remove all your +1 evasion tokens.\nRhythm Chaser cannot be used if there are any shields or heavy gear in your grid.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "rhythm chaser fighting art gain +1 evasion token the first time you critically wound during a showdown. rhythm chaser cannot be used if there are any shields or heavy gear in your grid. "
     },
     {
@@ -1741,7 +1201,7 @@ var dataset = {
       "name": "Strategist",
       "type": "Fighting Art",
       "description": "During the showdown setup, after placing terrain, you may add a *Giant Stone Face* or a *Toppled Piller* terrain card to the showdown board.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "strategist fighting art during the showdown setup, after placing terrain, you may add a giant stone face or a toppled piller terrain card to the showdown board. "
     },
     {
@@ -1755,21 +1215,21 @@ var dataset = {
       "name": "Thrill Seeker",
       "type": "Fighting Art",
       "description": "Whenever you gain survival during the showdown phase, gain 1 additional survival.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "thrill seeker fighting art whenever you gain survival during the showdown phase, gain 1 additional survival. "
     },
     {
       "name": "Timeless Eye",
       "type": "Fighting Art",
       "description": "Your attack roll is a *perfect hit* on a result of 9 or 10. \nYou cannot use Timeless Eye if you have the *blind* severe head injury.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "timeless eye fighting art your attack roll is a *perfect hit* on a result of 9 or 10. you cannot use timeless eye if you have the *blind* severe head injury. "
     },
     {
       "name": "Tough",
       "type": "Fighting Art",
       "description": "When rolling on a severe injury table, unless you roll a 1, add +1 to the result. [This does not include brain trauma. The result total cannot exceed 10.]",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "tough fighting art when rolling on a severe injury table, unless you roll a 1, add +1 to the result. [this does not include brain trauma. the result total cannot exceed 10.] "
     },
     {
@@ -1797,7 +1257,7 @@ var dataset = {
       "name": "Tumble",
       "type": "Fighting Art",
       "description": "When something would *collide* with you, roll 1d10. On a result of 6+, you successfully tumble out of harm's way. Instead, place your survivor standing on the closest free space outside of the collision path.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "tumble fighting art when something would *collide* with you, roll 1d10. on a result of 6+, you successfully tumble out of harm's way. instead, place your survivor standing on the closest free space outside of the collision path. "
     },
     {
@@ -1811,7 +1271,7 @@ var dataset = {
       "name": "Unconscious Fighter",
       "type": "Fighting Art",
       "description": "It takes 7 bleeding tokens to kill you.",
-      "expansion": "",
+      "expansion": null,
       "searchableText": "unconscious fighter fighting art it takes 7 bleeding tokens to kill you. "
     },
     {
@@ -1840,7 +1300,7 @@ var dataset = {
       "type": "Fighting Art",
       "description": "When you activate an instrument all survivors are *encouraged*. \nYour *Ballads* cost 2 less to perform",
       "expansion": "Smog",
-      "searchableText": "virtuoso fighting art when you activate an instrument all survivors are *encouraged*. your *Ballads* cost 2 less to perform smog"
+      "searchableText": "virtuoso fighting art when you activate an instrument all survivors are *encouraged*. your *ballads* cost 2 less to perform smog"
     },
     {
       "name": "Wardrobe Expert",
@@ -1854,121 +1314,555 @@ var dataset = {
       "type": "Fighting Art",
       "description": "*Non-Arc Survivor Campagin Only \nDuring your act, you may spend 2 survival to remove one of your disorders. Limit once per round.",
       "expansion": "Candy & Cola",
-      "searchableText": ""
+      "searchableText": "reframe fighting art *non-arc survivor campagin only during your act, you may spend 2 survival to remove one of your disorders. limit once per round. *non-arc survivor campagin only during your act, you may spend 2 survival to remove one of your disorders. limit once per round. candy & cola"
     },
     {
       "name": "Adrenaline",
       "type": "Fighting Art",
       "description": "*Non-Arc Survivor Campagin Only \nAt the start of your act, you may: Gain {m} that must be used to move. | Gain {q} that must be used to activate a weapon. Limit once per showdown, per option",
       "expansion": "Goth",
-      "searchableText": ""
+      "searchableText": "adrenaline fighting art *non-arc survivor campagin only at the start of your act, you may: gain {m} that must be used to move. | gain {q} that must be used to activate a weapon. limit once per showdown, per option *non-arc survivor campagin only at the start of your act, you may: gain {m} that must be used to move. | gain {q} that must be used to activate a weapon. limit once per showdown, per option goth"
     },
     {
       "name": "Dubuious Fare",
       "type": "Fighting Art",
       "description": "*Non-Arc Survivor Campagin Only \nYou may *consume* a monster roesource from a Node 1, 2, or 3 quarry monster (archive it) to roll 1d10. If the resourece is indomitable, add +3 to the result. 1-7 Gain +2 survival and +2 insanity | 8-11 Gain +1 permanent strength. | 12+ Gain +1 permanent luck",
       "expansion": "Aeneas",
-      "searchableText": ""
+      "searchableText": "dubuious fare fighting art *non-arc survivor campagin only you may *consume* a monster roesource from a node 1, 2, or 3 quarry monster (archive it) to roll 1d10. if the resourece is indomitable, add +3 to the result. 1-7 gain +2 survival and +2 insanity | 8-11 gain +1 permanent strength. | 12+ gain +1 permanent luck *non-arc survivor campagin only you may *consume* a monster roesource from a node 1, 2, or 3 quarry monster (archive it) to roll 1d10. if the resourece is indomitable, add +3 to the result. 1-7 gain +2 survival and +2 insanity | 8-11 gain +1 permanent strength. | 12+ gain +1 permanent luck aeneas"
     },
     {
       "name": "Chain Dash",
       "type": "Fighting Art",
       "description": "*Non-Arc Survivor Campagin Only* \nAfter performing *dash*, roll 1d10. On a 5+, you may immediately perform another *dash,* ignoring round limits. On a 10+, you may perform this dash without spending survival.",
-      "expansion": "",
-      "searchableText": ""
+      "expansion": null,
+      "searchableText": "chain dash fighting art *non-arc survivor campagin only* after performing *dash*, roll 1d10. on a 5+, you may immediately perform another *dash,* ignoring round limits. on a 10+, you may perform this dash without spending survival. *non-arc survivor campagin only* after performing *dash*, roll 1d10. on a 5+, you may immediately perform another *dash,* ignoring round limits. on a 10+, you may perform this dash without spending survival."
     },
     {
       "name": "Inversion",
       "type": "Fighting Art",
       "description": "When you gain an attribute token, you may flip it to its opposite side. Limit once per lantern year.",
       "expansion": "Pariah",
-      "searchableText": ""
+      "searchableText": "inversion fighting art when you gain an attribute token, you may flip it to its opposite side. limit once per lantern year. when you gain an attribute token, you may flip it to its opposite side. limit once per lantern year. pariah"
     },
     {
       "name": "Freeclimber",
       "type": "Fighting Art",
       "description": "Your *Fist & Tooth* gains *Refined* and the climbing keyword.",
       "expansion": "Pariah",
-      "searchableText": ""
+      "searchableText": "freeclimber fighting art your *fist & tooth* gains *refined* and the climbing keyword. your *fist & tooth* gains *refined* and the climbing keyword. pariah"
     }
   ],
-  "Impairment": [
+  "Disorder": [
     {
-      "name": "Anemic",
-      "type": "Impairment",
-      "description": "It takes one fewer bleeding token to kill you. This impairment can be gained multiple times. If you gain Anemic enough times that it takes 0 bleeding tokens to kill you, you instantly die.",
+      "name": "Absent Seizures",
+      "type": "Disorder",
+      "description": "The first time you would suffer a brain trauma each showdown, you are instead knocked down and forget a fighting art [erase it]",
+      "expansion": "Gorm",
+      "searchableText": "absent seizures disorder the first time you would suffer a brain trauma each showdown, you are instead knocked down and forget a fighting art [erase it] gorm"
+    },
+    {
+      "name": "Aichmophobia",
+      "type": "Disorder",
+      "description": "You cannot activate or *depart* with axes, swords, spears, daggers, scythes, or katars in your gear grid.",
       "expansion": null,
-      "searchableText": "anemic it takes one fewer bleeding token to kill you. this impairment can be gained multiple times. if you gain anemic enough times that it takes 0 bleeding tokens to kill you, you instantly die."
+      "searchableText": "aichmophobia disorder you cannot activate or *depart* with axes, swords, spears, daggers, scythes, or katars in your gear grid."
     },
     {
-      "name": "Broken Vow",
-      "type": "Impairment",
-      "description": "If any survivors with 0 Hunt XP in your hunting party die during the hunt or showdown, you retire.",
+      "name": "Anxiety",
+      "type": "Disorder",
+      "description": "At the start of the showdown, gain the *priority target* token unless you have *stinky* gear in your gear grid.",
       "expansion": null,
-      "searchableText": "broken vow if any survivors with 0 hunt xp in your hunting party die during the hunt or showdown, you retire."
+      "searchableText": "anxiety disorder at the start of the showdown, gain the *priority target* token unless you have *stinky* gear in your gear grid."
     },
     {
-      "name": "Closed Meridians",
-      "type": "Impairment",
-      "description": "Gain +6 permanent luck. At the start of your act, suffer -1 permanent luck. When you have 0 or less permanent luck, suffer the head explosion severe injury.",
+      "name": "Apathetic",
+      "type": "Disorder",
+      "description": "You cannot use or gain survival. You cannot gain courage. \nCure this disorder if you have 8+ understanding.",
       "expansion": null,
-      "searchableText": "closed meridians gain +6 permanent luck. at the start of your act, suffer -1 permanent luck. when you have 0 or less permanent luck, suffer the head explosion severe injury."
+      "searchableText": "apathetic disorder you cannot use or gain survival. you cannot gain courage. cure this disorder if you have 8+ understanding."
     },
     {
-      "name": "Cowardly",
-      "type": "Impairment",
-      "description": "When you would die or cease to exist, you instead retreat to safety and rejoin the survivors during the Aftermath.",
+      "name": "Arithmophillia",
+      "type": "Disorder",
+      "description": "When you gain this disorder, roll 1d5. Your movement is that number. \nIgnore all other movement modifiers",
+      "expansion": "DK",
+      "searchableText": "arithmophillia disorder when you gain this disorder, roll 1d5. your movement is that number. ignore all other movement modifiers dk"
+    },
+    {
+      "name": "Atelophobia",
+      "type": "Disorder",
+      "description": "When there are no *perfect hits* in your attack, suffer 1 brain damage.",
       "expansion": null,
-      "searchableText": "cowardly when you would die or cease to exist, you instead retreat to safety and rejoin the survivors during the aftermath."
+      "searchableText": "atelophobia disorder when there are no *perfect hits* in your attack, suffer 1 brain damage."
     },
     {
-      "name": "Endless Appetite",
-      "type": "Impairment",
-      "description": "This impairment cannot be removed for any reason. You cannot {s} *Run Away* or {s} *Logistics of Death.* You play with the *Dual Modes - Hunger / Content* tile.",
-      "expansion": "Aeneas",
-      "searchableText": ""
+      "name": "Binge Eating",
+      "type": "Disorder",
+      "description": "You cannot *depart* unless you have *consumable* gear in your gear grid. \nYou must *consume* if a choice to *consume* arises.",
+      "expansion": null,
+      "searchableText": "binge eating disorder you cannot *depart* unless you have *consumable* gear in your gear grid. you must *consume* if a choice to *consume* arises."
     },
     {
-      "name": "Bile Smell",
-      "type": "Impairment",
-      "description": "You are always stinky. You do not generate endeavors. When a survivor ends their movement adjacent to you, they suffer 1 brain damage.",
+      "name": "Bloodlust",
+      "type": "Disorder",
+      "description": "Whenever a survivor gains a bleeding token, suffer the *frenzy* brain trauma. Limit once per round.",
+      "expansion": "CC",
+      "searchableText": "bloodlust disorder whenever a survivor gains a bleeding token, suffer the *frenzy* brain trauma. limit once per round. cc"
+    },
+    {
+      "name": "Brain Smog",
+      "type": "Disorder",
+      "description": "You Cannot *surge* or *concentrate*",
+      "expansion": "Smog",
+      "searchableText": "brain smog disorder you cannot *surge* or *concentrate* smog"
+    },
+    {
+      "name": "Chimeric Delusion",
+      "type": "Disorder",
+      "description": "You cannot *depart* to hunt the Frogdog. \nYour delusion prevents you from speaking. You cannot *encourage* or participate in *Intimacy*.",
+      "expansion": "Frogdog",
+      "searchableText": "chimeric delusion disorder you cannot *depart* to hunt the frogdog. your delusion prevents you from speaking. you cannot *encourage* or participate in *intimacy*. frogdog"
+    },
+    {
+      "name": "Controlophobia",
+      "type": "Disorder",
+      "description": "While you are the monster controller, double any damage you suffer.",
+      "expansion": "Spidi",
+      "searchableText": "controlophobia disorder while you are the monster controller, double any damage you suffer. spidi"
+    },
+    {
+      "name": "Coprolalia",
+      "type": "Disorder",
+      "description": "All your gear is *noisy*. You are always a threat unless you are knocked down, even if an effect says otherwise.",
+      "expansion": null,
+      "searchableText": "coprolalia disorder all your gear is *noisy*. you are always a threat unless you are knocked down, even if an effect says otherwise."
+    },
+    {
+      "name": "Delicious",
+      "type": "Disorder",
+      "description": "You are still considered a threat when you are knocked down [unless you use an effect that says otherwise].",
+      "expansion": "LG",
+      "searchableText": "delicious disorder you are still considered a threat when you are knocked down [unless you use an effect that says otherwise]. lg"
+    },
+    {
+      "name": "Delirium",
+      "type": "Disorder",
+      "description": "All your gear is *noisy*. \nOn *Arrival*, draw two random survivor attribute tokens, honoring the side they are drawn on.",
+      "expansion": "Frogdog",
+      "searchableText": "delirium disorder all your gear is *noisy*. on *arrival*, draw two random survivor attribute tokens, honoring the side they are drawn on. frogdog"
+    },
+    {
+      "name": "Destined",
+      "type": "Disorder",
+      "description": "If you do not *depart*, lose all survival and insanity.",
+      "expansion": "DK",
+      "searchableText": "destined disorder if you do not *depart*, lose all survival and insanity. dk"
+    },
+    {
+      "name": "Directional Dyslexia",
+      "type": "Disorder",
+      "description": "Your {m} can only be spent to move in a single straight line.",
+      "expansion": "King",
+      "searchableText": "directional dyslexia disorder your (m) can only be spent to move in a single straight line. king"
+    },
+    {
+      "name": "Dishonorable",
+      "type": "Disorder",
+      "description": "You cannot *depart* unless you are *insane*. \nGain +1 speed while attacking a monster that is knocked down or from its blind spot.",
+      "expansion": "BK",
+      "searchableText": "dishonorable disorder you cannot *depart* unless you are *insane*. gain +1 speed while attacking a monster that is knocked down or from its blind spot. bk"
+    },
+    {
+      "name": "Emotionless",
+      "type": "Disorder",
+      "description": "You cannot gain +1 strength tokens.",
+      "expansion": "SS",
+      "searchableText": "emotionless disorder you cannot gain +1 strength tokens. ss"
+    },
+    {
+      "name": "Enfeebled",
+      "type": "Disorder",
+      "description": "It takes ones less bleeding token to kill you.",
+      "expansion": "LG",
+      "searchableText": "enfeebled disorder it takes ones less bleeding token to kill you. lg"
+    },
+    {
+      "name": "Eproctophilia",
+      "type": "Disorder",
+      "description": "When you gain a stink token, gain +1 insanity. \nYou must *depart* with *stinky* gear in your gear grid.",
+      "expansion": "Frogdog",
+      "searchableText": "eproctophilia disorder when you gain a stink token, gain +1 insanity. you must *depart* with *stinky* gear in your gear grid. frogdog"
+    },
+    {
+      "name": "Ergophobia",
+      "type": "Disorder",
+      "description": "When you are a *returning survivor*, you do not generate {v}. \nYou cannot endeavor.",
+      "expansion": null,
+      "searchableText": "ergophobia disorder when you are a *returning survivor*, you do not generate {*}. you cannot endeavor."
+    },
+    {
+      "name": "Fear of the Dark",
+      "type": "Disorder",
+      "description": "You retire. \nIf you gain this disorder during a hunt or showdown, you put a brave face until you return to the settlement, vowing never to leave the Lantern Hoard again.",
+      "expansion": null,
+      "searchableText": "fear of the dark disorder if you gain this disorder during a hunt or showdown, you put a brave face until you return to the settlement, vowing never to leave the lantern hoard again."
+    },
+    {
+      "name": "Flower Addiction",
+      "type": "Disorder",
+      "description": "You may only *depart* to hunt the flower Knight. \nAfter you *depart*, cure this disorder.",
+      "expansion": "FK",
+      "searchableText": "flower addiction disorder you may only *depart*y to hunt the flower knight. after you *depart*, cure this disorder. fk"
+    },
+    {
+      "name": "Ghostly Beauty",
+      "type": "Disorder",
+      "description": "Double all insanity you gain. \nDouble all survival you spend.",
+      "expansion": "FK",
+      "searchableText": "ghostly beauty disorder double all insanity you gain. double all survival you spend. fk"
+    },
+    {
+      "name": "Hemophobia",
+      "type": "Disorder",
+      "description": "During the showdown, whenever a survivor [including you] gains a bleeding token, you are knocked down.",
+      "expansion": null,
+      "searchableText": "hemophobia disorder during the showdown, whenever a survivor [including you] gains a bleeding token, you are knocked down."
+    },
+    {
+      "name": "Hoarder",
+      "type": "Disorder",
+      "description": "Whenever you are a *returning survivor*, archive 1 resource gained from the last showdown and gain +1 courage.",
+      "expansion": null,
+      "searchableText": "hoarder disorder whenever you are a *returning survivor*, archive 1 resource gained from the last showdown and gain +1 courage."
+    },
+    {
+      "name": "Honorable",
+      "type": "Disorder",
+      "description": "You cannot attack a monster from its blind spot or if it is knocked down.",
+      "expansion": null,
+      "searchableText": "honorable disorder you cannot attack a monster from its blind spot or if it is knocked down."
+    },
+    {
+      "name": "Hyper-Sensitivity",
+      "type": "Disorder",
+      "description": "You may *dodge* one additional time per a round. \nWhenever you are hit by an attack, you must *dodge* at least once, if possible.",
+      "expansion": "Slenderman",
+      "searchableText": "hyper-sensitivity disorder you may *dodge* one additional time per a round. whenever you are hit by an attack, you must *dodge* at least once, if possible. slenderman"
+    },
+    {
+      "name": "Hyperactive",
+      "type": "Disorder",
+      "description": "During the showdown, you must move at least 1 space every round.",
+      "expansion": null,
+      "searchableText": "hyperactive disorder during the showdown, you must move at least 1 space every round."
+    },
+    {
+      "name": "Immortal",
+      "type": "Disorder",
+      "description": "While you are *insane*, convert all damage dealt to your hit locations to brain damage. nYou are so busy reveling in your own glory that you cannot spend survival while *insane*.",
+      "expansion": null,
+      "searchableText": "immortal disorder while you are *insane*, convert all damage dealt to your hit locations to brain damage. you are so busy reveling in your own glory that you cannot spend survival while *insane*."
+    },
+    {
+      "name": "Indecision",
+      "type": "Disorder",
+      "description": "If you are the event revealer of hunt events that call you to make a roll, roll twice and use the lower result.",
+      "expansion": null,
+      "searchableText": "indecision disorder if you are the event revealer of hunt events that call you to make a roll, roll twice and use the lower result."
+    },
+    {
+      "name": "Maladroit",
+      "type": "Disorder",
+      "description": "When you end your movement on terrain, you are knocked down.",
+      "expansion": "BK",
+      "searchableText": "maladroit disorder when you end your movement on terrain, you are knocked down. bk"
+    },
+    {
+      "name": "Megalophobia",
+      "type": "Disorder",
+      "description": "you may not *depart* for hunts or showdowns with monsters that occupy more than 4 spaces on the showdown board.",
+      "expansion": "Gorm",
+      "searchableText": "megalophobia disorder you may not *depart* for hunts or showdowns with monsters that occupy more than 4 spaces on the showdown board. gorm"
+    },
+    {
+      "name": "Monster Panic",
+      "type": "Disorder",
+      "description": "Whenever you suffer brain damage from an *Intimidate* action, suffer 1 additional brain damage.",
+      "expansion": null,
+      "searchableText": "monster panic disorder whenever you suffer brain damage from an *knockback* action, suffer 1 additional brain damage."
+    },
+    {
+      "name": "Motion Sickness",
+      "type": "Disorder",
+      "description": "Whenever you suffer *knockback* gain 1 bleeding token.",
+      "expansion": "DBK",
+      "searchableText": "motion sickness disorder whenever you suffer *knockback* gain 1 bleeding token. dbk"
+    },
+    {
+      "name": "Narcissistic",
+      "type": "Disorder",
+      "description": "You may not wear armor at the head location. If you are wearing armor at the head location when you gain this disorder, archive it.",
+      "expansion": "FK",
+      "searchableText": "narcissistic disorder you may not wear armor at the head location. if you are wearing armor at the head location when you gain this disorder, archive it. fk"
+    },
+    {
+      "name": "Overprotective",
+      "type": "Disorder",
+      "description": "When an adjacent survivor is knocked down, you are also knocked down as you rush to their aid.",
+      "expansion": "SS",
+      "searchableText": "overprotective disorder when an adjacent survivor is knocked down, you are also knocked down as you rush to their aid. ss"
+    },
+    {
+      "name": "Pacifist",
+      "type": "Disorder",
+      "description": "You Cannot activate weapons to attack. Ignore this if you are *frenzied*.",
+      "expansion": "Smog",
+      "searchableText": "pacifist disorder you cannot activate weapons to attack. ignore this if you are *frenzied*. smog"
+    },
+    {
+      "name": "Performance Anxiety",
+      "type": "Disorder",
+      "description": "You cannot be nominated for *Intimacy*. \nCure this disorder if you have 8+ courage.",
+      "expansion": "DK",
+      "searchableText": "performance anxiety disorder you cannot be nominated for *intimacy*. cure this disorder if you have 8+ courage. dk"
+    },
+    {
+      "name": "Phobophobia",
+      "type": "Disorder",
+      "description": "At the start of your act, if you have 0 insanity, gain the *Terrified* survivor status card.",
+      "expansion": "CC",
+      "searchableText": "phobophobia disorder at the start of your act, if you have 0 insanity, gain the terrified survivor status card. cc"
+    },
+    {
+      "name": "Photophilia",
+      "type": "Disorder",
+      "description": "You cannot *depart* without a lantern in your gear grid.",
+      "expansion": null,
+      "searchableText": "photophilia disorder you cannot *depart* without a lantern in your gear grid."
+    },
+    {
+      "name": "Post-Traumatic Stress",
+      "type": "Disorder",
+      "description": "Next settlement phase, you do not contribute or participate in any endeavors.\nSkip the next hunt to recover.",
+      "expansion": null,
+      "searchableText": "post-traumatic stress disorder next settlement phase, you do not contribute or participate in any endeavors.<br>skip the next hunt to recover."
+    },
+    {
+      "name": "Prey",
+      "type": "Disorder",
+      "description": "You may not spend survival unless you are *insane*.",
+      "expansion": null,
+      "searchableText": "prey disorder you may not spend survival unless you are *insane*."
+    },
+    {
+      "name": "Prima Donna",
+      "type": "Disorder",
+      "description": "Each survivor turn, you must take your act first (roll off each turn if multiple survivors have this disorder).",
+      "expansion": "LK",
+      "searchableText": "prima donna disorder each survivor turn, you must take your act first (roll off each turn if multiple survivors have this disorder). lk"
+    },
+    {
+      "name": "Ptophobia",
+      "type": "Disorder",
+      "description": "When you suffer *knockback* suffer {l} brain damage.",
+      "expansion": "BK",
+      "searchableText": "ptophobia disorder when you suffer *knockback* suffer * brain damage. bk"
+    },
+    {
+      "name": "Quixotic",
+      "type": "Disorder",
+      "description": "If you are *insane* when you *depart* gain +1 survival and +1 strength token.",
+      "expansion": null,
+      "searchableText": "quixotic disorder if you are *insane* when you *depart* gain +1 survival and +1 strength token."
+    },
+    {
+      "name": "Rageholic",
+      "type": "Disorder",
+      "description": "Whenever you suffer a severe injury, also suffer the *frenzy* brain trauma.",
+      "expansion": null,
+      "searchableText": "rageholic disorder whenever you suffer a severe injury, also suffer the *frenzy* brain trauma."
+    },
+    {
+      "name": "Revenge",
+      "type": "Disorder",
+      "description": "Whenever a survivor dies during the showdown, suffer *frenzy* brain trauma.",
+      "expansion": "Spidi",
+      "searchableText": "revenge disorder whenever a survivor dies during the showdown, suffer *frenzy* brain trauma. spidi"
+    },
+    {
+      "name": "Schadenfreude",
+      "type": "Disorder",
+      "description": "When another survivor suffers a severe injury, you are overcome with glee. You are knocked down and gain +1 insanity.",
+      "expansion": "Atnas",
+      "searchableText": "schadenfreude disorder when another survivor suffers a severe injury, you are overcome with glee. you are knocked down and gain +1 insanity. atnas"
+    },
+    {
+      "name": "Secretive",
+      "type": "Disorder",
+      "description": "When you are a *returning survivor*, you quickly become preoccupied with your own affairs. You must skip the next hunt to deal with them.",
+      "expansion": null,
+      "searchableText": "secretive disorder when you are a *returning survivor*, you quickly become preoccupied with your own affairs. you must skip the next hunt to deal with them."
+    },
+    {
+      "name": "Seizures",
+      "type": "Disorder",
+      "description": "During the showdown, whenever you suffer damage to your head location, you are knocked down.",
+      "expansion": null,
+      "searchableText": "seizures disorder during the showdown, whenever you suffer damage to your head location, you are knocked down."
+    },
+    {
+      "name": "Shallow Lungs",
+      "type": "Disorder",
+      "description": "When you *encourage*, you are knocked down.",
+      "expansion": "LK",
+      "searchableText": "shallow lungs disorder when you *encourage*, you are knocked down. lk"
+    },
+    {
+      "name": "Somniphobia",
+      "type": "Disorder",
+      "description": "On *Arrival*, lose half of your survival, rounded down.",
+      "expansion": null,
+      "searchableText": "somniphobia disorder on *arrival*, lose half of your survival, rounded down."
+    },
+    {
+      "name": "Spiral Ganglia",
+      "type": "Disorder",
+      "description": "At the start of the showdown, gain the *Darkness Awareness* survivor status card.",
+      "expansion": "Slenderman",
+      "searchableText": "spiral ganglia disorder at the start of the showdown, gain the darkness awareness survivor status card. slenderman"
+    },
+    {
+      "name": "Squeamish",
+      "type": "Disorder",
+      "description": "You cannot *depart* with any *stinky* gear in your gear grid. If a status or effect would cause you to become *stinky*, lose all your survival.",
+      "expansion": null,
+      "searchableText": "squeamish disorder you cannot *depart* with any *stinky* gear in your gear grid. if a status or effect would cause you to become *stinky*, lose all your survival."
+    },
+    {
+      "name": "Stage Fright",
+      "type": "Disorder",
+      "description": "Whenever you become *doomed* or gain the *priority target* token, lose 1 survival.",
+      "expansion": "LK",
+      "searchableText": "stage fright disorder whenever you become *doomed* or gain the *priority target* token, lose 1 survival. lk"
+    },
+    {
+      "name": "Stark Raving",
+      "type": "Disorder",
+      "description": "You are always *insane*, regardless of your insanity.",
+      "expansion": "LG",
+      "searchableText": "stark raving disorder you are always *insane*, regardless of your insanity. lg"
+    },
+    {
+      "name": "Subjugated",
+      "type": "Disorder",
+      "description": "When you are knocked down, you are *dominated*. nWhen you *depart* to hunt the King remove this disorder.",
+      "expansion": "King",
+      "searchableText": "subjugated disorder when you are knocked down, you are dominated. when you *depart* to hunt the king remove this disorder. king"
+    },
+    {
+      "name": "Sun-Drunk",
+      "type": "Disorder",
+      "description": "When you have any +1 strength tokens, you cannot *dash*, *dodge* or {s} *Run Away*.",
+      "expansion": "SS",
+      "searchableText": "sun-drunk disorder when you have any +1 strength tokens, you cannot *dash*, *dodge* or {a} *run away*. ss"
+    },
+    {
+      "name": "Superstitious",
+      "type": "Disorder",
+      "description": "You cannot activate or *depart* with other gear in your gear grid.",
+      "expansion": "DK",
+      "searchableText": "superstitious disorder you cannot activate or *depart* with other gear in your gear grid. dk"
+    },
+    {
+      "name": "Tiny Arachnophobia",
+      "type": "Disorder",
+      "description": "You cannot carry any gear with the amber keyword. You cannot gain any resources with the silk keyword.",
+      "expansion": "Spidi",
+      "searchableText": "tiny arachnophobia disorder you cannot carry any gear with the amber keyword. you cannot gain any resources with the silk keyword. spidi"
+    },
+    {
+      "name": "Traumatized",
+      "type": "Disorder",
+      "description": "Whenever you end your act adjacent to a monster, you are knocked down.",
+      "expansion": null,
+      "searchableText": "traumatized disorder whenever you end your act adjacent to a monster, you are knocked down."
+    },
+    {
+      "name": "Tunnel Vision",
+      "type": "Disorder",
+      "description": "When you spend {q}, you may only activate weapons.",
+      "expansion": "LG",
+      "searchableText": "tunnel vision disorder when you spend {q}, you may only activate weapons. lg"
+    },
+    {
+      "name": "Unlucky",
+      "type": "Disorder",
+      "description": "You cannot critically wound.",
+      "expansion": "LK",
+      "searchableText": "unlucky disorder you cannot critically wound. lk"
+    },
+    {
+      "name": "Vermin Obsession",
+      "type": "Disorder",
+      "description": "While there is a *Bug Patch* terrain tile on the showdown board, you are so overwhelmed that you cannot spend survival.",
+      "expansion": "DBK",
+      "searchableText": "vermin obsession disorder while there is a bug patch terrain tile on the showdown board, you are so overwhelmed that you cannot spend survival. dbk"
+    },
+    {
+      "name": "Vestiphobia",
+      "type": "Disorder",
+      "description": "You cannot wear armor at the body location. If you are wearing armor at the body location when you gain this disorder, archive it as you tear it off your person!",
+      "expansion": null,
+      "searchableText": "vestiphobia disorder you cannot wear armor at the body location. if you are wearing armor at the body location when you gain this disorder, archive it as you tear it off your person!"
+    },
+    {
+      "name": "Weak Spot",
+      "type": "Disorder",
+      "description": "When you gain this disorder, roll a random hit location and record it. You cannot *depart* unless you have armor at this hit location.",
+      "expansion": null,
+      "searchableText": "weak spot disorder when you gain this disorder, roll a random hit location and record it. you cannot *depart* unless you have armor at this hit location."
+    },
+    {
+      "name": "Weltschmerz",
+      "type": "Disorder",
+      "description": "You cannot *depart* unless you have updated the death count this lantern year.",
+      "expansion": "Atnas",
+      "searchableText": "weltschmerz disorder you cannot *depart* unless you have updated the death count this lantern year. atnas"
+    },
+    {
+      "name": "Anhedonia",
+      "type": "Disorder",
+      "description": "You are always sane. \nYou cannot gain fighting arts, secret fighting arts, or abilities.",
       "expansion": "Pariah",
-      "searchableText": ""
+      "searchableText": "anhedonia disorder you are always sane. you cannot gain fighting arts, secret fighting arts, or abilities. you are always sane. you cannot gain fighting arts, secret fighting arts, or abilities. pariah"
     },
     {
-      "name": "Joyless",
-      "type": "Impairment",
-      "description": "You cannot surge.",
-      "expansion": "Pariah",
-      "searchableText": ""
+      "name": "Hyperalgesia",
+      "type": "Disorder",
+      "description": "When you suffer damage, lose 1 survival. Limit once per a round.",
+      "expansion": "Red Witches",
+      "searchableText": "hyperalgesia disorder when you suffer damage, lose 1 survival. limit once per a round. when you suffer damage, lose 1 survival. limit once per a round. red witches"
     },
     {
-      "name": "Sinister Confusion",
-      "type": "Impairment",
-      "description": "When you activate a weapon, choose either -2 accuracy or -3 strength for your attack.",
-      "expansion": "Pariah",
-      "searchableText": ""
+      "name": "Cowardice",
+      "type": "Disorder",
+      "description": "Ignore your postive evasion attribute modifiers.",
+      "expansion": "Red Witches",
+      "searchableText": "cowardice disorder ignore your postive evasion attribute modifiers. ignore your postive evasion attribute modifiers. red witches"
     },
     {
-      "name": "Sizzling Blood",
-      "type": "Impairment",
-      "description": "During the showdown, when you gain a bleeding token, also gain a -1 evasion token.",
-      "expansion": "Pariah",
-      "searchableText": ""
+      "name": "Battle Drunk",
+      "type": "Disorder",
+      "description": "The first time you wound the monster each round, gain +1 strength and -1 accuracy token.s \nWhen you are knocked down, archive all your strength and accuracy tokens.",
+      "expansion": "Red Witches",
+      "searchableText": "battle drunk disorder the first time you wound the monster each round, gain +1 strength and -1 accuracy token.s when you are knocked down, archive all your strength and accuracy tokens. the first time you wound the monster each round, gain +1 strength and -1 accuracy token.s when you are knocked down, archive all your strength and accuracy tokens. red witches"
     },
     {
-      "name": "Marrow Hunger",
-      "type": "Impairment",
-      "description": "If the *Murder* or *Skull Eater* settlement events are drawn, nominate this survivor.",
+      "name": "Codependent",
+      "type": "Disorder",
+      "description": "You cannot gain understanding, except from the Parish settlement events, rulebook, etc.",
       "expansion": null,
-      "searchableText": "marrow hunger impairment if the murder or skull eater settlement events are drawn, nominate this survivor."
-    },
-    {
-      "name": "Endless Babble",
-      "type": "Impairment",
-      "description": "When you *depart*, *departing survivors* gain +1 insanity. You cannot *encourage*.",
-      "expansion": null,
-      "searchableText": "endless babble impairment when you *depart*, *departing survivors* gain +1 insanity. you cannot encourage."
+      "searchableText": "codependent disorder guided by the truth of another. you cannot gain understanding, except from the parish settlement events, rulebook, etc."
     }
   ],
   "Knowledge": [
@@ -2157,7 +2051,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "eight eyes knowledge collectivism on *Arrival*, if the survivors have more functioning eyes than the monster, they ambush the monster. 0"
+      "searchableText": "eight eyes knowledge collectivism on *arrival*, if the survivors have more functioning eyes than the monster, they ambush the monster. 0"
     },
     {
       "name": "Legion I",
@@ -2223,7 +2117,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "blackheart knowledge deadism on *Arrival*, gain +1 str token.\nadd your number of +1 str tokens to your brain trauma rolls. 0"
+      "searchableText": "blackheart knowledge deadism on *arrival*, gain +1 str token.\nadd your number of +1 str tokens to your brain trauma rolls. 0"
     },
     {
       "name": "Dark Eye I",
@@ -2432,7 +2326,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "high roller ii knowledge dreamism +1 torment<br>you may steal a d10 from an attack roll made against you.<br>During your attack, you may replace the roll result with the stolen d10."
+      "searchableText": "high roller ii knowledge dreamism +1 torment<br>you may steal a d10 from an attack roll made against you.<br>during your attack, you may replace the roll result with the stolen d10."
     },
     {
       "name": "Serial Code I",
@@ -2608,7 +2502,7 @@ var dataset = {
       "toRankCount": 4,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "Health i knowledge gourmandism when you *consume* during the hunt or showdown, gain +1 str token when you *consume* during the hunt or showdown 4"
+      "searchableText": "health i knowledge gourmandism when you *consume* during the hunt or showdown, gain +1 str token when you *consume* during the hunt or showdown 4"
     },
     {
       "name": "Health II",
@@ -2619,7 +2513,7 @@ var dataset = {
       "toRankCount": 5,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "Health ii knowledge gourmandism when you *consume* during the hunt or showdown, gain +1 str or accuracy token. when you *consume* during the hunt or showdown 5"
+      "searchableText": "health ii knowledge gourmandism when you *consume* during the hunt or showdown, gain +1 str or accuracy token. when you *consume* during the hunt or showdown 5"
     },
     {
       "name": "Health III",
@@ -2630,7 +2524,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "Health iii knowledge gourmandism when you *consume* during the hunt or showdown, gain +1 str, acc, or speed tokens. 0"
+      "searchableText": "health iii knowledge gourmandism when you *consume* during the hunt or showdown, gain +1 str, acc, or speed tokens. 0"
     },
     {
       "name": "Juggernaut I",
@@ -2850,7 +2744,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "light whisperer knowledge lanterism on *Arrival*, gain a death token.\n{q}: revel cards from the top of the hitlocation deck equal to your death tokens and put them back in any order. then roll 1d10. on a 1, you *consume* a death token and suffer *frenzy*. 0"
+      "searchableText": "light whisperer knowledge lanterism on *arrival*, gain a death token.\n{q}: revel cards from the top of the hitlocation deck equal to your death tokens and put them back in any order. then roll 1d10. on a 1, you *consume* a death token and suffer *frenzy*. 0"
     },
     {
       "name": "Death Collector I",
@@ -2916,7 +2810,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "light eater knowledge lanternism subconscious - on *Arrival*, gain a death token.\n{q}: *consume* a death token. archive it and suffer *frenzy* 0"
+      "searchableText": "light eater knowledge lanternism subconscious - on *arrival*, gain a death token.\n{q}: *consume* a death token. archive it and suffer *frenzy* 0"
     },
     {
       "name": "Light Warrior",
@@ -2927,7 +2821,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "light warrior knowledge lanternism on *Arrival*, gain a death token.\n{q}: gain +2 strength for each death token you have until the end of your next attack. then roll 1d10. on a 1, you *consume* a death token and suffer *frenzy*. 0"
+      "searchableText": "light warrior knowledge lanternism on *arrival*, gain a death token.\n{q}: gain +2 strength for each death token you have until the end of your next attack. then roll 1d10. on a 1, you *consume* a death token and suffer *frenzy*. 0"
     },
     {
       "name": "Marrow Monarch",
@@ -2949,7 +2843,7 @@ var dataset = {
       "toRankCount": 3,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "osteophage i knowledge marrowism you may archive a bone resource to *consume* it. if you do, gain the *Marrow Hunger* impairment. when you *consume* a bone 3"
+      "searchableText": "osteophage i knowledge marrowism you may archive a bone resource to *consume* it. if you do, gain the *marrow hunger* impairment. when you *consume* a bone 3"
     },
     {
       "name": "Osteophage II",
@@ -2960,7 +2854,7 @@ var dataset = {
       "toRankCount": 5,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "osteophage ii knowledge marrowism you may archive a bone resource to *consume* it. if you do, gain the *Marrow Hunger* impairment.\nwhen you *depart* with no armor and no shield in your gear grid, add {!} to all hit locations for each observation of this knowledge. when you *consume* a bone 5"
+      "searchableText": "osteophage ii knowledge marrowism you may archive a bone resource to *consume* it. if you do, gain the *marrow hunger* impairment.\nwhen you *depart* with no armor and no shield in your gear grid, add {!} to all hit locations for each observation of this knowledge. when you *consume* a bone 5"
     },
     {
       "name": "Osteophage III",
@@ -3092,7 +2986,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "dutybound iii knowledge monster if you are retired or otherwise cannot *depart*, you may gain +1 systemic pressure to *depart* this lantern year.\non *Arrival*, gain deflect tokens equal to your systemic pressure. 0"
+      "searchableText": "dutybound iii knowledge monster if you are retired or otherwise cannot *depart*, you may gain +1 systemic pressure to *depart* this lantern year.\non *arrival*, gain deflect tokens equal to your systemic pressure. 0"
     },
     {
       "name": "Frog Kick III",
@@ -3279,7 +3173,7 @@ var dataset = {
       "toRankCount": 3,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "believe in yourself knowledge optimism you are guardless.\non *Arrival*, if your survival is at the settlement's survival limit, gain +1 evasion token. during the aftermath, if you have no filled heavy injury boxes 3"
+      "searchableText": "believe in yourself knowledge optimism you are guardless.\non *arrival*, if your survival is at the settlement's survival limit, gain +1 evasion token. during the aftermath, if you have no filled heavy injury boxes 3"
     },
     {
       "name": "Believe in Yourself II",
@@ -3290,7 +3184,7 @@ var dataset = {
       "toRankCount": 4,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "believe in yourself ii knowledge optimism you are guardless.\non *Arrival*, if your survival is at the settlement's survival limit, gain +2 evasion tokens.. during the aftermath, if you have no filled injury boxes 4"
+      "searchableText": "believe in yourself ii knowledge optimism you are guardless.\non *arrival*, if your survival is at the settlement's survival limit, gain +2 evasion tokens.. during the aftermath, if you have no filled injury boxes 4"
     },
     {
       "name": "Believe in Yourself III",
@@ -3301,7 +3195,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "believe in yourself iii knowledge optimism you are guardless.\non *Arrival*, if your survival is at the settlement's survival limit, gain +3 evasion tokens.. 0"
+      "searchableText": "believe in yourself iii knowledge optimism you are guardless.\non *arrival*, if your survival is at the settlement's survival limit, gain +3 evasion tokens.. 0"
     },
     {
       "name": "Better Than This",
@@ -3323,7 +3217,7 @@ var dataset = {
       "toRankCount": 3,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "positivity i knowledge optimism on *Arrival*, if your survival is at the settlement's limit, gain 1 reroll token. in the aftermath, if your survival is at the settlment's survival limit. 3"
+      "searchableText": "positivity i knowledge optimism on *arrival*, if your survival is at the settlement's limit, gain 1 reroll token. in the aftermath, if your survival is at the settlment's survival limit. 3"
     },
     {
       "name": "Positivity II",
@@ -3334,7 +3228,7 @@ var dataset = {
       "toRankCount": 5,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "positivity ii knowledge optimism on *Arrival*, if your survival is at the settlement's survival limit gain 2 reroll tokens. in the aftermath gain +1 for each of your reroll tokens 5"
+      "searchableText": "positivity ii knowledge optimism on *arrival*, if your survival is at the settlement's survival limit gain 2 reroll tokens. in the aftermath gain +1 for each of your reroll tokens 5"
     },
     {
       "name": "Positivity III",
@@ -3345,7 +3239,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "positivity iii knowledge optimism on *Arrival*, if your survival is at the settlement's survival limit gain 2 reroll tokens.\nwhen your reroll result is 9+, gain another reroll token. 0"
+      "searchableText": "positivity iii knowledge optimism on *arrival*, if your survival is at the settlement's survival limit gain 2 reroll tokens.\nwhen your reroll result is 9+, gain another reroll token. 0"
     },
     {
       "name": "Braggart",
@@ -3499,7 +3393,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "fortis fortuna iii knowledge romanticism on a *perfect hit*, gain +1 lumi.\non *Arrival*, you may spend 3 lumi to increase the range of your *perfect hits* by 1 this lantern year. 0"
+      "searchableText": "fortis fortuna iii knowledge romanticism on a *perfect hit*, gain +1 lumi.\non *arrival*, you may spend 3 lumi to increase the range of your *perfect hits* by 1 this lantern year. 0"
     },
     {
       "name": "Freedom",
@@ -3648,7 +3542,7 @@ var dataset = {
       "name": "Hunger II",
       "type": "Knowledge",
       "philosophyLinked": "Starting",
-      "mainDesc": "You must eat monsters to feed the monsters inside. kWhen you *depart*, gain +1 survival",
+      "mainDesc": "You must eat monsters to feed the monsters inside. \nWhen you *depart*, gain +1 survival",
       "observationText": "When you *consume*",
       "toRankCount": 3,
       "rankUpText": "",
@@ -3675,7 +3569,7 @@ var dataset = {
       "toRankCount": 6,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "Accuracy training i knowledge survivalism theory when you successfully hit the monster. limit once per attack. 6"
+      "searchableText": "accuracy training i knowledge survivalism theory when you successfully hit the monster. limit once per attack. 6"
     },
     {
       "name": "Accuracy Training II",
@@ -3686,7 +3580,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "Accuracy training i knowledge survivalism +1 accuracy 0"
+      "searchableText": "accuracy training i knowledge survivalism +1 accuracy 0"
     },
     {
       "name": "Death Sense I",
@@ -4038,7 +3932,7 @@ var dataset = {
       "toRankCount": 9,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "fortune & misfortune i knowledge wanderer on *Arrival*, gain +1 luck token, and all other survivors gain +1 systemic pressure token. when you critically wound 9"
+      "searchableText": "fortune & misfortune i knowledge wanderer on *arrival*, gain +1 luck token, and all other survivors gain +1 systemic pressure token. when you critically wound 9"
     },
     {
       "name": "Fortune & Misfortune II",
@@ -4049,7 +3943,7 @@ var dataset = {
       "toRankCount": 6,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "fortune & misfortune ii knowledge wanderer on *Arrival*, gain +2 luck token, and all other survivors gain +2 systemic pressure token. when a survivor with systemic pressure tokens die from a severe injury 6"
+      "searchableText": "fortune & misfortune ii knowledge wanderer on *arrival*, gain +2 luck token, and all other survivors gain +2 systemic pressure token. when a survivor with systemic pressure tokens die from a severe injury 6"
     },
     {
       "name": "Fortune & Misfortune III",
@@ -4060,7 +3954,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": null,
-      "searchableText": "fortune & misfortune iii knowledge wanderer on *Arrival*, gain +3 luck token, and all other survivors gain +3 systemic pressure token. 0"
+      "searchableText": "fortune & misfortune iii knowledge wanderer on *arrival*, gain +3 luck token, and all other survivors gain +3 systemic pressure token. 0"
     },
     {
       "name": "Hemerochory",
@@ -4068,10 +3962,10 @@ var dataset = {
       "philosophyLinked": "Gatherism",
       "mainDesc": "You may *depart* with one resource card. If that resource is *Perishable*, it is not destoryed. \nAt the start of any hunt turn, before hunt events are revealed, you may sow a resource. Archive it to gain +{l} survival",
       "observationText": "",
-      "toRankCount": null,
+      "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Gatherism",
-      "searchableText": ""
+      "searchableText": "hemerochory knowledge you may *depart* with one resource card. if that resource is *perishable*, it is not destoryed. at the start of any hunt turn, before hunt events are revealed, you may sow a resource. archive it to gain +{l} survival gatherism gatherism"
     },
     {
       "name": "Florafantasia",
@@ -4082,7 +3976,7 @@ var dataset = {
       "toRankCount": 6,
       "rankUpText": "Lose this knowlage and suffer *frenzy*",
       "expansion": "Gatherism",
-      "searchableText": ""
+      "searchableText": "florafantasia knowledge when a monster is on or adjacent to terrain, you may *dodge* hits from it as many times as you would like each round without spending survival. when you use this to *dodge* lose this knowlage and suffer *frenzy* gatherism gatherism"
     },
     {
       "name": "Botanical Tracker",
@@ -4090,10 +3984,10 @@ var dataset = {
       "philosophyLinked": "Gatherism",
       "mainDesc": "After Hunt Phase setup, place the *Virid Grove* event on any hunt space.",
       "observationText": "",
-      "toRankCount": null,
+      "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Gatherism",
-      "searchableText": ""
+      "searchableText": "botanical tracker knowledge after hunt phase setup, place the *virid grove* event on any hunt space. gatherism gatherism"
     },
     {
       "name": "Phytologist I",
@@ -4104,7 +3998,7 @@ var dataset = {
       "toRankCount": 2,
       "rankUpText": "",
       "expansion": "Gatherism",
-      "searchableText": ""
+      "searchableText": "phytologist i knowledge you may add +2 to your roll result for a plant-related hunt event, *herb gathering,* or *virid grove.* limit once per lantern year when you use this gatherism gatherism"
     },
     {
       "name": "Phytologist II",
@@ -4115,7 +4009,7 @@ var dataset = {
       "toRankCount": 5,
       "rankUpText": "",
       "expansion": "Gatherism",
-      "searchableText": ""
+      "searchableText": "phytologist ii knowledge add +3 to your roll result for a plant-related hunt event, *herb gathering,* or *virid grove.* when using this causes your roll result to become 10+ gatherism gatherism"
     },
     {
       "name": "Phytologist III",
@@ -4123,10 +4017,10 @@ var dataset = {
       "philosophyLinked": "Gatherism",
       "mainDesc": "Add your understanding to your roll result for a plant-related hunt event, plant-related terrain, *Herb Gathering,* or *Virid Grove.*",
       "observationText": "",
-      "toRankCount": null,
+      "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Gatherism",
-      "searchableText": ""
+      "searchableText": "phytologist iii knowledge add your understanding to your roll result for a plant-related hunt event, plant-related terrain, *herb gathering,* or *virid grove.* gatherism gatherism"
     },
     {
       "name": "Invasive I",
@@ -4137,7 +4031,7 @@ var dataset = {
       "toRankCount": 2,
       "rankUpText": "",
       "expansion": "Gatherism",
-      "searchableText": ""
+      "searchableText": "invasive i knowledge during showdown setup, if the terrain & deployment section instructs you to set up any random terrain cards, replace one with a gatherism {q} of your choice from the terrain deck. when you use this gatherism gatherism"
     },
     {
       "name": "Invasive II",
@@ -4148,7 +4042,7 @@ var dataset = {
       "toRankCount": 5,
       "rankUpText": "",
       "expansion": "Gatherism",
-      "searchableText": ""
+      "searchableText": "invasive ii knowledge during showdown setup, add a gatherism {q} of your choice from the terrain deck and place it according to its setup rules. when you activate a gatherism terrain gatherism gatherism"
     },
     {
       "name": "Invasive III",
@@ -4156,10 +4050,10 @@ var dataset = {
       "philosophyLinked": "Gatherism",
       "mainDesc": "During showdown setup, add a plant-related {Q} of your choice from the terrain deck and place it according to its setup rules. \nAt the start of your act, gain {q} that can only be spent to activate terrain.",
       "observationText": "",
-      "toRankCount": null,
+      "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Gatherism",
-      "searchableText": ""
+      "searchableText": "invasive iii knowledge during showdown setup, add a plant-related {q} of your choice from the terrain deck and place it according to its setup rules. at the start of your act, gain {q} that can only be spent to activate terrain. gatherism gatherism"
     },
     {
       "name": "Reframe I",
@@ -4170,7 +4064,7 @@ var dataset = {
       "toRankCount": 2,
       "rankUpText": "",
       "expansion": "Candy & Cola",
-      "searchableText": ""
+      "searchableText": "reframe i knowledge *theory* when you gain a disorder effervescence candy & cola"
     },
     {
       "name": "Reframe II",
@@ -4181,7 +4075,7 @@ var dataset = {
       "toRankCount": 8,
       "rankUpText": "",
       "expansion": "Candy & Cola",
-      "searchableText": ""
+      "searchableText": "reframe ii knowledge during your act, you may spend 2 survival to remove one of your disorders. limit once per round. when you remove a disorder effervescence candy & cola"
     },
     {
       "name": "Reframe III",
@@ -4192,7 +4086,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Candy & Cola",
-      "searchableText": ""
+      "searchableText": "reframe iii knowledge during your act, you may remove one of your disorders to gain +2 survival. limit once per round. effervescence candy & cola"
     },
     {
       "name": "Adrenaline I",
@@ -4203,7 +4097,7 @@ var dataset = {
       "toRankCount": 6,
       "rankUpText": "",
       "expansion": "Goth",
-      "searchableText": ""
+      "searchableText": "adrenaline i knowledge at the start of the act you may: gain {m} that must be used to move. limit once per showdown. when you wound the monster disintegration goth"
     },
     {
       "name": "Adrenaline II",
@@ -4214,7 +4108,7 @@ var dataset = {
       "toRankCount": 12,
       "rankUpText": "",
       "expansion": "Goth",
-      "searchableText": ""
+      "searchableText": "adrenaline ii knowledge *+1 systemic pressure* at the start of the act you may: gain {m} that must be used to move. | gain {q} that must be used to activate a weapon. limit once per showdown, per option. when you wound the monster disintegration goth"
     },
     {
       "name": "Adrenaline III",
@@ -4225,7 +4119,7 @@ var dataset = {
       "toRankCount": 24,
       "rankUpText": "",
       "expansion": "Goth",
-      "searchableText": ""
+      "searchableText": "adrenaline iii knowledge *+2 systemic pressure* at the start of the act you may: gain {m} that must be used to move. | gain {q} that must be used to activate a weapon. | gain {m} or {q}. limit once per showdown, per option. when you wound the monster disintegration goth"
     },
     {
       "name": "Adrenaline IIII",
@@ -4236,7 +4130,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Goth",
-      "searchableText": ""
+      "searchableText": "adrenaline iiii knowledge *+3 systemic pressure* at the start of the act you may: gain {m} that must be used to move. | gain {q} that must be used to activate a weapon. | gain {m} or {q}. | gain either a +1 strength token, or add {#} to all hit locations. limit once per showdown, per option. disintegration goth"
     },
     {
       "name": "Dubious Fare I",
@@ -4247,7 +4141,7 @@ var dataset = {
       "toRankCount": 5,
       "rankUpText": "",
       "expansion": "Aeneas",
-      "searchableText": ""
+      "searchableText": "dubious fare i knowledge you may *consume* a monster roesource from a node 1 quarry monster (archive it) to roll 1d10. if the resourece is indomitable, add +3 to the result. 1-8 gain +2 survival and +2 insanity | 9-11 gain +1 permanent strength. | 12+ gain this monster's secret fighting art when you *consume* to use this consumption aeneas"
     },
     {
       "name": "Dubious Fare II",
@@ -4258,7 +4152,7 @@ var dataset = {
       "toRankCount": 3,
       "rankUpText": "",
       "expansion": "Aeneas",
-      "searchableText": ""
+      "searchableText": "dubious fare ii knowledge you may *consume* a monster roesource from a node 1 or 2 quarry monster (archive it) to roll 1d10. if the resourece is indomitable, add +3 to the result. 1-7 gain +1 courage and +2 survival. | 8-11 gain +1 permanent strength. | 12+ gain this monster's secret fighting art when you *consume* an indomitable resource to use this consumption aeneas"
     },
     {
       "name": "Dubious Fare III",
@@ -4269,7 +4163,7 @@ var dataset = {
       "toRankCount": 5,
       "rankUpText": "",
       "expansion": "Aeneas",
-      "searchableText": ""
+      "searchableText": "dubious fare iii knowledge you may *consume* a monster roesource from a node 1, 2, or 3 quarry monster (archive it) to roll 1d10. if the resourece is indomitable, add +3 to the result. 1-5 gain +1 courage and +2 survival | 6-9 gain +1 permanent strength. | 10+ gain this monster's secret fighting art when you *consume* to use this consumption aeneas"
     },
     {
       "name": "Chain Dash I",
@@ -4280,7 +4174,7 @@ var dataset = {
       "toRankCount": 3,
       "rankUpText": "",
       "expansion": "Death Drifter",
-      "searchableText": ""
+      "searchableText": "chain dash i knowledge *theory* when you *dash* hyper light death drifter"
     },
     {
       "name": "Chain Dash II",
@@ -4291,7 +4185,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "☐☐☐ Epiphany *Phasing Strike* ☐☐☐ Epiphany *Guarding Rush* ☐☐☐ Epiphany *Dashing Thrust*",
       "expansion": "Death Drifter",
-      "searchableText": ""
+      "searchableText": "chain dash ii knowledge after performing *dash*, roll 1d10. on a 5+, you may immediately perform another *dash,* ignoring round limits. on a 10+, you may perform this dash without spending survival. when you are a returning survivor ☐☐☐ epiphany *phasing strike* ☐☐☐ epiphany *guarding rush* ☐☐☐ epiphany *dashing thrust* hyper light death drifter"
     },
     {
       "name": "Phasing Strike",
@@ -4302,7 +4196,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Death Drifter",
-      "searchableText": ""
+      "searchableText": "phasing strike knowledge when you *dash* to move, you may move through (but not end on) spaces the monster occupies. after moving though a monster, roll 1d10. on a 9+, the monster suffers a wound hyper light death drifter"
     },
     {
       "name": "Guarding Rush",
@@ -4313,7 +4207,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Death Drifter",
-      "searchableText": ""
+      "searchableText": "guarding rush knowledge *+1 movement* when you *dash*, gain a deflect token until the end of the round. limit three times per round. hyper light death drifter"
     },
     {
       "name": "Dashing Thrust",
@@ -4324,7 +4218,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Death Drifter",
-      "searchableText": ""
+      "searchableText": "dashing thrust knowledge if you are standing adjacent to the monster after performing *dash,* you may spend 1 survival to make an automatic hit and attempt to wound with a melee weapon. if you wound the monster this way, it suffers *knockback 2* and an addtional wound. limit once per round. hyper light death drifter"
     },
     {
       "name": "Feedback Loop I",
@@ -4335,7 +4229,7 @@ var dataset = {
       "toRankCount": 2,
       "rankUpText": "",
       "expansion": "Pariah",
-      "searchableText": ""
+      "searchableText": "feedback loop i knowledge the first time you gain a token each lantern year, gain a copy of that token. when you gain a token with this monster pariah"
     },
     {
       "name": "Feedback Loop II",
@@ -4346,7 +4240,7 @@ var dataset = {
       "toRankCount": 3,
       "rankUpText": "",
       "expansion": "Pariah",
-      "searchableText": ""
+      "searchableText": "feedback loop ii knowledge when you gain a token, you may gain a copy of that token. limit once per lantern year. when you gain a token with this monster pariah"
     },
     {
       "name": "Feedback Loop III",
@@ -4357,7 +4251,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Pariah",
-      "searchableText": ""
+      "searchableText": "feedback loop iii knowledge when you or another survivor gain a token, you may gain a copy of that token. limit once per lantern year. monster pariah"
     },
     {
       "name": "Joint Array I",
@@ -4368,7 +4262,7 @@ var dataset = {
       "toRankCount": 4,
       "rankUpText": "",
       "expansion": "Red Witches",
-      "searchableText": ""
+      "searchableText": "joint array i knowledge *theory* when another survivor with *joint array* wounds the monster monster red witches"
     },
     {
       "name": "Joint Array II",
@@ -4379,7 +4273,7 @@ var dataset = {
       "toRankCount": 3,
       "rankUpText": "",
       "expansion": "Red Witches",
-      "searchableText": ""
+      "searchableText": "joint array ii knowledge when you attack, if another survivor with *joint array* has already inflicted a wound this round, cancel reactions on your first selected hit location. when another survivor uses *joint array* to cancel a reaction monster red witches"
     },
     {
       "name": "Joint Array III",
@@ -4390,360 +4284,7 @@ var dataset = {
       "toRankCount": 0,
       "rankUpText": "",
       "expansion": "Red Witches",
-      "searchableText": ""
-    }
-  ],
-  "Philosophy": [
-    {
-      "name": "Ambitionism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Spoiled",
-      "tenetKnowledge": null,
-      "description": "If you are a *returning survivor* and CC did not increase during the *Aftermath*, skip the next hunt and sulk.",
-      "expansion": null,
-      "searchableText": "ambitionism philosophy spoiled if you are a *returning survivor* and cc did not increase during the aftermath, skip the next hunt and sulk. 2,6,10,14,16"
-    },
-    {
-      "name": "Blessed First",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Woebegone",
-      "tenetKnowledge": "Fortune & Misfortune",
-      "description": "While Luck is on the showdown board, the other survivors feel his deep foreboding. Their weapons gain *Unwieldy*.",
-      "expansion": null,
-      "searchableText": "blessed first philosophy woebegone while luck is on the showdown board, the other survivors weapons gain unwieldy. 2,6,10,14,16"
-    },
-    {
-      "name": "Champion",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        4,
-        6,
-        12,
-        16
-      ],
-      "nerosis": "Compelled",
-      "tenetKnowledge": "Chosen",
-      "description": "An internal need guides you to greatness. You must *depart* if able to do so. If you are unable to *depart* for any reason (you are retired, must skip the next hunt, etc.), you *depart* anyway, but set your insanity and survival to 0.",
-      "expansion": null,
-      "searchableText": "champion philosophy compelled you must *depart* if able to do so. if you are unable to *depart* for any reason, you *depart* anyway, but set your insanity and survival to 0. 2,4,6,12,16"
-    },
-    {
-      "name": "Collectivism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Selfless",
-      "tenetKnowledge": "All for One",
-      "description": "While you are alive, increase the settlement's survival limit by +1. Each collectivist can increase the limit.\nWhen you *depart*, set your survival to 0 after applying all bonuses.",
-      "expansion": null,
-      "searchableText": "collectivism philosophy selfless while you are alive, increase the settlement's survival limit by +1. each collectivist can increase the limit. when you *depart*, set your survival to 0 after applying all bonuses. 2,6,10,14,16"
-    },
-    {
-      "name": "Deadism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        4,
-        10,
-        12,
-        16
-      ],
-      "nerosis": "Disembodied",
-      "tenetKnowledge": "Death Poet",
-      "description": "Nothing matters. You cannot gain insanity.",
-      "expansion": null,
-      "searchableText": "deadism philosophy disembodied nothing matters. you cannot gain insanity. 2,4,10,12,16"
-    },
-    {
-      "name": "Dreamism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        4,
-        7,
-        10,
-        16
-      ],
-      "nerosis": "Sleepless",
-      "tenetKnowledge": "Guardian",
-      "description": "You cannot slee soundly unless you are at the feet of the Dream Keeper, bathed in the snores of the dreamers it holds aloft. \nYou cannot gain survival during the hunt or showdown.",
-      "expansion": null,
-      "searchableText": "dreamism philosophy sleepless you cannot gain survival during the hunt or showdown. 2,4,7,10,16"
-    },
-    {
-      "name": "Faceism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        4,
-        7,
-        10,
-        16
-      ],
-      "nerosis": "Fixated",
-      "tenetKnowledge": "Physiognomy",
-      "description": "You can attack the monster only from its facing or when it is knocked down.",
-      "expansion": null,
-      "searchableText": "faceism philosophy fixated you can attack the monster only from its facing or when it is knocked down. 2,4,7,10,16"
-    },
-    {
-      "name": "Gourmandism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Ravenous",
-      "tenetKnowledge": "Health",
-      "description": "You may spend {q} to *consume* a piece of gear or resource with the *consumable* keyword. Archive it.\nDuring the *Aftermath*, if you did not perform this, suffer -1 strength.",
-      "expansion": null,
-      "searchableText": "gourmandism philosophy ravenous you may spend {q} to *consume* a piece of gear or resource with the *consumable* keyword. archive it. during the aftermath, if you did not perform this, suffer -1 strength. 2,6,10,14,16"
-    },
-    {
-      "name": "Homicidalism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Murderer",
-      "tenetKnowledge": "Dark Impulse",
-      "description": "During the hunt or showdown, if you are ever alone with another survivor, you murder them; keep track of your *body count*. Before resolving each rank of Homicidalism, roll 1d10 and subtract your *body count* from the roll result. On a 1 or lower, the settlement kills you.",
-      "expansion": null,
-      "searchableText": "homicidalism philosophy murderer during the hunt or showdown, if you are ever alone with another survivor, you murder them; keep track of your body count. before resolving each rank, roll 1d10 and subtract your body count from the roll result. on a 1 or lower, the settlement kills you. 2,6,10,14,16"
-    },
-    {
-      "name": "Impermanism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        4,
-        7,
-        10,
-        16
-      ],
-      "nerosis": "Unrestrained",
-      "tenetKnowledge": "Shatterstar",
-      "description": "It was always going to break. All weapons, except Fist & Tooth, have *Frail* while they are in your gear grid. \nIf you wound a Super-Dense hit location with Fist & Tooth, suffer the *broken arm* severe injury at the end of the attack.",
-      "expansion": null,
-      "searchableText": "impermanism philosophy unrestrained all weapons, except f&t, have frail while they are in your gear grid. if you wound a super-dense hit location with f&t, suffer the broken arm severe injury at the end of the attack. 2,4,7,10,16"
-    },
-    {
-      "name": "Lanternism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        4,
-        7,
-        10,
-        16
-      ],
-      "nerosis": "Phototaxis",
-      "tenetKnowledge": "Death Collector",
-      "description": "You are bound by the light. While there is a *Fallen Lantern* terrain tile on the board, you cannot spend survival.",
-      "expansion": null,
-      "searchableText": "lanternism philosophy phototaxis you are bound by the light. while there is a fallen lantern terrain tile on the board, you cannot spend survival. 2,4,7,10,16"
-    },
-    {
-      "name": "Marrowism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Arrogance",
-      "tenetKnowledge": "Osteophage",
-      "description": "Why follow in any other footsteps? When you gain knowledge at the Forum that is not from Marrowism, it cost +2 Lumi.\nYou cannot refuse a Majestic Invitation from a Bone Eater.",
-      "expansion": null,
-      "searchableText": "marrowism philosophy arrogance when you gain knowledge at the forum that is not from marrowism, it cost +2 lumi. you cannot refuse a majestic invitation from a bone eater. 2,6,10,14,16"
-    },
-    {
-      "name": "Optimism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Important",
-      "tenetKnowledge": "Positivity",
-      "description": "When you *depart*, if your total number of armor points (after all bonuses) is higher than each other departing survivor's, gain survival up to the limit. Otherwise, loose all survival.",
-      "expansion": null,
-      "searchableText": "optimism philosophy important when you *depart*, if your total number of armor points is higher than each other *departing survivor*'s, gain survival up to the limit. otherwise, loose all survival. 2,6,10,14,16"
-    },
-    {
-      "name": "Regalism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Inferiority Complex",
-      "tenetKnowledge": "Find the Castle",
-      "description": "You feel inferior and must confirm this bias. \nYou may not *depart* if you have the highest strength among all *departing survivors*.",
-      "expansion": null,
-      "searchableText": "regalism philosophy inferiority complex you may not *depart* if you have the highest strength among all *departing survivors*. 2,6,10,14,16"
-    },
-    {
-      "name": "Romanticism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Dilettante",
-      "tenetKnowledge": "Wanderlust",
-      "description": "When you *depart*, gain a random knowledge from the knowledge deck. If you have no empty slots, you must replace an existing knowledge.",
-      "expansion": null,
-      "searchableText": "romanticism philosophy dilettante when you *depart*, gain a random knowledge from the knowledge deck. if you have no empty slots, you must replace an existing knowledge. 2,6,10,14,16"
-    },
-    {
-      "name": "Survivalism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        4,
-        7,
-        10,
-        16
-      ],
-      "nerosis": "Selfish",
-      "tenetKnowledge": "Tenacity",
-      "description": "When you *encourage* another survivor, roll 1d10. On a 6+, you do not *encourage*. Keep your survival. You cannot *encourage* again this round. \nIf it possible for your survivor to use *Meat Shield* to avoid harm, they must use it.",
-      "expansion": null,
-      "searchableText": "survivalism philosophy selfish when you *encourage* another survivor, roll 1d10. on a 6+, you do not *encourage*. keep your survival. you cannot *encourage* again this round. if it possible for your survivor to use meat shield to avoid harm, they must use it. 2,4,7,10,16"
-    },
-    {
-      "name": "Verminism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Frailty",
-      "tenetKnowledge": "Hissing Arms",
-      "description": "No matter how protected you are, you know your insides are vulnerable. \n+1 systemic pressure",
-      "expansion": null,
-      "searchableText": "verminism philosophy frailty +1 systemic pressure 2,6,10,14,16"
-    },
-    {
-      "name": "Gatherism",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        5,
-        8,
-        12,
-        16
-      ],
-      "nerosis": "Inquisitive",
-      "tenetKnowledge": "Invasive",
-      "description": "Obsessive curiosity. When the survivors are prompted to *investigate* during the hunt, you must do so (multiple Gatherists roll off if necessary). \nWhile you are on or adjacent to terrain during the showdown, you cannot spend survival.",
-      "expansion": "Gatherism",
-      "searchableText": ""
-    },
-    {
-      "name": "Effervescence",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        4,
-        6,
-        13,
-        16
-      ],
-      "nerosis": "Compound Grief",
-      "tenetKnowledge": "Reframe",
-      "description": "On *Arrival*, Candy gains a random disorder, if all her disorder slots are already filled, she instead gains +1 systemic pressure and suffers -1 ♥",
-      "expansion": "Candy & Cola",
-      "searchableText": ""
-    },
-    {
-      "name": "Disintegration",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        5,
-        9,
-        16
-      ],
-      "nerosis": "Rotter",
-      "tenetKnowledge": "Adrenaline",
-      "description": "When you *depart,* set your armor points at each hit location to 0 after factoring all bonuses. When you are a returning survivor, you devour another. Suffer -1 population, the settlement does not gain benefits of their death principle.",
-      "expansion": "Goth",
-      "searchableText": ""
-    },
-    {
-      "name": "Consumption",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        6,
-        10,
-        14,
-        16
-      ],
-      "nerosis": "Cravings",
-      "tenetKnowledge": "Dubious Fare",
-      "description": "If Aeneas is *Hungry*, she consumes and archives 1 consumable resource or gear in the settlement (including settlement storage) at the start of the Develop Step of the settlement phase",
-      "expansion": "Aeneas",
-      "searchableText": ""
-    },
-    {
-      "name": "Hyper Light",
-      "type": "Philosophy",
-      "milestoneNumbers": [
-        2,
-        4,
-        8,
-        14,
-        16
-      ],
-      "nerosis": "Afflicted",
-      "tenetKnowledge": "Chain Dash",
-      "description": "At the end of your act, if you did not *dash* this round, you are knocked down and gain a bleeding token.",
-      "expansion": "Death Drifter",
-      "searchableText": ""
+      "searchableText": "joint array iii knowledge at the start of the survivors' turn choose one effect to apply until the end of the round: when you attack, if no other survivor has inflicted a wound this round, gain +4 strength until the end of the attack. | when you attack, if another survivor with *joint array* has already inflicted a wound this round, cancel reactions on your first selected hit location. monster red witches"
     }
   ],
   "Secret Fighting Art": [
@@ -4913,7 +4454,7 @@ var dataset = {
       "type": "Secret Fighting Art",
       "description": "On *Arrival*, gain reroll tokens equal to the number of volumes recorded about your quarry",
       "expansion": null,
-      "searchableText": "scholar of death secret fighting art on *Arrival*, gain reroll tokens equal to the number of volumes recorded about your quarry"
+      "searchableText": "scholar of death secret fighting art on *arrival*, gain reroll tokens equal to the number of volumes recorded about your quarry"
     },
     {
       "name": "Swordsman's Promise",
@@ -4941,238 +4482,746 @@ var dataset = {
       "type": "Secret Fighting Art",
       "description": "When your wound attempt on a hit location succeeds, you may ignore it and attempt to wound the selected hit location again with +2 luck. Limit once per attack.",
       "expansion": "Aeneas",
-      "searchableText": ""
+      "searchableText": "moonwolf style secret fighting art when your wound attempt on a hit location succeeds, you may ignore it and attempt to wound the selected hit location again with +2 luck. limit once per attack. when your wound attempt on a hit location succeeds, you may ignore it and attempt to wound the selected hit location again with +2 luck. limit once per attack. aeneas"
     },
     {
       "name": "Rousing Wail",
       "type": "Secret Fighting Art",
       "description": "{q}: All hearing knocked down survivors stand and gain + {l} insanity. If you are adjacent to the monster, it gains a *flinch token.* Limit once per round.",
       "expansion": "Aeneas",
-      "searchableText": ""
+      "searchableText": "rousing wail secret fighting art {q}: all hearing knocked down survivors stand and gain + {l} insanity. if you are adjacent to the monster, it gains a *flinch token.* limit once per round. {q}: all hearing knocked down survivors stand and gain + {l} insanity. if you are adjacent to the monster, it gains a *flinch token.* limit once per round. aeneas"
     },
     {
       "name": "Sacred Code",
       "type": "Secret Fighting Art",
       "description": "Once per showdown, durning your act, you may recite the code. Everyone and everything else trembles and collapses into a heap. \nAll other survivors and monsters are knocked down.",
       "expansion": "Pariah",
-      "searchableText": ""
+      "searchableText": "sacred code secret fighting art once per showdown, durning your act, you may recite the code. everyone and everything else trembles and collapses into a heap. all other survivors and monsters are knocked down. once per showdown, durning your act, you may recite the code. everyone and everything else trembles and collapses into a heap. all other survivors and monsters are knocked down. pariah"
     },
     {
       "name": "Quadradept",
       "type": "Secret Fighting Art",
       "description": "You use all your limbs as needed. You may use {q} as {m} and vice versa. \nYour preternatural reflexes sharpen. You cannot be knocked down.",
       "expansion": "Pariah",
-      "searchableText": ""
+      "searchableText": "quadradept secret fighting art you use all your limbs as needed. you may use {q} as {m} and vice versa. your preternatural reflexes sharpen. you cannot be knocked down. you use all your limbs as needed. you may use {q} as {m} and vice versa. your preternatural reflexes sharpen. you cannot be knocked down. pariah"
     },
     {
       "name": "Vault Key",
       "type": "Secret Fighting Art",
       "description": "This cannot be removed for any reason. \nGain 3 addtional secret fighting art slots. \nWhen you gain understanding, a wave of physical agony accopanies comprehension. Suffer that much damage to each hit location.",
       "expansion": "Red Witches",
-      "searchableText": ""
+      "searchableText": "vault key secret fighting art this cannot be removed for any reason. gain 3 addtional secret fighting art slots. when you gain understanding, a wave of physical agony accopanies comprehension. suffer that much damage to each hit location. this cannot be removed for any reason. gain 3 addtional secret fighting art slots. when you gain understanding, a wave of physical agony accopanies comprehension. suffer that much damage to each hit location. red witches"
     },
     {
       "name": "Story of the Libary",
       "type": "Secret Fighting Art",
       "description": "East history. Durning the settlement phase, you may return a consequence innovation to the Innovation Deck to gain the benefits of {s} *Age 2*, ignoring once per a lifetime restrictions. If you returned {T} *Records,* gain the benefits of {s} *Age 4* instead.",
       "expansion": "Red Witches",
-      "searchableText": ""
+      "searchableText": "story of the libary secret fighting art east history. durning the settlement phase, you may return a consequence innovation to the innovation deck to gain the benefits of {s} *age 2*, ignoring once per a lifetime restrictions. if you returned {t} *records,* gain the benefits of {s} *age 4* instead. east history. durning the settlement phase, you may return a consequence innovation to the innovation deck to gain the benefits of {s} *age 2*, ignoring once per a lifetime restrictions. if you returned {t} *records,* gain the benefits of {s} *age 4* instead. red witches"
     },
     {
       "name": "Story of the Forged",
       "type": "Secret Fighting Art",
       "description": "When you suffer a random severe injury, gaiin the following based on its hit location: \n{+}: +1 permeanent evasion | {-}: +1 permanent speed | {,}: +1 permanent strength | {.}: +1 permanent luck | {/}: +1 permanent movement",
       "expansion": "Red Witches",
-      "searchableText": ""
+      "searchableText": "story of the forged secret fighting art when you suffer a random severe injury, gaiin the following based on its hit location: {+}: +1 permeanent evasion | {-}: +1 permanent speed | {,}: +1 permanent strength | {.}: +1 permanent luck | {/}: +1 permanent movement when you suffer a random severe injury, gaiin the following based on its hit location: {+}: +1 permeanent evasion | {-}: +1 permanent speed | {,}: +1 permanent strength | {.}: +1 permanent luck | {/}: +1 permanent movement red witches"
     },
     {
       "name": "Story of the Forsaker",
       "type": "Secret Fighting Art",
       "description": "When another survivor dies during the showdown, you attacks gain *Sharp* for the rest of the showdown. \nWhile you are the only survivor on the showdown board, gain {q} at the start of your act.",
       "expansion": "Red Witches",
-      "searchableText": ""
+      "searchableText": "story of the forsaker secret fighting art when another survivor dies during the showdown, you attacks gain *sharp* for the rest of the showdown. while you are the only survivor on the showdown board, gain {q} at the start of your act. when another survivor dies during the showdown, you attacks gain *sharp* for the rest of the showdown. while you are the only survivor on the showdown board, gain {q} at the start of your act. red witches"
     }
   ],
-  "Weapon": [
+  "Ability": [
     {
-      "name": "Axe",
-      "type": "Weapon",
-      "spec": "If your wound attempt fails, you may ignore it and attempt to wound the selected {N} again. Limit, once per attack.",
-      "mastery": "When you wound a monster at a location with a persistent injury, that wound becomes a critical wound.",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Feinting Shot",
+      "type": "Ability",
+      "description": "Spend {m}{q} to move your survivor 3 spaces away from the monster. Activate and attack with a bow or arrow in your gear grid. This attack gains +3 accuracy and +3 range.",
       "expansion": null,
-      "searchableText": "axe weapon if your wound attempt fails, you may ignore it and attempt to wound the selected hit location again. limit, once per attack. when you wound a monster at a location with a persistent injury, that wound becomes a critical wound."
+      "searchableText": "feinting shot ability spend {m}{q} to move your survivor 3 spaces away from the monster. activate and attack with a bow or arrow in your gear grid. this attack gains +3 accuracy and +3 range. "
     },
     {
-      "name": "Bow",
-      "type": "Weapon",
-      "spec": "When attacking with a bow you may reroll any misses once.",
-      "mastery": "Gain *Deadly 2* and ignore *Cumbersome*",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Hit Song",
+      "type": "Ability",
+      "description": "Spend {m}{q} to full move forward and attack. If you moved at least 4 spaces, the first time you wound during this attack, *encourage* all survivors.",
       "expansion": null,
-      "searchableText": "bow weapon when attacking with a bow you may reroll any misses once. gain deadly 2 and ignore *Cumbersome*"
+      "searchableText": "hit song ability spend {m}{q} to full move forward and attack. if you moved at least 4 spaces, the first time you wound during this attack, *encourage* all survivors. "
     },
     {
-      "name": "Club",
-      "type": "Weapon",
-      "spec": "On a *perfect hit* double your wound attempt total on the first selected hit location.\nLimit once per attack.",
-      "mastery": "If successful wound attempt total is greater than or equal to twice the monster's toughness, inflict an additional wound.",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Immortal Spin",
+      "type": "Ability",
+      "description": "Spend {m}{q} to move 3 spaces forward. If you do, activate a melee weapon with +1 strength for each of your bleeding tokens.",
       "expansion": null,
-      "searchableText": "club weapon on a *perfect hit* double your wound attempt total on the first selected hit location. limit once per attack. if successful wound attempt total is greater than or equal to twice the monster's toughness, inflict an additional wound."
+      "searchableText": "immortal spin ability spend {m}{q} to move 3 spaces forward. if you do, activate a melee weapon with +1 strength for each of your bleeding tokens. "
     },
     {
-      "name": "Dagger",
-      "type": "Weapon",
-      "spec": "If a wound attempt fails, after performing any reactions, you may discard another drawn {N} to attempt to wound that {N} again. Limit, once per attack.",
-      "mastery": "After a wounded {N} is discarded, if adjacent to the attacker and wounded monster you may spend 1 survival to re-draw the wounded {N} and attempt to wound with a dagger.",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Guardless",
+      "type": "Ability",
+      "description": "A survivor with guardless may not *dodge*, block, deflect, or ignore hits. Attack rolls can still miss guardless survivors, as they still factor their evasion in.",
       "expansion": null,
-      "searchableText": "dagger weapon if a wound attempt fails, after performing any reactions, you may discard another drawn hit location card to attempt to wound that hit location again. limit, once per attack. after a wounded hit location is discarded, if adjacent to the attacker and wounded monster you may spend 1 survival to re-draw the wounded hit location and attempt to wound with a dagger."
+      "searchableText": "guardless ability a survivor with guardless may not *dodge*, block, deflect, or ignore hits. attack rolls can still miss guardless survivors, as they still factor their evasion in. "
     },
     {
-      "name": "Fist & Tooth",
-      "type": "Weapon",
-      "spec": "You may stand (if knocked down) at the start of the monster's turn or the survivors' turn.\nLimit once per round",
-      "mastery": "+2 permanent accuracy and str",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Rush",
+      "type": "Ability",
+      "description": "When a survivor hits 3+ times in a single attack, they Rush for that attack.",
       "expansion": null,
-      "searchableText": "fist & tooth weapon you may stand (if knocked down) at the start of the monster's turn or the survivors' turn. limit once per round +2 permanent accuracy and strength"
+      "searchableText": "rush ability when a survivor hits 3+ times in a single attack, they rush for that attack. "
     },
     {
-      "name": "Grand Weapon",
-      "type": "Weapon",
-      "spec": "+1 Acc.\nIf you critically wound the monster is knocked down.",
-      "mastery": "When you have a *perfect hit*, cancel all reactions for that attack.",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Subconscious",
+      "type": "Ability",
+      "description": "You can use this while *frenzied*.",
       "expansion": null,
-      "searchableText": "grand weapon weapon +1 acc. if you critically wound the monster is knocked down. when you have a *perfect hit*, cancel all reactions for that attack."
+      "searchableText": "subconscious ability you can use this while *frenzied*. "
     },
     {
-      "name": "Katana",
-      "type": "Weapon",
-      "spec": "Cannot select this weapon type. If you are *blind* and have 4+ ranks: On your first *perfect hit* each attack, do not draw a {H}. The monster suffers 1 wound.",
-      "mastery": "Leave the settlement, can set another survivor weapon type to Katana",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Astute",
+      "type": "Ability",
+      "description": "On *Arrival*, if possible, add an Acanthus Plant terrain card to the showdown.",
       "expansion": null,
-      "searchableText": "katana weapon cannot select this weapon type. if you are *blind* and have 4+ ranks: on your first *perfect hit* each attack, do not draw a hit location. the monster suffers 1 wound. leave the settlement, can set another survivor weapon type to katana"
+      "searchableText": "astute ability on *arrival*, if possible, add an acanthus plant terrain card to the showdown. "
     },
     {
-      "name": "Katar",
-      "type": "Weapon",
-      "spec": "Cancel reactions on the first selected {N}",
-      "mastery": "+1 evasion token on a *perfect hit*.\nWhen you are knocked down remove all +1 evasion tokens",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Caratosis",
+      "type": "Ability",
+      "description": "Before making an attack roll, you may declare \"Caratosis X\" in a loud, booming voice. If you do, that attack gains X automatic hits. X cannot be more than your total red affinities. When the attack ends, gain +X Hunt XP.",
       "expansion": null,
-      "searchableText": "katar weapon cancel reactions on the first selected hit location +1 evasion token on a *perfect hit*. when you are knocked down remove all +1 evasion tokens"
+      "searchableText": "caratosis ability before making an attack roll, you may declare \"caratosis x\" in a loud, booming voice. if you do, that attack gains x automatic hits. x cannot be more than your total red affinities. when the attack ends, gain +x hunt xp. "
     },
     {
-      "name": "Shield",
-      "type": "Weapon",
-      "spec": "No longer knocked down after collision with monster.\n{!} to all hit locations",
-      "mastery": "While adjacent to a survivor that is targeted by a monster, you may swap spaces on the board and become the target instead.",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Dormenatus",
+      "type": "Ability",
+      "description": "When you suffer damage, you may declare \"Dormenatus X\" in a loud, booming voice. If you do, add X armor points to each hit location. X cannot be more than your total green affinities. After the damage is resolved, gain +X Hunt XP.",
       "expansion": null,
-      "searchableText": "shield weapon no longer knocked down after collision with monster. +{!} to all hit locations while adjacent to a survivor that is targeted by a monster, you may swap spaces on the board and become the target instead."
+      "searchableText": "dormenatus ability when you suffer damage, you may declare \"dormenatus x\" in a loud, booming voice. if you do, add x armor points to each hit location. x cannot be more than your total green affinities. after the damage is resolved, gain +x hunt xp. "
     },
     {
-      "name": "Spear",
-      "type": "Weapon",
-      "spec": "If you draw the trap, roll 1d10 . On a 7+ cancel the trap. Discard it, then reshuffle the {N} deck and draw a new card. Limit once per round.",
-      "mastery": "When you hit the monster you may spend 1 survival to gain the *priority target* token. If they made the hit from directly behind another survivor, that survivor gains it instead.",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Forgettable",
+      "type": "Ability",
+      "description": "Gain +2 evasion. Forgettable survivors cannot be *encouraged*.",
       "expansion": null,
-      "searchableText": "spear weapon if you draw the trap, roll 1d10 . on a 7+ cancel the trap. discard it, then reshuffle the hl deck and draw a new card. limit once per round. when you hit the monster you may spend 1 survival to gain the *priority target* token. if they made the hit from directly behind another survivor, that survivor gains it instead."
+      "searchableText": "forgettable ability gain +2 evasion. forgettable survivors cannot be *encouraged*. "
     },
     {
-      "name": "Sword",
-      "type": "Weapon",
-      "spec": "After drawing hit location, make a wound attempt and then select a {N} to resolve with that result. Limit once per attack.",
-      "mastery": "+1 Acc, Str and speed",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Homing Instinct",
+      "type": "Ability",
+      "description": "Add +5 to your rolls on the {s} *Run Away* story event.",
       "expansion": null,
-      "searchableText": "sword weapon after drawing hit location, make a wound attempt and then select a hit location to resolve with that result. limit once per attack. +1 acc, str and speed"
+      "searchableText": "homing instinct ability add +5 to your rolls on the {a} *run away* story event. "
     },
     {
-      "name": "Sword - Willow",
-      "type": "Weapon",
-      "spec": "Swords in your gear grid gain Block 1 and the two-handed keyword. When you block or deflect a hit with a sword, gain +1 survival. Limit once per round.",
-      "mastery": "After resolving a monster's {O}, if you ignored a hit with block or defect, you may spend 1 survival to activate a sword and attack. Limit once per round.",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Internal Tempo",
+      "type": "Ability",
+      "description": "You ignore the monster's accuracy tokens and always treat your evasion as 0. Your gear loses the *noisy* keyword while it is in your gear grid.",
       "expansion": null,
-      "searchableText": "sword - willow weapon swords in your gear grid gain block 1 and the two-handed keyword. when you block or deflect a hit with a sword, gain +1 survival. limit once per round. after resolving a monster's ai, if you ignored a hit with block or defect, you may spend 1 survival to activate a sword and attack. limit once per round."
+      "searchableText": "internal tempo ability you ignore the monster's accuracy tokens and always treat your evasion as 0. your gear loses the *noisy* keyword while it is in your gear grid. "
     },
     {
-      "name": "Twilight Sword",
-      "type": "Weapon",
-      "spec": "Rank 2 - Ignore *Cumbersome*, Rank 4 - Ignore slow and gain +2 speed, Rank 6 - Gain Deadly",
-      "mastery": "Leave the settlement, may give the twilight sword to another survivor.",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Iridescent Hide",
+      "type": "Ability",
+      "description": "When you *depart*, add {!} to each hit location for each different-colored affinity in your gear grid.",
       "expansion": null,
-      "searchableText": "twilight sword weapon rank 2 - ignore *Cumbersome*, rank 4 - ignore slow and gain +2 speed, rank 6 - gain deadly leave the settlement, may give the twilight sword to another survivor."
+      "searchableText": "iridescent hide ability when you *depart*, add {!} to each hit location for each different-colored affinity in your gear grid. "
     },
     {
-      "name": "Whip",
-      "type": "Weapon",
-      "spec": "Instead of moving the top card of the AI deck into the wound stack, you may move the top card of the AI discard pile. Limit once per Attack",
-      "mastery": "Gain +5 strength when attacking with a whip",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Lucernae",
+      "type": "Ability",
+      "description": "Before making a wound attempt, you may declare \"Lucernae X\" in a loud, booming voice. If you do, that wound attempt gains +X luck. X cannot be more than your total blue affinities. When the attack ends, gain +X Hunt XP.",
       "expansion": null,
-      "searchableText": "whip weapon instead of moving the top card of the ai deck into the wound stack, you may move the top card of the ai discard pile. limit once per attack gain +5 strength when attacking with a whip"
+      "searchableText": "lucernae ability before making a wound attempt, you may declare \"lucernae x\" in a loud, booming voice. if you do, that wound attempt gains +x luck. x cannot be more than your total blue affinities. when the attack ends, gain +x hunt xp. "
     },
     {
-      "name": "Scythe",
-      "type": "Weapon",
-      "spec": "When you critically wound with a scythe. roll 1d10. On a 6+, shuffle the hit location deck (do not shuffle unresolved hit locations). Limit, once per attack",
-      "mastery": "At teh start of a Scythe Master's act, if they are insane, they gain +1 {q}, which they may only spend to activate scythes.",
-      "specialistLevels": [
-        3,
-        8
-      ],
+      "name": "Myopic Fighter",
+      "type": "Ability",
+      "description": "Gain +2 acc. You may only attack with daggers and katars.",
       "expansion": null,
-      "searchableText": "whip weapon instead of moving the top card of the ai deck into the wound stack, you may move the top card of the ai discard pile. limit once per attack gain +5 strength when attacking with a whip"
+      "searchableText": "myopic fighter ability gain +2 acc. you may only attack with daggers and katars. "
+    },
+    {
+      "name": "Nightmare Blood",
+      "type": "Ability",
+      "description": "Whenever you gain a bleeding token, add {!} to all hit locations.",
+      "expansion": null,
+      "searchableText": "nightmare blood ability whenever you gain a bleeding token, add {!}to all hit locations. "
+    },
+    {
+      "name": "Nightmare Membrane",
+      "type": "Ability",
+      "description": "You may spend {q}{m} to exchange any 1 of your tokens for a +1 strength token.",
+      "expansion": null,
+      "searchableText": "nightmare membrane ability you may spend {a}{m} to exchange any 1 of your tokens for a +1 strength token. "
+    },
+    {
+      "name": "Nightmare Spurs",
+      "type": "Ability",
+      "description": "Once per showdown, you may spend all your survival (at least 1) to lose all your +1 strength tokens and gain that many +1 luck tokens.",
+      "expansion": null,
+      "searchableText": "nightmare spurs ability once per showdown, you may spend all your survival (at least 1) to lose all your +1 strength tokens and gain that many +1 luck tokens. "
+    },
+    {
+      "name": "Oracle's Eye",
+      "type": "Ability",
+      "description": "At the start of the showdown, look through the AI deck, then shuffle it.",
+      "expansion": null,
+      "searchableText": "oracle's eye ability at the start of the showdown, look through the ai deck, then shuffle it. "
+    },
+    {
+      "name": "Pristine",
+      "type": "Ability",
+      "description": "When you suffer a dismembered severe injury, ignore it and gain a bleeding token instead.",
+      "expansion": null,
+      "searchableText": "pristine ability when you suffer a dismembered severe injury, ignore it and gain a bleeding token instead. "
+    },
+    {
+      "name": "Reflection",
+      "type": "Ability",
+      "description": "Your complete affinities and incomplete affinity halves count as all colors. You may *dodge* at any time and as many times as you like each round. When you attack from a blind spot, add +1d10 to all wound attempts for that attack.",
+      "expansion": null,
+      "searchableText": "reflection ability your complete affinities and incomplete affinity halves count as all colors. you may *dodge* at any time and as many times as you like each round. when you attack from a blind spot, add +1d10 to all wound attempts for that attack. "
+    },
+    {
+      "name": "Refraction",
+      "type": "Ability",
+      "description": "Your complete affinities and incomplete affinity halves count as all colors. During the Showdown, after you perform a survival action, gain +1 survival.",
+      "expansion": null,
+      "searchableText": "refraction ability your complete affinities and incomplete affinity halves count as all colors. during the showdown, after you perform a survival action, gain +1 survival. "
+    },
+    {
+      "name": "Rival's Scar",
+      "type": "Ability",
+      "description": "This survivor gains +1 permanent strength and suffers -1 permanent evasion.",
+      "expansion": null,
+      "searchableText": "rival's scar ability this survivor gains +1 permanent strength and suffers -1 permanent evasion. "
+    },
+    {
+      "name": "Super Hair",
+      "type": "Ability",
+      "description": "You may spend {q} to freely exchange any tokens with adjacent survivors who have Super Hair.",
+      "expansion": null,
+      "searchableText": "super hair ability you may spend {a} to freely exchange any tokens with adjacent survivors who have super hair. "
+    },
+    {
+      "name": "True Peace",
+      "type": "Ability",
+      "description": "Set your systemic pressure and torment to 0.",
+      "expansion": null,
+      "searchableText": "true peace ability set your systemic pressure and torment to 0. "
+    },
+    {
+      "name": "Veteran",
+      "type": "Ability",
+      "description": "During the Aftermath, gain +1 Hunt XP.",
+      "expansion": null,
+      "searchableText": "veteran ability during the aftermath, gain +1 hunt xp. "
+    },
+    {
+      "name": "Winged Escape",
+      "type": "Ability",
+      "description": "Once per showdown, you may archive a Cyclops Fly vermin resource to discard the Trap and reshuffle the hit location deck.",
+      "expansion": null,
+      "searchableText": "winged escape ability once per showdown, you may archive a cyclops fly vermin resource to discard the trap and reshuffle the hit location deck. "
+    },
+    {
+      "name": "Unburdened",
+      "type": "Ability",
+      "description": "You may only wear Cloth (no other armor or accessories). Gain +2 strength from your resolve.",
+      "expansion": null,
+      "searchableText": "unburdened ability you may only wear cloth (no other armor or accessories). gain +2 strength from your resolve. "
+    },
+    {
+      "name": "Acid Palms",
+      "type": "Ability",
+      "description": "Add 1d10 strength to wound attempts when attacking with Fist & Tooth.",
+      "expansion": null,
+      "searchableText": "acid palms ability add 1d10 strength to wound attempts when attacking with fist & tooth. "
+    },
+    {
+      "name": "Advanced Play",
+      "type": "Ability",
+      "description": "You may set aside 2 dice with the High Roller knowledge. These dice must be from separate attacks.",
+      "expansion": null,
+      "searchableText": "advanced play ability you may set aside 2 dice with the high roller knowledge. these dice must be from separate attacks. "
+    },
+    {
+      "name": "Ageless",
+      "type": "Ability",
+      "description": "You may hunt if you are retired. When you gain Hunt XP, you may instead choose not to gain it.",
+      "expansion": null,
+      "searchableText": "ageless ability you may hunt if you are retired. when you gain hunt xp, you may instead choose not to gain it. "
+    },
+    {
+      "name": "Analyze",
+      "type": "Ability",
+      "description": "At the start of the survivors' turn, if you are adjacent to the monster, reveal the top AI card, then place it back on top of the deck.",
+      "expansion": null,
+      "searchableText": "analyze ability at the start of the survivors' turn, if you are adjacent to the monster, reveal the top ai card, then place it back on top of the deck. "
+    },
+    {
+      "name": "Astute Psyche",
+      "type": "Ability",
+      "description": "When you make an observation about a knowledge, make two observations instead.",
+      "expansion": null,
+      "searchableText": "astute psyche ability when you make an observation about a knowledge, make two observations instead. "
+    },
+    {
+      "name": "Bitter Frenzy",
+      "type": "Ability",
+      "description": "You may spend survival and use fighting arts, weapon specialization, and weapon mastery while *frenzied*.",
+      "expansion": null,
+      "searchableText": "bitter *frenzy* ability you may spend survival and use fighting arts, weapon specialization, and weapon mastery while *frenzied*. "
+    },
+    {
+      "name": "Bounding Legs",
+      "type": "Ability",
+      "description": "When you spend {m}, you must place yourself in an unoccupied space 5 spaces away from your current space and gain a +1 speed token for the rest of the round.",
+      "expansion": null,
+      "searchableText": "bounding legs ability when you spend {m}, you must place yourself in an unoccupied space 5 spaces away from your current space and gain a +1 speed token for the rest of the round. "
+    },
+    {
+      "name": "Bullfrog Neck",
+      "type": "Ability",
+      "description": "Add +1 to your head severe injury roll results. Double your courage for any rolls that would take it into account.",
+      "expansion": null,
+      "searchableText": "bullfrog neck ability add +1 to your head severe injury roll results. double your courage for any rolls that would take it into account. "
+    },
+    {
+      "name": "Burnt Nerves",
+      "type": "Ability",
+      "description": "You are immune to bash.",
+      "expansion": null,
+      "searchableText": "burnt nerves ability you are immune to bash. "
+    },
+    {
+      "name": "Cheer Captain",
+      "type": "Ability",
+      "description": "Spend {v}{v} to cause *departing survivors* to suffer the *frenzy* brain trauma twice and ignore bash for the rest of the lantern year. Limit once per lantern year.",
+      "expansion": null,
+      "searchableText": "cheer captain ability spend {v}{v} to cause *departing survivors* to suffer the *frenzy* brain trauma twice and ignore bash for the rest of the lantern year. limit once per lantern year. "
+    },
+    {
+      "name": "Cutthroat",
+      "type": "Ability",
+      "description": "On a *perfect hit*, gain {q} after your attack ends, which must be spent immediately. Limit once per round.",
+      "expansion": null,
+      "searchableText": "cutthroat ability on a *perfect hit*, gain {q} after your attack ends, which must be spent immediately. limit once per round. "
+    },
+    {
+      "name": "Dark Calling",
+      "type": "Ability",
+      "description": "Increase your range of *perfect hits* by 1. When you are a *returning survivor*, roll 1d10. If the result is less than or equal to your HuntXP, you leave the settlement forever.",
+      "expansion": null,
+      "searchableText": "dark calling ability increase your range of *perfect hits* by 1. when you are a *returning survivor*, roll 1d10. if the result is less than or equal to your huntxp, you leave the settlement forever. "
+    },
+    {
+      "name": "Dead Again",
+      "type": "Ability",
+      "description": "When you die, do not gain the benefits of your Death principle. Instead, gain +1 population. This new survivor adopts the Deadism philosophy, gains Dead Again, and has your name.",
+      "expansion": null,
+      "searchableText": "dead again ability when you die, do not gain the benefits of your death principle. instead, gain +1 population. this new survivor adopts the deadism philosophy, gains dead again, and has your name. "
+    },
+    {
+      "name": "Destructive Vow",
+      "type": "Ability",
+      "description": "At the end of your act, gain +3 insanity if you have attacked this round. Otherwise, suffer 3 brain damage.",
+      "expansion": null,
+      "searchableText": "destructive vow ability at the end of your act, gain +3 insanity if you have attacked this round. otherwise, suffer 3 brain damage. "
+    },
+    {
+      "name": "Discourse Savant",
+      "type": "Ability",
+      "description": "When you roll on a table while ranking up your philosophy, you may choose your roll result instead of rolling.",
+      "expansion": null,
+      "searchableText": "discourse savant ability when you roll on a table while ranking up your philosophy, you may choose your roll result instead of rolling. "
+    },
+    {
+      "name": "Dream Keeper's Legacy",
+      "type": "Ability",
+      "description": "During the showdown, if you have at least 1 permanent luck, you may set your luck to 0 and physically flip any token.",
+      "expansion": null,
+      "searchableText": "dream keeper's legacy ability during the showdown, if you have at least 1 permanent luck, you may set your luck to 0 and physically flip any token. "
+    },
+    {
+      "name": "Engorged Cure",
+      "type": "Ability",
+      "description": "Once per showdown, you may archive a Nightmare Tick vermin resource to remove all your bleeding tokens and fully *heal* yourself.",
+      "expansion": null,
+      "searchableText": "engorged cure ability once per showdown, you may archive a nightmare tick vermin resource to remove all your bleeding tokens and fully *heal* yourself. "
+    },
+    {
+      "name": "Extra Long Arms",
+      "type": "Ability",
+      "description": "Your Fist & Tooth has reach 2.",
+      "expansion": null,
+      "searchableText": "extra long arms ability your fist & tooth has reach 2. "
+    },
+    {
+      "name": "Fated Battle",
+      "type": "Ability",
+      "description": "At the start of a showdown with the picked monster, gain +1 speed token.",
+      "expansion": null,
+      "searchableText": "fated battle ability at the start of a showdown with the picked monster, gain +1 speed token. "
+    },
+    {
+      "name": "Flipper Feet",
+      "type": "Ability",
+      "description": "Gain +1 movement and +1 evasion. You cannot wear leg armor.",
+      "expansion": null,
+      "searchableText": "flipper feet ability gain +1 movement and +1 evasion. you cannot wear leg armor. "
+    },
+    {
+      "name": "Fortune Sight",
+      "type": "Ability",
+      "description": "On *Arrival*, gain +1 accuracy tokens equal to your permanent luck.",
+      "expansion": null,
+      "searchableText": "fortune sight ability on *arrival*, gain +1 accuracy tokens equal to your permanent luck. "
+    },
+    {
+      "name": "Founder's Eye",
+      "type": "Ability",
+      "description": "A permanent design with intricate line work too fine for the naked eye to see. Gain +1 to all rolls on the Arc *Intimacy* story event.",
+      "expansion": null,
+      "searchableText": "founder's eye ability a permanent design with intricate line work too fine for the naked eye to see. gain +1 to all rolls on the arc *intimacy* story event. "
+    },
+    {
+      "name": "Game Master",
+      "type": "Ability",
+      "description": "When you are the monster controller and the monster draws {O}, instead draw 2 cards and select 1 to perform, placing the other back on top of the {O} deck.",
+      "expansion": null,
+      "searchableText": "game master ability when you are the monster controller and the monster draws {o}, instead draw 2 cards and select 1 to perform, placing the other back on top of the {o} deck. "
+    },
+    {
+      "name": "Gravel Guts",
+      "type": "Ability",
+      "description": "Add +1 to your body severe injury roll results. Ignore monster *knockback* actions.",
+      "expansion": null,
+      "searchableText": "gravel guts ability add +1 to your body severe injury roll results. ignore monster *knockback* actions. "
+    },
+    {
+      "name": "Grounded",
+      "type": "Ability",
+      "description": "Once per lantern year, at any time, you may set your insanity to 0, 1, or 2.",
+      "expansion": null,
+      "searchableText": "grounded ability once per lantern year, at any time, you may set your insanity to 0, 1, or 2. "
+    },
+    {
+      "name": "Hemostasis",
+      "type": "Ability",
+      "description": "It takes an additional bleeding token to kill you. This ability can be gained multiple times.",
+      "expansion": null,
+      "searchableText": "hemostasis ability it takes an additional bleeding token to kill you. this ability can be gained multiple times. "
+    },
+    {
+      "name": "Inevitable",
+      "type": "Ability",
+      "description": "When you gain this, choose a weapon. It gains Sharp. Record this on your survivor record sheet. Erase it when the gear is archived.",
+      "expansion": null,
+      "searchableText": "inevitable ability when you gain this, choose a weapon. it gains sharp. record this on your survivor record sheet. erase it when the gear is archived. "
+    },
+    {
+      "name": "Iron Will",
+      "type": "Ability",
+      "description": "You cannot be knocked down. Reduce all *knockback* you suffer to *knockback* 1.",
+      "expansion": null,
+      "searchableText": "iron will ability you cannot be knocked down. reduce all *knockback* you suffer to *knockback* 1. "
+    },
+    {
+      "name": "Juice Hunter",
+      "type": "Ability",
+      "description": "Once per hunt phase, when you are the event revealer, you may take a detour to search for a nest of lantern bugs. Roll a random hunt event. Afterwards, you return with bug juice and all survivors gain +1d5 survival.",
+      "expansion": null,
+      "searchableText": "juice hunter ability once per hunt phase, when you are the event revealer, you may take a detour to search for a nest of lantern bugs. roll a random hunt event. afterwards, you return with bug juice and all survivors gain +1d5 survival. "
+    },
+    {
+      "name": "Largesse",
+      "type": "Ability",
+      "description": "During your act, if you are Honorable, you may give an adjacent survivor one of your survival. Limit once per round.",
+      "expansion": null,
+      "searchableText": "largesse ability during your act, if you are honorable, you may give an adjacent survivor one of your survival. limit once per round. "
+    },
+    {
+      "name": "Legendcaller",
+      "type": "Ability",
+      "description": "Once a lifetime, on a hunt board space after Overwhelming Darkness, in place of rolling a random hunt event, use \"53\" as your result.",
+      "expansion": null,
+      "searchableText": "legendcaller ability once a lifetime, on a hunt board space after overwhelming darkness, in place of rolling a random hunt event, use \"53\" as your result. "
+    },
+    {
+      "name": "Levinblood",
+      "type": "Ability",
+      "description": "At the end of your attack with a weapon with the metal keyword, if you hit the monster, it is shocked and suffers an automatic wound.",
+      "expansion": null,
+      "searchableText": "levinblood ability at the end of your attack with a weapon with the metal keyword, if you hit the monster, it is shocked and suffers an automatic wound. "
+    },
+    {
+      "name": "Leyline Walker",
+      "type": "Ability",
+      "description": "While there is no armor or accessory gear in your gear grid, gain +3 evasion.",
+      "expansion": null,
+      "searchableText": "leyline walker ability while there is no armor or accessory gear in your gear grid, gain +3 evasion. "
+    },
+    {
+      "name": "Life Exchange",
+      "type": "Ability",
+      "description": "In the Aftermath, gain 1 additional Hunt XP. You may not wear other gear. If you trigger the White Secret story event, you cease to exist. When you retire, you cease to exist.",
+      "expansion": null,
+      "searchableText": "life exchange ability in the aftermath, gain 1 additional hunt xp. you may not wear other gear. if you trigger the white secret story event, you cease to exist. when you retire, you cease to exist. "
+    },
+    {
+      "name": "Crystal Skin ",
+      "type": "Ability",
+      "description": "You ignore cursed and cannot wear armor. When you depart gain 3 to all hit locations. Suffer -2 to the result of all severe injury rolls. When you participate in Intimacy, newborns gain Crystal Skin in addition to any other roll results. ",
+      "expansion": null,
+      "searchableText": "crystal skin you ignore cursed and cannot wear armor. when you depart gain 3 to all hit locations. suffer -2 to the result of all severe injury rolls. when you participate in intimacy, newborns gain crystal skin in addition to any other roll results. "
+    },
+    {
+      "name": "Rooted to All",
+      "type": "Ability",
+      "description": "If you are standing at teh start of yoru act, reveal the top 2 cards of the AI deck and put them back in any order.",
+      "expansion": null,
+      "searchableText": "rooted to all ability if you are standing at teh start of yoru act, reveal the top 2 cards of the ai deck and put them back in any order. if you are standing at teh start of yoru act, reveal the top 2 cards of the ai deck and put them back in any order."
+    },
+    {
+      "name": "Lone Drifter",
+      "type": "Ability",
+      "description": "You may *dash* 1 addtional time per round. You cannot perform any survival action except for *dash*. At the start of your act, gain survival up to the settlement limit",
+      "expansion": "Death Drifter",
+      "searchableText": "lone drifter ability you may *dash* 1 addtional time per round. you cannot perform any survival action except for *dash*. at the start of your act, gain survival up to the settlement limit you may *dash* 1 addtional time per round. you cannot perform any survival action except for *dash*. at the start of your act, gain survival up to the settlement limit death drifter"
+    },
+    {
+      "name": "Bile Body",
+      "type": "Ability",
+      "description": "On Arrival, gain a +1 evasion token. When you suffer a severe injury, adjacent monsters and survivors are knocked down. Limit once per showdown.",
+      "expansion": "Pariah",
+      "searchableText": "bile body ability on arrival, gain a +1 evasion token. when you suffer a severe injury, adjacent monsters and survivors are knocked down. limit once per showdown. on arrival, gain a +1 evasion token. when you suffer a severe injury, adjacent monsters and survivors are knocked down. limit once per showdown. pariah"
+    },
+    {
+      "name": "Boost Heart",
+      "type": "Ability",
+      "description": "At the start of your act, gain +1 strength token. When you are knocked down, lose all your +1 strength tokens. When you have five or more +1 strength tokens, your heart bursts. Dead",
+      "expansion": "Pariah",
+      "searchableText": "boost heart ability at the start of your act, gain +1 strength token. when you are knocked down, lose all your +1 strength tokens. when you have five or more +1 strength tokens, your heart bursts. dead at the start of your act, gain +1 strength token. when you are knocked down, lose all your +1 strength tokens. when you have five or more +1 strength tokens, your heart bursts. dead pariah"
+    },
+    {
+      "name": "Ferrous Feed",
+      "type": "Ability",
+      "description": "During your act, consume and archive 1 of your attribute tokens to suffer bleed 1.",
+      "expansion": "Pariah",
+      "searchableText": "ferrous feed ability during your act, consume and archive 1 of your attribute tokens to suffer bleed 1. during your act, consume and archive 1 of your attribute tokens to suffer bleed 1. pariah"
+    },
+    {
+      "name": "Fused",
+      "type": "Ability",
+      "description": "When you suffer a severe body injury, the monster suffers an automatic hit that inflicts a critical wound.",
+      "expansion": "Pariah",
+      "searchableText": "fused ability when you suffer a severe body injury, the monster suffers an automatic hit that inflicts a critical wound. when you suffer a severe body injury, the monster suffers an automatic hit that inflicts a critical wound. pariah"
+    },
+    {
+      "name": "Heart Strings",
+      "type": "Ability",
+      "description": "You cannot be the straggler. On Arrival, choose a board edge. You may move up to three additional spaces towards your chosen board edge after {m} action.",
+      "expansion": "Pariah",
+      "searchableText": "heart strings ability you cannot be the straggler. on arrival, choose a board edge. you may move up to three additional spaces towards your chosen board edge after {m} action. you cannot be the straggler. on arrival, choose a board edge. you may move up to three additional spaces towards your chosen board edge after {m} action. pariah"
+    },
+    {
+      "name": "One Two",
+      "type": "Ability",
+      "description": "When you die, do not gain the benefits of your Death Principle. Two survivors emerge from your corpse.",
+      "expansion": "Pariah",
+      "searchableText": "one two ability when you die, do not gain the benefits of your death principle. two survivors emerge from your corpse. when you die, do not gain the benefits of your death principle. two survivors emerge from your corpse. pariah"
+    },
+    {
+      "name": "Warmed up",
+      "type": "Ability",
+      "description": "You never suffer the effects of cold. On Arrival, gain +1 movement and +1 speed token. When you are a returning survivor, +5 {v}. Only you may spend these endeavors.",
+      "expansion": "Pariah",
+      "searchableText": "warmed up ability you never suffer the effects of cold. on arrival, gain +1 movement and +1 speed token. when you are a returning survivor, +5 {v}. only you may spend these endeavors. you never suffer the effects of cold. on arrival, gain +1 movement and +1 speed token. when you are a returning survivor, +5 {v}. only you may spend these endeavors. pariah"
+    },
+    {
+      "name": "Astrocyte Excitation",
+      "type": "Ability",
+      "description": "You add +4 to your roll results during {s} *Vaultless*.",
+      "expansion": "Red Witches",
+      "searchableText": "astrocyte excitation ability you add +4 to your roll results during {s} *vaultless*. you add +4 to your roll results during {s} *vaultless*. red witches"
+    },
+    {
+      "name": "Hyper Defense",
+      "type": "Ability",
+      "description": "Durning your act, you may gain a bleeding token to perform *Block 1* at no activation cost. Limit once per a round..",
+      "expansion": "Red Witches",
+      "searchableText": "hyper defense ability durning your act, you may gain a bleeding token to perform *block 1* at no activation cost. limit once per a round.. durning your act, you may gain a bleeding token to perform *block 1* at no activation cost. limit once per a round.. red witches"
+    },
+    {
+      "name": "Improbable Survivor",
+      "type": "Ability",
+      "description": "When you suffer a severe injury, gain +1 luck token.",
+      "expansion": "Red Witches",
+      "searchableText": "improbable survivor ability when you suffer a severe injury, gain +1 luck token. when you suffer a severe injury, gain +1 luck token. red witches"
+    },
+    {
+      "name": "Perfect Kidneys",
+      "type": "Ability",
+      "description": "at the end of your act, remove a negative attribute token. When you suffer the Bleeding Kidneys severe injury, lose this ability.",
+      "expansion": "Red Witches",
+      "searchableText": "perfect kidneys ability at the end of your act, remove a negative attribute token. when you suffer the bleeding kidneys severe injury, lose this ability. at the end of your act, remove a negative attribute token. when you suffer the bleeding kidneys severe injury, lose this ability. red witches"
+    },
+    {
+      "name": "Red String of Fate",
+      "type": "Ability",
+      "description": "When you draw a trap, cancel it, discard it, then reshuffle the hit location discard into the hitlocation deck and draw a new card. Limit once per lifetime.",
+      "expansion": "Red Witches",
+      "searchableText": "red string of fate ability when you draw a trap, cancel it, discard it, then reshuffle the hit location discard into the hitlocation deck and draw a new card. limit once per lifetime. when you draw a trap, cancel it, discard it, then reshuffle the hit location discard into the hitlocation deck and draw a new card. limit once per lifetime. red witches"
+    },
+    {
+      "name": "Reflexive Shooter",
+      "type": "Ability",
+      "description": "Ignore Cumbersome on bows in your gear grid and reduce their range by 2.",
+      "expansion": "Red Witches",
+      "searchableText": "reflexive shooter ability ignore cumbersome on bows in your gear grid and reduce their range by 2. ignore cumbersome on bows in your gear grid and reduce their range by 2. red witches"
+    },
+    {
+      "name": "Stone Face Engraver",
+      "type": "Ability",
+      "description": "When a survivor adopts a philosophy, they draw an additional card and select one to adopt.",
+      "expansion": null,
+      "searchableText": "stone face engraver ability when a survivor adopts a philosophy, they draw an additional card and select one to adopt."
+    },
+    {
+      "name": "Mentor",
+      "type": "Ability",
+      "description": "During the settlement phase, spend {v} to nominate a survivor with less Hunt XP than you. They gain +2 lumi and +2 Hunt XP. Limit once per lantern year.",
+      "expansion": null,
+      "searchableText": "mentor ability during the settlement phase, spend {v} to nominate a survivor with less hunt xp than you. they gain +2 lumi and +2 hunt xp. limit once per lantern year."
+    },
+    {
+      "name": "Candypop",
+      "type": "Ability",
+      "description": "When you archive a resource with *Pantom Friend* gain a random *Unique* soda gear and +1 permanent affinity of your choice.",
+      "expansion": "Cany & Cola",
+      "searchableText": "candypop ability when you archive a resource with pantom friend gain a random unique soda gear and +1 permanent affinity of your choice."
+    },
+    {
+      "name": "Overactive Imagination",
+      "type": "Ability",
+      "description": "When you suffer a random brain trauma, roll twice and pick the lowest result. When you are a *returning survivor*, gain +2 {v}",
+      "expansion": "Cany & Cola",
+      "searchableText": "overactive imagination ability when you suffer a random brain trauma, roll twice and pick the lowest result. when you are a returning survivor, gain +2 endeavor"
+    },
+    {
+      "name": "Steadfast",
+      "type": "Ability",
+      "description": "When you encourage, gain +2 accuracy tokens untill the end of the round.",
+      "expansion": "Cany & Cola",
+      "searchableText": "steadfast ability when you encourage, gain +2 accuracy tokens untill the end of the round."
+    },
+    {
+      "name": "Soda Vendor",
+      "type": "Ability",
+      "description": "You may carry any number of soda rare gear outside of your gear grid. (All sodas you carry must be different.) You may give a soda gear to an adjacent survivor anytime during your act.",
+      "expansion": "Cany & Cola",
+      "searchableText": "soda vendor ability you may carry any number of soda rare gear outside of your gear grid. (all sodas you carry must be different.) you may give a soda gear to an adjacent survivor anytime during your act."
+    },
+    {
+      "name": "Extra Sprint",
+      "type": "Ability",
+      "description": "You may *dash* 1 additional time each round.",
+      "expansion": "Death Drifter",
+      "searchableText": "extra sprint ability you may dash 1 additional time each round."
+    },
+    {
+      "name": "Revenant",
+      "type": "Ability",
+      "description": "Cannot be killed. If you would die, gain +1 understanding and inexplicably survive instead. The first time you die each lantern year, archive all tokens, erase all filled injury boxes, and heal all permanent injuries. Each time after return to settlement and -1 ♥",
+      "expansion": "Goth",
+      "searchableText": "revenant ability cannot be killed. if you would die, gain +1 understanding and inexplicably survive instead. the first time you die each lantern year, archive all tokens, erase all filled injury boxes, and heal all permanent injuries. each time after return to settlement and -1 ♥"
+    },
+    {
+      "name": "Skillful Stitcher",
+      "type": "Ability",
+      "description": "During the *Aftermath*, you may archive a resource to erase a permanent injury that another survivor suffered this showdown.",
+      "expansion": "Goth",
+      "searchableText": "skillful stitcher ability during the aftermath, you may archive a resource to erase a permanent injury that another survivor suffered this showdown."
+    }
+  ],
+  "Impairment": [
+    {
+      "name": "Anemic",
+      "type": "Impairment",
+      "description": "It takes one fewer bleeding token to kill you. This impairment can be gained multiple times. If you gain Anemic enough times that it takes 0 bleeding tokens to kill you, you instantly die.",
+      "expansion": null,
+      "searchableText": "anemic it takes one fewer bleeding token to kill you. this impairment can be gained multiple times. if you gain anemic enough times that it takes 0 bleeding tokens to kill you, you instantly die."
+    },
+    {
+      "name": "Broken Vow",
+      "type": "Impairment",
+      "description": "If any survivors with 0 Hunt XP in your hunting party die during the hunt or showdown, you retire.",
+      "expansion": null,
+      "searchableText": "broken vow if any survivors with 0 hunt xp in your hunting party die during the hunt or showdown, you retire."
+    },
+    {
+      "name": "Closed Meridians",
+      "type": "Impairment",
+      "description": "Gain +6 permanent luck. At the start of your act, suffer -1 permanent luck. When you have 0 or less permanent luck, suffer the head explosion severe injury.",
+      "expansion": null,
+      "searchableText": "closed meridians gain +6 permanent luck. at the start of your act, suffer -1 permanent luck. when you have 0 or less permanent luck, suffer the head explosion severe injury."
+    },
+    {
+      "name": "Cowardly",
+      "type": "Impairment",
+      "description": "When you would die or cease to exist, you instead retreat to safety and rejoin the survivors during the Aftermath.",
+      "expansion": null,
+      "searchableText": "cowardly when you would die or cease to exist, you instead retreat to safety and rejoin the survivors during the aftermath."
+    },
+    {
+      "name": "Endless Appetite",
+      "type": "Impairment",
+      "description": "This impairment cannot be removed for any reason. You cannot {s} *Run Away* or {s} *Logistics of Death.* You play with the *Dual Modes - Hunger / Content* tile.",
+      "expansion": "Aeneas",
+      "searchableText": "endless appetite impairment this impairment cannot be removed for any reason. you cannot {s} *run away* or {s} *logistics of death.* you play with the *dual modes - hunger / content* tile. this impairment cannot be removed for any reason. you cannot {s} *run away* or {s} *logistics of death.* you play with the *dual modes - hunger / content* tile. aeneas"
+    },
+    {
+      "name": "Bile Smell",
+      "type": "Impairment",
+      "description": "You are always stinky. You do not generate endeavors. When a survivor ends their movement adjacent to you, they suffer 1 brain damage.",
+      "expansion": "Pariah",
+      "searchableText": "bile smell impairment you are always stinky. you do not generate endeavors. when a survivor ends their movement adjacent to you, they suffer 1 brain damage. you are always stinky. you do not generate endeavors. when a survivor ends their movement adjacent to you, they suffer 1 brain damage. pariah"
+    },
+    {
+      "name": "Joyless",
+      "type": "Impairment",
+      "description": "You cannot surge.",
+      "expansion": "Pariah",
+      "searchableText": "joyless impairment you cannot surge. you cannot surge. pariah"
+    },
+    {
+      "name": "Sinister Confusion",
+      "type": "Impairment",
+      "description": "When you activate a weapon, choose either -2 accuracy or -3 strength for your attack.",
+      "expansion": "Pariah",
+      "searchableText": "sinister confusion impairment when you activate a weapon, choose either -2 accuracy or -3 strength for your attack. when you activate a weapon, choose either -2 accuracy or -3 strength for your attack. pariah"
+    },
+    {
+      "name": "Sizzling Blood",
+      "type": "Impairment",
+      "description": "During the showdown, when you gain a bleeding token, also gain a -1 evasion token.",
+      "expansion": "Pariah",
+      "searchableText": "sizzling blood impairment during the showdown, when you gain a bleeding token, also gain a -1 evasion token. during the showdown, when you gain a bleeding token, also gain a -1 evasion token. pariah"
+    },
+    {
+      "name": "Marrow Hunger",
+      "type": "Impairment",
+      "description": "If the *Murder* or *Skull Eater* settlement events are drawn, nominate this survivor.",
+      "expansion": null,
+      "searchableText": "marrow hunger impairment if the murder or skull eater settlement events are drawn, nominate this survivor."
+    },
+    {
+      "name": "Endless Babble",
+      "type": "Impairment",
+      "description": "When you *depart*, *departing survivors* gain +1 insanity. You cannot *encourage*.",
+      "expansion": null,
+      "searchableText": "endless babble impairment when you *depart*, *departing survivors* gain +1 insanity. you cannot encourage."
     }
   ]
 };

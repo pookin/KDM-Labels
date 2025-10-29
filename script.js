@@ -49,14 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // const previewMarginDisplayBottom = document.getElementById('previewMarginDisplayBottom'); // Obsolete
   // const previewMarginDisplayLeft = document.getElementById('previewMarginDisplayLeft'); // Obsolete
 
-  // ID Assignment
-  let currentId = 1;
-  for (const type in window.dataset) {
-    window.dataset[type].forEach(item => {
-      item.id = currentId++;
-    });
-  }
-
   const menuBtn = document.getElementById('menuBtn');
   const mainMenu = document.getElementById('mainMenu'); // This is the panel with menu item links
 
@@ -389,12 +381,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function search(query) {
     const trimmedQuery = query.trim().toLowerCase();
 
-    if (!window.dataset || typeof window.dataset !== 'object') {
-      console.error("Dataset not loaded or is not an object.");
-      return [];
+    if (!window.dataset || typeof window.dataset !== 'object' || Array.isArray(window.dataset)) {
+        console.error("Dataset not loaded or is not a non-array object.");
+        return [];
     }
-
-    const allItems = Object.values(window.dataset).flat();
 
     const filterablePhilosophyNames = new Set();
     if (philosophyCheckboxesContainer) {
@@ -402,13 +392,15 @@ document.addEventListener('DOMContentLoaded', function() {
         philosophyCheckboxes.forEach(cb => filterablePhilosophyNames.add(cb.value));
     }
 
+    const allItems = Object.values(window.dataset).flat();
     return allItems.flatMap(originalItem => {
       if (!originalItem || typeof originalItem.name !== 'string' || typeof originalItem.type !== 'string') {
         return []; // Skip invalid items
       }
 
-      const nameMatches = !trimmedQuery || originalItem.name.toLowerCase().includes(trimmedQuery);
-      if (!nameMatches && trimmedQuery) {
+      const searchableText = (originalItem.searchableText || originalItem.name || '').toLowerCase();
+      const textMatches = !trimmedQuery || searchableText.includes(trimmedQuery);
+      if (!textMatches && trimmedQuery) {
         return []; // Does not match search query
       }
 
@@ -475,15 +467,15 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!suggestionBox || !searchInput) return;
       suggestionBox.innerHTML = '';
       selectedIndex = -1;
-      suggestionBox.style.display = 'none';
 
       const queryIsEmpty = searchInput.value.trim() === '';
-      const allItems = Object.values(window.dataset).flat();
-      if (queryIsEmpty && (!filteredItems || filteredItems.length === allItems.length)) {
+      const totalItemsInDataset = window.dataset ? Object.values(window.dataset).flat().length : 0;
+
+      if (queryIsEmpty && (!filteredItems || filteredItems.length === totalItemsInDataset)) {
           suggestionBox.style.display = 'none';
           return;
       }
-      if (queryIsEmpty && filteredItems && filteredItems.length > 0 && filteredItems.length < allItems.length ){
+      if (queryIsEmpty && filteredItems && filteredItems.length > 0 && filteredItems.length < totalItemsInDataset ){
          // Query is empty, but filters ARE active, so show the filtered list.
       } else if (queryIsEmpty){
           suggestionBox.style.display = 'none';
@@ -513,13 +505,16 @@ document.addEventListener('DOMContentLoaded', function() {
               }
 
               if (item.type === 'Knowledge') {
-                  const baseName = item.name.replace(romanNumeralRegex, '').trim();
-                  try {
-                      const lastPrintedFullName = localStorage.getItem(`lastPrinted_${baseName}`);
-                      if (lastPrintedFullName && lastPrintedFullName === item.name) {
-                          iconHTML = '<span class="lp-icon">✓</span>';
-                      }
-                  } catch (e) { console.warn("LocalStorage access error in renderSuggestions:", e); }
+                  const levelMatch = item.name.match(romanNumeralRegex);
+                  if (levelMatch) {
+                      const baseName = item.name.replace(romanNumeralRegex, '').trim();
+                      try {
+                        const lastPrintedFullName = localStorage.getItem(`lastPrinted_${baseName}`);
+                        if (lastPrintedFullName && lastPrintedFullName === item.name) {
+                            iconHTML = '<span class="lp-icon">✓</span>';
+                        }
+                      } catch (e) { console.warn("LocalStorage access error in renderSuggestions:", e); }
+                  }
               }
               div.innerHTML = baseText + iconHTML;
 
@@ -533,13 +528,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function selectItem(itemFromSuggestion) { // Renamed item to itemFromSuggestion for clarity
-      console.log('selectItem called with:', itemFromSuggestion);
       if (!previewFrame || !searchInput) { console.error("selectItem: previewFrame or searchInput missing."); return; }
       if (!itemFromSuggestion || typeof itemFromSuggestion.name === 'undefined') { console.error("selectItem: Invalid item.", itemFromSuggestion); return; }
 
       if (suggestionBox) { suggestionBox.style.display = 'none'; }
       searchInput.value = itemFromSuggestion.name; // Keep the suffixed name in the search bar
-      suggestionBox.style.display = 'none';
 
       let originalItemData = itemFromSuggestion;
       let weaponViewType = itemFromSuggestion.displayType; // Will be 'specialist' or 'mastery' for weapons
@@ -547,8 +540,9 @@ document.addEventListener('DOMContentLoaded', function() {
       // If it's a weapon variant from search, find the true original item from dataset
       // The itemFromSuggestion is a shallow copy with modified name and new displayType/originalName.
       // We need to send the *actual* full original item to the iframe.
-      if (itemFromSuggestion.displayType && itemFromSuggestion.originalName && window.dataset) {
-        const allItems = Object.values(window.dataset).flat();
+      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
+
+      if (itemFromSuggestion.displayType && itemFromSuggestion.originalName && allItems.length > 0) {
         const foundOriginal = allItems.find(i => i.name === itemFromSuggestion.originalName && i.type === 'Weapon');
         if (foundOriginal) {
             originalItemData = foundOriginal;
@@ -567,18 +561,14 @@ document.addEventListener('DOMContentLoaded', function() {
       // Use originalItemData for checks if it's a weapon variant, otherwise itemFromSuggestion
       const itemForLogic = (itemFromSuggestion.displayType && itemFromSuggestion.originalName) ? originalItemData : itemFromSuggestion;
 
-      if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && typeof window.dataset !== 'undefined') {
-          const baseKnowledgeName = itemForLogic.tenetKnowledge;
+      if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && allItems.length > 0) {
+          const baseKnowledgeName = itemForLogic.tenetKnowledge; // Changed 'item' to 'itemForLogic'
           let knowledgeToFetchFullName = null;
-          const allItems = Object.values(window.dataset).flat();
-
           try {
               const lastPrintedFull = localStorage.getItem(`lastPrinted_${baseKnowledgeName}`);
               if (lastPrintedFull) {
                   const lastPrintedItemExists = allItems.find(k => k.name === lastPrintedFull && k.type === 'Knowledge');
-                  if (lastPrintedItemExists) {
-                      knowledgeToFetchFullName = lastPrintedFull;
-                  }
+                  if (lastPrintedItemExists) knowledgeToFetchFullName = lastPrintedFull;
               }
           } catch(e) { console.warn("LocalStorage access error for tenetKnowledge:", e); }
 
@@ -589,20 +579,12 @@ document.addEventListener('DOMContentLoaded', function() {
                   knowledgeToFetchFullName = defaultLevelName;
               } else {
                   const directMatchItem = allItems.find(k => k.name === baseKnowledgeName && k.type === 'Knowledge');
-                  if (directMatchItem) {
-                      knowledgeToFetchFullName = baseKnowledgeName;
-                  }
+                  if (directMatchItem) knowledgeToFetchFullName = baseKnowledgeName;
               }
           }
-
           if (knowledgeToFetchFullName) {
               const fetchedData = allItems.find(k => k.name === knowledgeToFetchFullName && k.type === 'Knowledge');
-              if (fetchedData) {
-                  tenetKnowledgeItemData = JSON.parse(JSON.stringify(fetchedData));
-                  searchInput.value = fetchedData.name; // Update search input with knowledge name
-                  const results = search(searchInput.value);
-                  renderSuggestions(results);
-              }
+              if (fetchedData) tenetKnowledgeItemData = JSON.parse(JSON.stringify(fetchedData));
           }
       }
       // const selectedWeaponView = document.querySelector('input[name="weaponView"]:checked')?.value || 'specialist'; // No longer needed
@@ -666,16 +648,18 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       const labelTitle = searchInput.value;
-      if (labelTitle && window.dataset && typeof window.dataset === 'object') {
-          const allItems = Object.values(window.dataset).flat();
+      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
+
+      if (labelTitle && allItems.length > 0) {
           const currentItem = allItems.find(i => i.name === labelTitle);
           if (currentItem && currentItem.type === 'Knowledge') {
-              const baseName = currentItem.name.replace(romanNumeralRegex, '').trim();
-              try {
-                  localStorage.setItem(`lastPrinted_${baseName}`, currentItem.name);
-              } catch (e) {
-                  console.warn("LocalStorage error in printLabel:", e);
+              const baseNameRegex = /\s+(I|II|III)$/;
+              let baseName = labelTitle;
+              if (baseNameRegex.test(labelTitle)) {
+                  baseName = labelTitle.replace(baseNameRegex, '').trim();
               }
+              try { localStorage.setItem(`lastPrinted_${baseName}`, labelTitle); }
+              catch (e) { console.warn("LocalStorage error in printLabel:", e); }
           }
       }
   }
@@ -698,9 +682,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function populateExpansionFilters() {
-      if (!window.dataset || !expansionCheckboxesContainer) return; // expansionCheckboxesContainer is now global-like
+      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
+      if (allItems.length === 0 || !expansionCheckboxesContainer) return;
       const expansionNames = new Set([CORE_GAME_EXPANSION_NAME]);
-      const allItems = Object.values(window.dataset).flat();
       allItems.forEach(item => {
           if (item.expansion && typeof item.expansion === 'string' && item.expansion.trim() !== "") {
               expansionNames.add(item.expansion.trim());
@@ -713,11 +697,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function populatePhilosophyFilters() {
-      if (!window.dataset || !philosophyCheckboxesContainer) return; // philosophyCheckboxesContainer is now global-like
+      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
+      if (allItems.length === 0 || !philosophyCheckboxesContainer) return;
       const philosophyNames = new Set();
-      const philosophyItems = window.dataset['Philosophy'] || [];
-      philosophyItems.forEach(item => {
-          if (item.name && typeof item.name === 'string' && item.name.trim() !== "") {
+      allItems.forEach(item => {
+          if (item.type === 'Philosophy' && item.name && typeof item.name === 'string' && item.name.trim() !== "") {
               philosophyNames.add(item.name.trim());
           }
       });
@@ -988,4 +972,12 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSuggestions(initialResults);
   }
 
+  // Show help modal on first visit
+  const visitedFlag = 'kdmLabelPrinter_hasVisited';
+  if (!localStorage.getItem(visitedFlag)) {
+    if (helpDialog && typeof openDialog === 'function') { // Ensure elements and function are available
+        openDialog(helpDialog);
+        localStorage.setItem(visitedFlag, 'true');
+    }
+  }
 });
