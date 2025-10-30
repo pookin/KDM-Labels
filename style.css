@@ -75,6 +75,54 @@
     .menu-panel .menu-item-list .menu-link-item:hover {
       background-color: #4a6fa5; 
     }
+
+    .menu-panel .menu-item-list .menu-item-has-submenu > .menu-link-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-panel .menu-item-list .menu-item-has-submenu > .menu-link-item::after {
+      content: '▶';
+      font-size: 0.8em;
+      margin-left: 10px;
+      transition: transform 0.2s;
+    }
+
+    .menu-panel .menu-item-list .menu-item-has-submenu.open > .menu-link-item::after {
+      transform: rotate(90deg);
+    }
+
+    .menu-panel .submenu {
+      list-style: none;
+      padding-left: 0; /* Changed for nesting */
+      margin: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+    }
+
+    .menu-panel .submenu .submenu { /* Nested submenus */
+        padding-left: 15px;
+        background-color: #34495e;
+    }
+
+    .menu-panel .submenu.open {
+        max-height: 500px; /* Adjust as needed */
+    }
+
+    .menu-panel .submenu a {
+      display: block;
+      padding: 8px 5px;
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 0.9em;
+      border-radius: 3px;
+    }
+
+    .menu-panel .submenu a:hover {
+      background-color: #4a6fa5;
+    }
     /* End New Menu Item List Styles */
     
     .container { 
