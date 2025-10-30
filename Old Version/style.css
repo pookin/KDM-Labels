@@ -1,0 +1,692 @@
+    /* Base Mobile Styles */
+    body { 
+      margin: 0; 
+      padding-top: 60px; 
+      padding-bottom: 70px; 
+      font-family: Arial, sans-serif; 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      font-size: 16px; 
+    }
+
+    #appHeader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #34495e;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #4a6fa5;
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+    #appTitle {
+      font-size: 1.5em; 
+      font-weight: bold;
+    }
+    #menuBtn { /* This is a .btn class styled button */
+      padding: 8px 12px;
+    }
+
+    .menu-panel {
+      position: fixed; 
+      top: 50px; 
+      right: 15px; 
+      background: #3e5770; 
+      padding: 10px; /* Reduced padding for list items */
+      border-radius: 6px;
+      border: 1px solid #4a6fa5;
+      z-index: 1010; 
+      width: calc(100% - 50px); 
+      max-width: 320px; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .menu-panel.hidden {
+      display: none;
+    }
+    
+    /* New Menu Item List Styles */
+    .menu-panel .menu-item-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .menu-panel .menu-item-list li {
+      border-bottom: 1px solid #4a6fa5; /* Can add if separators are desired */
+    }
+    .menu-panel .menu-item-list li:last-child {
+      border-bottom: none;
+    }
+    .menu-panel .menu-item-list .menu-link-item {
+      display: block;
+      padding: 10px;
+      color: #ecf0f1; 
+      text-decoration: none;
+      background-color: transparent; 
+      border: none; 
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      border-radius: 3px; 
+      box-sizing: border-box;
+    }
+    .menu-panel .menu-item-list .menu-link-item:hover {
+      background-color: #4a6fa5; 
+    }
+
+    .menu-panel .menu-item-list .menu-item-has-submenu > .menu-link-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-panel .menu-item-list .menu-item-has-submenu > .menu-link-item::after {
+      content: '▶';
+      font-size: 0.8em;
+      margin-left: 10px;
+      transition: transform 0.2s;
+    }
+
+    .menu-panel .menu-item-list .menu-item-has-submenu.open > .menu-link-item::after {
+      transform: rotate(90deg);
+    }
+
+    .menu-panel .submenu {
+      list-style: none;
+      padding-left: 0; /* Changed for nesting */
+      margin: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+    }
+
+    .menu-panel .submenu .submenu { /* Nested submenus */
+        padding-left: 15px;
+        background-color: #34495e;
+    }
+
+    .menu-panel .submenu.open {
+        max-height: 500px; /* Adjust as needed */
+    }
+
+    .menu-panel .submenu a {
+      display: block;
+      padding: 8px 5px;
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 0.9em;
+      border-radius: 3px;
+    }
+
+    .menu-panel .submenu a:hover {
+      background-color: #4a6fa5;
+    }
+    /* End New Menu Item List Styles */
+    
+    .container { 
+      width: 100%; 
+      max-width: 900px; 
+      margin: 0 auto; 
+      background: #34495e; 
+      padding: 15px; 
+      box-sizing: border-box;
+    }
+    
+    .main-content-area {
+        /* Wraps scrollable parts */
+    }
+
+    .container > h2 { 
+      display: none; 
+    }
+    h3 { 
+      margin-top: 0; 
+      border-bottom: 1px solid #4a6fa5; 
+      padding-bottom: 8px;
+      font-size: 1.25em;
+    }
+
+    .dialog-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 2000;
+    }
+    .dialog-overlay.hidden {
+        display: none;
+    }
+    .dialog-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #34495e;
+        border: 1px solid #4a6fa5;
+        border-radius: 8px;
+        z-index: 2010;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        width: 90%;
+        max-width: 500px; 
+        max-height: 80vh; 
+        display: flex; 
+        flex-direction: column;
+        overflow-y: auto; /* Allow all modals to scroll if content overflows */
+    }
+    .dialog-modal.hidden {
+        display: none;
+    }
+
+    .dialog-header-sticky {
+        position: sticky;
+        top: 0;
+        background-color: #34495e; /* Match modal background */
+        z-index: 10;
+        padding: 15px 20px;
+        border-bottom: 1px solid #4a6fa5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .dialog-title {
+        margin: 0;
+        font-size: 1.25em;
+        border-bottom: none;
+        padding-bottom: 0;
+        color: #ecf0f1;
+    }
+
+    .dialog-content {
+        padding: 20px;
+        flex-grow: 1; 
+    }
+
+    /* Specific for Help Dialog */
+    #helpDialog .dialog-content {
+         /* The dialog itself scrolls now, so this is not needed. */
+    }
+
+    #helpDialog p a,
+    #helpDialog ul li a {
+        color: #87CEFA; /* LightSkyBlue */
+        text-decoration: underline;
+    }
+
+    #helpDialog p a:hover,
+    #helpDialog ul li a:hover {
+        color: #ADD8E6; /* LightBlue */
+    }
+
+    .dialog-close-btn {
+        background: #5d8aa8;
+        color: #ecf0f1;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 1.2em;
+        line-height: 30px; 
+        text-align: center;
+        cursor: pointer;
+        flex-shrink: 0; /* Prevent the button from shrinking */
+    }
+    .dialog-close-btn:hover {
+        background: #4a6fa5;
+    }
+
+    .search-box { 
+      background: #4a6fa5; 
+      padding: 15px; 
+      border-radius: 6px; 
+      margin-bottom: 20px; 
+      position: relative; 
+    }
+    .search-box input { 
+      width: 100%; 
+      padding: 12px;
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      border: 1px solid #5d8aa8; 
+      border-radius: 4px; 
+      box-sizing: border-box;
+    }
+    .suggestions { 
+      position: absolute; 
+      top: 100%; 
+      left: 0; 
+      right: 0; 
+      background: #34495e; 
+      border: 1px solid #5d8aa8; 
+      border-top: none; 
+      border-radius: 0 0 4px 4px; 
+      max-height: 200px; 
+      overflow-y: auto; 
+      display: none; 
+      z-index: 10; 
+    }
+    .suggestion { 
+      padding: 10px;
+      cursor: pointer; 
+      font-size: 0.9em; 
+    }
+    .suggestion:hover { background: #4a6fa5; }
+    .suggestion.active { background: #2980b9; }
+    .suggestion .lp-icon { 
+      color: #2ecc71; 
+      margin-left: 4px; 
+      font-weight: bold; 
+    }
+    .preview-container { 
+      margin-bottom: 20px; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .iframe-preview { 
+      border: 1px solid #5d8aa8;
+      width: 100%; 
+      max-width: 300px;
+    }
+    
+    #appFooter {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #34495e; 
+      padding: 10px 15px;
+      border-top: 1px solid #4a6fa5;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-end; 
+      gap: 10px;
+      box-sizing: border-box;
+    }
+
+    #appFooter .btn { 
+       width: auto; 
+    }
+
+    .btn { 
+      padding: 12px 15px;
+      background: #5d8aa8; 
+      color: #ecf0f1; 
+      border: none; 
+      border-radius: 4px; 
+      cursor: pointer; 
+      transition: background .3s; 
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .btn:hover { background: #4a6fa5; }
+
+    .btn-warning {
+        background-color: #c0392b; /* A reddish color */
+    }
+    .btn-warning:hover {
+        background-color: #e74c3c;
+    }
+    
+    #labelSettingsDialog .settings label, 
+    #contentFiltersDialog .settings label { 
+      display: block;
+      width: auto;
+      margin-bottom: 8px;
+    }
+     #labelSettingsDialog .settings input[type="number"],
+     #contentFiltersDialog .settings input[type="number"] { 
+      margin-right: 5px; 
+      margin-bottom: 10px; 
+      padding: 8px;
+      border-radius: 4px; 
+      border: 1px solid #5d8aa8; 
+      background: #2c3e50; 
+      color: #ecf0f1; 
+      width: calc(25% - 10px);
+      box-sizing: border-box;
+    }
+    #labelSettingsDialog .settings .margin-group,
+    #contentFiltersDialog .settings .margin-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      align-items: center;
+    }
+    #labelSettingsDialog .settings .margin-group input[type="number"],
+    #contentFiltersDialog .settings .margin-group input[type="number"] {
+      width: calc(50% - 10px);
+      margin-right: 0;
+    }
+    #labelSettingsDialog .settings .margin-group span,
+    #contentFiltersDialog .settings .margin-group span {
+      margin-right: 5px;
+      margin-bottom: 10px;
+    }
+    #labelSettingsDialog .settings br,
+    #contentFiltersDialog .settings br { 
+      display: none; 
+    } 
+
+    #labelSettingsDialog .settings .settings-actions,
+    #contentFiltersDialog .settings .settings-actions { 
+      margin-top: 10px; 
+      display: flex; 
+      flex-direction: column;
+      gap: 10px; 
+    }
+    #labelSettingsDialog .settings .settings-actions .btn,
+    #contentFiltersDialog .settings .settings-actions .btn {
+      width: 100%; 
+    }
+
+    /* Styles for new Label Settings structure */
+    .settings-group {
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #4a6fa5;
+    }
+    .settings-group:last-of-type { /* Might need to adjust if actions are not last */
+        /* border-bottom: none; remove this if actions are within a group */
+    }
+     #labelSettingsDialog .settings-group:has(~ .settings-actions) { /* More robust way to remove border from last settings group before actions */
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .group-label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #ecf0f1; /* Ensure visibility */
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 15px; /* Space between radio options */
+      align-items: center;
+    }
+    .radio-group input[type="radio"] {
+      margin-right: 3px;
+    }
+    .radio-group label {
+      margin-right: 10px; /* Space after label text if needed */
+      font-weight: normal; /* Override general label bolding if any */
+      color: #ecf0f1;
+    }
+
+    .input-pair, .input-quad {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px; /* Gap between label, input, and unit */
+    }
+    .input-pair label, .input-quad label {
+      flex-basis: 60px; /* Adjust as needed for label width */
+      flex-shrink: 0;
+      font-weight: normal;
+      color: #ecf0f1;
+    }
+    .input-pair input[type="number"], .input-quad input[type="number"] {
+      flex-grow: 1;
+      width: auto; /* Allow flex to control width */
+      max-width: 100px; /* Prevent excessive growth */
+      padding: 6px; /* Slightly smaller padding */
+      margin-right: 0; /* Remove old margin */
+      margin-bottom: 0; /* Remove old margin */
+    }
+    .unit-display {
+      flex-basis: 30px; /* Width for "mm" or "in" */
+      flex-shrink: 0;
+      text-align: left;
+      color: #bdc3c7; /* Subtler color for unit */
+    }
+    /* End of new Label Settings structure styles */
+
+    /* Styles for Margin & Preview Grid Layout */
+    .margin-preview-grid-container {
+      display: grid;
+      grid-template-columns: auto 1fr auto; /* Left input, Label Preview, Right input */
+      grid-template-rows: auto 1fr auto;    /* Top input, Label Preview, Bottom input */
+      grid-template-areas:
+        ".    margin-top    ."
+        "margin-left label-preview margin-right"
+        ".    margin-bottom .";
+      align-items: center; /* Center items vertically in their grid cells */
+      justify-items: center; /* Center items horizontally in their grid cells */
+      gap: 5px; /* Gap between grid items */
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #2c3e50;
+      border-radius: 4px;
+      /* border: 1px dashed #5d8aa8; /* Optional: if container needs a border */
+    }
+
+    .input-quad.grid-margin-top { grid-area: margin-top; }
+    .input-quad.grid-margin-left { grid-area: margin-left; justify-self: end; } /* Align to the right of its cell */
+    .input-quad.grid-margin-right { grid-area: margin-right; justify-self: start; } /* Align to the left of its cell */
+    .input-quad.grid-margin-bottom { grid-area: margin-bottom; }
+
+    iframe.grid-label-preview { /* Changed selector to target iframe */
+      grid-area: label-preview;
+      background-color: #ecf0f1; /* Fallback background */
+      border: 1px solid #7f8c8d; /* Border for the iframe itself */
+      box-sizing: border-box;
+      transition: width 0.2s ease-out, height 0.2s ease-out;
+      overflow: hidden; /* Prevent scrollbars on the iframe itself */
+      /* Width and height will be set by JavaScript */
+      min-width: 100px;
+      min-height: 50px;
+      /* Removed: text-align, display: flex, align-items, justify-content, font-size, color, padding */
+      /* These properties should be controlled by the content within the iframe (label_render.html) */
+    }
+
+    /* Adjustments for input-quads in the grid if needed */
+    .margin-preview-grid-container .input-quad {
+      flex-direction: column; /* Stack label, input, unit vertically */
+      align-items: center; /* Center them within the input-quad */
+      gap: 2px; /* Smaller gap for vertical stacking */
+      margin-bottom: 0; /* Remove default margin from input-quad */
+    }
+    .margin-preview-grid-container .input-quad label {
+      flex-basis: auto; /* Reset flex-basis */
+      font-size: 0.75em; /* Smaller label text for margins */
+    }
+    .margin-preview-grid-container .input-quad input[type="number"] {
+      max-width: 60px; /* Smaller input boxes for margins */
+      padding: 4px;
+    }
+    .margin-preview-grid-container .input-quad .unit-display {
+      font-size: 0.7em; /* Smaller unit display */
+    }
+    /* End Styles for Margin & Preview Grid Layout */
+
+    /* OBSOLETE STYLES TO REMOVE (from previous preview design) */
+    /*
+    .calibration-preview-container { ... }
+    .middle-row-preview { ... }
+    .margin-display { ... }
+    .margin-display.top { ... }
+    .margin-display.bottom { ... }
+    .margin-display.left { ... }
+    .margin-display.right { ... }
+    */
+    /* Note: .embedded-calibration-label is reused and restyled, so not fully obsolete */
+
+
+    .settings-section { /* General style for sections *within* a dialog that need separation */
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #4a6fa5;
+    }
+    /* Override for the main content container within Content Filters if it uses .settings-section */
+    #contentFiltersInDialog.settings-section {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    /* Ensure the h3 title in dialogs is well-placed if it's the first element */
+    .dialog-content > .settings-section > h3:first-child,
+    .dialog-content > h3:first-child {
+        margin-top: 0; /* Explicitly ensure no top margin if it's the first title */
+    }
+    /* If #contentFiltersInDialog is NOT a settings-section, but directly holds h3 */
+    /* We might not need the above if h3 already has margin-top:0, which it does. */
+    /* The key is removing the settings-section's top spacing effects. */
+
+    .filter-group {
+      margin-bottom: 15px;
+    }
+    .filter-group h4 {
+      font-size: 1.1em;
+      margin-bottom: 8px;
+      border-bottom: none;
+    }
+    .filter-controls {
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+    }
+    .btn-small {
+      padding: 5px 10px;
+      font-size: 0.85em;
+      width: auto;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      max-height: 150px;
+      overflow-y: auto;
+      background: #2c3e50;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #5d8aa8;
+    }
+/* Styling for the div that wraps each checkbox and its label */
+.checkbox-group > div {
+  display: flex; /* Align checkbox and label on the same line */
+  align-items: center; /* Vertically align them nicely */
+  padding: 2px 0; /* Optional: add some padding around each item */
+}
+    .checkbox-group label {
+  /* display: block; */ /* Remove display:block */
+      color: #ecf0f1;
+      cursor: pointer;
+  margin-left: 4px; /* Add some space between checkbox and label text */
+  flex-grow: 1; /* Allow label to take available space */
+    }
+    .checkbox-group input[type="checkbox"] {
+  margin-right: 0; /* Reset margin, using gap or margin on label now */
+  vertical-align: middle; /* Keep this for good alignment */
+  flex-shrink: 0; /* Prevent checkbox from shrinking */
+    }
+
+/* Style for save feedback message */
+.save-feedback {
+  text-align: center;
+  padding: 8px;
+  margin-top: 10px;
+  background-color: #27ae60; /* Green for success */
+  color: white;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: opacity 0.5s ease-in-out;
+}
+.save-feedback.hidden {
+  display: none; /* Or opacity: 0; visibility: hidden; if using transitions for appearance */
+}
+/* End Style for save feedback message */
+
+    /* Tablet Styles */
+    @media (min-width: 600px) {
+      body {
+         padding-top: 60px; 
+         padding-bottom: 70px;
+      }
+      .container {
+        width: 90%; 
+        padding: 20px;
+        border-radius: 8px; 
+        box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+      }
+      #appTitle {
+        font-size: 1.65em; 
+      }
+      h3 {
+        font-size: 1.35em;
+      }
+      #labelSettingsDialog .settings label, 
+      #contentFiltersDialog .settings label {
+        display: inline-block; 
+        width: 150px; 
+        margin-bottom: 5px;
+      }
+      #labelSettingsDialog .settings input[type="number"],
+      #contentFiltersDialog .settings input[type="number"] {
+        width: 70px; 
+      }
+      #labelSettingsDialog .settings .margin-group,
+      #contentFiltersDialog .settings .margin-group {
+        display: inline-block; 
+      }
+      #labelSettingsDialog .settings .margin-group input[type="number"],
+      #contentFiltersDialog .settings .margin-group input[type="number"] {
+        width: 60px; 
+        margin-right: 1px;
+      }
+      #labelSettingsDialog .settings br,
+      #contentFiltersDialog .settings br { 
+        display: block; 
+      } 
+
+      #labelSettingsDialog .settings .settings-actions,
+      #contentFiltersDialog .settings .settings-actions {
+        flex-direction: row; 
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      #labelSettingsDialog .settings .settings-actions .btn,
+      #contentFiltersDialog .settings .settings-actions .btn {
+        width: auto; 
+      }
+      .iframe-preview {
+        max-width: 400px; 
+      }
+    }
+
+    /* Desktop Styles */
+    @media (min-width: 992px) {
+      .container {
+        max-width: 900px; 
+      }
+       #appTitle {
+        font-size: 1.75em;
+      }
+      #labelSettingsDialog .settings label,
+      #contentFiltersDialog .settings label {
+        width: 120px; 
+      }
+      #labelSettingsDialog .settings input[type="number"],
+      #contentFiltersDialog .settings input[type="number"] {
+        width: 60px; 
+      }
+      #labelSettingsDialog .settings .margin-group input[type="number"],
+      #contentFiltersDialog .settings .margin-group input[type="number"] {
+        width: 50px; 
+      }
+      .iframe-preview {
+         max-width: 500px; 
+      }
+      .dialog-modal {
+        max-width: 700px;
+      }
+    }

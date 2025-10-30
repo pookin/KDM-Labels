@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KDM Label Printer</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G31CF8ZP7V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-G31CF8ZP7V');
+</script>
+<body>
+  <header id="appHeader">
+    <span id="appTitle">KDM Label Printer</span>
+    <button id="menuBtn" class="btn">☰</button>
+  </header>
+
+  <div id="mainMenu" class="menu-panel hidden">
+    <ul class="menu-item-list">
+      <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Settings</a></li>
+      <li><a href="#" id="openContentFiltersBtn" class="menu-link-item">Content Filters</a></li>
+      <li id="survivorSheetMenu" class="menu-item-has-submenu">
+        <a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheets</a>
+        <ul id="survivorSheetSubMenu" class="submenu">
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">Standard</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet.pdf" target="_blank">Standard</a></li>
+              <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet_OneSided.pdf" target="_blank">Standard (One Sided)</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">Arc</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet.pdf" target="_blank">Arc</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_OneSided.pdf" target="_blank">Arc (One Sided)</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor.pdf" target="_blank">Arc (With Armor)</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor_OneSided.pdf" target="_blank">Arc (With Armor, One Sided)</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">People of the Stars</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet.pdf" target="_blank">People of the Stars</a></li>
+              <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet_OneSided.pdf" target="_blank">People of the Stars (One Sided)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#" id="helpBtn" class="menu-link-item">Help</a></li>
+      <li><a href="#" id="patchNotesBtn" class="menu-link-item">Patch Notes</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="main-content-area"> 
+      <div class="search-box">
+        <h3>Search</h3>
+        <input id="search" type="text" placeholder="Type item name..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div id="list" class="suggestions"></div>
+      </div>
+
+      <div class="preview-container">
+        <h3>Label Preview</h3>
+        <iframe id="preview" class="iframe-preview"></iframe>
+        <button id="printCalibrationLabelBtn" class="btn" style="margin-top: 10px;">Print Calibration Label</button>
+      </div>
+    </div>
+  </div>
+
+  <footer id="appFooter">
+    <button id="exportJpg" class="btn">Export as JPG</button>
+    <button id="print" class="btn">Print</button>
+  </footer>
+
+  <div id="dialogOverlay" class="dialog-overlay hidden"></div>
+
+  <div id="labelSettingsDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Settings</h3>
+        <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
+    </div>
+    <div class="dialog-content">
+      <div class="settings-group">
+        <label class="group-label">Preferences:</label>
+        <div class="input-pair">
+            <label for="autoPrint" style="flex-basis: auto;">Auto Print on Select:</label>
+            <input id="autoPrint" type="checkbox" title="Automatically print after a new label is selected and rendered.">
+        </div>
+        <div class="input-pair">
+            <label for="showExportJpg" style="flex-basis: auto;">Enable JPG Export:</label>
+            <input id="showExportJpg" type="checkbox" title="Show the 'Export as JPG' button in the footer.">
+        </div>
+      </div>
+      <div class="settings-group">
+        <label class="group-label">Unit:</label>
+        <div class="radio-group">
+          <input type="radio" id="unitMM" name="labelUnit" value="mm" checked>
+          <label for="unitMM">MM</label>
+          <input type="radio" id="unitInches" name="labelUnit" value="in">
+          <label for="unitInches">Inches</label>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <label class="group-label">Label Size:</label>
+        <div class="input-pair">
+          <label for="width">Width:</label>
+          <input id="width" type="number" value="50.8" step="0.01" title="Label Width">
+          <span class="unit-display">mm</span>
+        </div>
+        <div class="input-pair">
+          <label for="height">Height:</label>
+          <input id="height" type="number" value="25.4" step="0.01" title="Label Height">
+          <span class="unit-display">mm</span>
+        </div>
+      </div>
+      
+      <div class="settings-group">
+        <label class="group-label">Margins & Preview:</label>
+        <div class="margin-preview-grid-container">
+          <!-- Top Margin Input -->
+          <div class="input-quad grid-margin-top">
+            <label for="marginTop">Top:</label>
+            <input id="marginTop" type="number" value="1" step="0.01" title="Top Margin">
+            <span class="unit-display">mm</span>
+          </div>
+
+          <!-- Left Margin Input -->
+          <div class="input-quad grid-margin-left">
+            <label for="marginLeft">Left:</label>
+            <input id="marginLeft" type="number" value="1" step="0.01" title="Left Margin">
+            <span class="unit-display">mm</span>
+          </div>
+
+          <!-- Embedded Calibration Label (Center) -->
+          <iframe id="embeddedCalibrationPreviewFrame" class="grid-label-preview" src="label_render.html" title="Embedded Label Preview" scrolling="no"></iframe>
+
+          <!-- Right Margin Input -->
+          <div class="input-quad grid-margin-right">
+            <label for="marginRight">Right:</label>
+            <input id="marginRight" type="number" value="1" step="0.01" title="Right Margin">
+            <span class="unit-display">mm</span>
+          </div>
+
+          <!-- Bottom Margin Input -->
+          <div class="input-quad grid-margin-bottom">
+            <label for="marginBottom">Bottom:</label>
+            <input id="marginBottom" type="number" value="1" step="0.01" title="Bottom Margin">
+            <span class="unit-display">mm</span>
+          </div>
+        </div>
+      </div>
+
+      <p>Tip: When printing, ensure your printer settings match the label size defined, that any "Scale to Fit" options are turned OFF, and margins are set to "default" for accurate sizing.</p>
+
+      <div class="settings-group">
+        <label class="group-label">Data Management:</label>
+        <div class="input-pair">
+            <button id="resetKnowledgeBtn" class="btn btn-warning">Reset Knowledge Levels</button>
+        </div>
+        <p style="font-size: 0.8em; color: #bdc3c7; margin-top: 5px;">This will clear all saved "last printed" knowledge levels, resetting them to Level I.</p>
+      </div>
+
+      <div class="settings-actions">
+      </div>
+    </div>
+  </div>
+
+  <div id="contentFiltersDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Content Filters</h3>
+        <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
+    </div>
+    <div class="dialog-content">
+      <div class="settings-section" id="contentFiltersInDialog"> 
+        <div class="filter-group" id="expansionFilters">
+          <h4>Expansions</h4>
+          <div class="filter-controls">
+            <button id="selectAllExpansions" class="btn btn-small">Select All</button>
+            <button id="deselectAllExpansions" class="btn btn-small">Deselect All</button>
+          </div>
+          <div id="expansionCheckboxes" class="checkbox-group">
+            <!-- JS will populate -->
+          </div>
+        </div>
+        <div class="filter-group" id="philosophyFilters">
+          <h4>Philosophies</h4>
+          <div class="filter-controls">
+            <button id="selectAllPhilosophies" class="btn btn-small">Select All</button>
+            <button id="deselectAllPhilosophies" class="btn btn-small">Deselect All</button>
+          </div>
+          <div id="philosophyCheckboxes" class="checkbox-group">
+            <!-- JS will populate -->
+          </div>
+        </div>
+        <div id="filterSaveFeedback" class="save-feedback hidden">Saved!</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="helpDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Help</h3>
+        <button class="dialog-close-btn" data-dialog-id="helpDialog">X</button>
+    </div>
+    <div class="dialog-content">
+      <p><strong>Search:</strong> Type in the search box to find KDM items like Fighting Arts, Philosophies, Disorders, etc.</p>
+      <p>Note: For knowledges a checkmark will appear next to the last level you printed. When printing Philosophies it will use the last printed level for the tenet knowledge.</p>
+      <p><strong>Menu (☰):</strong></p>
+      <ul>
+        <li><strong>Label Settings:</strong> Adjust label dimensions and margins.</li>
+        <li><strong>Content Filters:</strong> Select which expansions or philosophies to include/exclude from your search results.</li>
+        <li><strong>Survivor Sheet:</strong> Opens a printable PDF of the KDM: Survivor Record Sheet. Make sure to print at actual size, you can print it double sided make sure to set it to flip on the short side.</li>
+      </ul>
+      <p><em>Note:</em> Ensure your browser's pop-up blocker is not blocking the print window or the Survivor Sheet PDF.</p>
+      <p><em>Tip:</em> When printing, ensure your printer settings match the label size defined in "Label Settings" and that any "Scale to Fit" options are turned OFF for accurate sizing.</p>
+      <h3>Printer and Label Suggestions</h3>
+      <p>The survivor sheet was designed around 54mmx25mm or 2"x1" Labels.</p>
+      <ul>
+        <li><a href="https://amzn.to/3I6yRKE" target="_blank">Dymo 550 30336 Labels</a></li> 550 Printers need labels with RFID chips.
+        <li><a href="https://amzn.to/45QKCic" target="_blank">Dymo 450 30336 Labels</a></li>
+        <li><a href="https://amzn.to/4lqO0oq" target="_blank">Rollo, Zebra, Munbyn, Nelko Labels</a></li>
+      </ul>
+      <p>For printers you want a thermal printer that doesn't use an app to print. Typically looking for shipping label printers. I use a DYMO 4XL printer but these others should also work.</p>
+      <ul>
+        <li><a href="https://amzn.to/4lvS3zJ" target="_blank">Dymo LabelWriter 550 Turbo</a></li> If you can get a 450 or 4XL they arent lock down on which labels they can use.
+        <li><a href="https://amzn.to/4lrx4Ow" target="_blank">MUNBYN Label Printer</a></li>
+        <li><a href="https://amzn.to/449psKN" target="_blank">Nelko Label Printer</a></li>
+      </ul>
+      <h3>Contact and Support</h3>
+      <p>If you find an issue with the site, please email me at <a href="josh@rule-3.com">josh@rule-3.com</a></p>
+      <p>If you like to support me check out my <a href="https://rule-3.com">shop</a></p>
+    </div>
+  </div>
+
+  <div id="patchNotesDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Patch Notes</h3>
+        <button class="dialog-close-btn" data-dialog-id="patchNotesDialog">X</button>
+    </div>
+    <div class="dialog-content">
+      <h4>Version 1.1.0 (Current)</h4>
+      <ul>
+        <li>Added a bunch of new survivor sheets.</li>
+        <li>Added this patch notes window!</li>
+        <li>Added the ability to export labels as JPG. Check the settings menu to turn this on.</li>
+        <li>Added Dragon Constellations</li>
+        <li>Fixed a bunch of typos, hopefully got them all if not let me know!</li>
+      </ul>
+      <h4>Version 1.0.0</h4>
+      <ul>
+        <li>Initial release.</li>
+      </ul>
+    </div>
+  </div>
+
+<script src="./kdm-data.js"></script>
+<script src="./script.js"></script>
+
+</body>
+</html>
