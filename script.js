@@ -464,44 +464,23 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function populateSevereInjuriesTabs() {
+    if (!window.severeInjuries) return;
     const injuries = window.severeInjuries['Severe Injury'];
-    const tabContainer = document.querySelector('#severeInjuriesDialog .dialog-content');
+    const injuryTypes = ['Brain Trauma', 'Head', 'Arms', 'Body', 'Waist', 'Legs'];
 
-    const brainTab = injuries.find(i => i.name === 'Brain Trauma');
-    if (brainTab) {
-      const brainContent = document.getElementById('brain');
-      brainContent.innerHTML = brainTab.table.map(row => `<p>${row}</p>`).join('');
-    }
-
-    const headTab = injuries.find(i => i.name === 'Head');
-    if (headTab) {
-      const headContent = document.getElementById('head');
-      headContent.innerHTML = headTab.table.map(row => `<p>${row}</p>`).join('');
-    }
-
-    const armsTab = injuries.find(i => i.name === 'Arms');
-    if (armsTab) {
-      const armsContent = document.getElementById('arms');
-      armsContent.innerHTML = armsTab.table.map(row => `<p>${row}</p>`).join('');
-    }
-
-    const bodyTab = injuries.find(i => i.name === 'Body');
-    if (bodyTab) {
-      const bodyContent = document.getElementById('body');
-      bodyContent.innerHTML = bodyTab.table.map(row => `<p>${row}</p>`).join('');
-    }
-
-    const waistTab = injuries.find(i => i.name === 'Waist');
-    if (waistTab) {
-      const waistContent = document.getElementById('waist');
-      waistContent.innerHTML = waistTab.table.map(row => `<p>${row}</p>`).join('');
-    }
-
-    const legsTab = injuries.find(i => i.name === 'Legs');
-    if (legsTab) {
-      const legsContent = document.getElementById('legs');
-      legsContent.innerHTML = legsTab.table.map(row => `<p>${row}</p>`).join('');
-    }
+    injuryTypes.forEach(type => {
+      const injuryData = injuries.find(i => i.name === type);
+      if (injuryData) {
+        const contentId = type.toLowerCase().replace(' ', ' ');
+        const contentElement = document.getElementById(contentId.replace(' ', ''));
+        if (contentElement) {
+          contentElement.innerHTML = injuryData.table.map(row => {
+            const formattedRow = row.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            return `<p>${formattedRow}</p>`;
+          }).join('');
+        }
+      }
+    });
   }
 
   const tabs = document.querySelectorAll('.tab-link');
@@ -859,6 +838,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (helpDialog && !helpDialog.classList.contains('hidden')) {
         helpDialog.classList.add('hidden');
     }
+    const severeInjuriesDialog = document.getElementById('severeInjuriesDialog');
+    if (severeInjuriesDialog && !severeInjuriesDialog.classList.contains('hidden')) {
+        severeInjuriesDialog.classList.add('hidden');
+    }
   }
 
   // Event listeners for opening dialogs
@@ -1046,5 +1029,4 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem(visitedFlag, 'true');
     }
   }
-
 });

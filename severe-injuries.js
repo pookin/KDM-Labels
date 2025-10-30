@@ -22,10 +22,10 @@ window.severeInjuries = {
       "type": "Severe Injury",
       "table": [
         "1: **Decapitated** You are dead.",
-        "2: **Blind** A gruesome injury blinds you. You can no longer see. Suffer -4 accuracy. You cannot use fighting arts that require you to see.",
-        "3: **Deaf** Blood pours from your ears. You cannot hear. You cannot be encouraged. You cannot use fighting arts that require you to hear.",
-        "4: **Shattered Jaw** Your jaw is broken and hangs slack. You cannot encourage. You cannot consume.",
-        "5-6: **Concussion** Suffer the stunned brain trauma.",
+        "2: **Intracranial Hemorrhage** Gain a bleeding token. Suffer -1 permanent accuracy.",
+        "3: **Deaf** Blood pours from your ears, you cannot hear. You cannot be **encouraged**. You cannot use fighting arts that require you to hear.",
+        "4: **Blind** A gruesome injury blinds you. Suffer -4 permanent accuracy. You cannot use fighting arts that require sight.",
+        "5-6: **Concussion** You are knocked down and suffer the **stunned** brain trauma.",
         "7-10: **Minor Head Injury** Suffer 1 brain damage."
       ]
     },
@@ -33,11 +33,11 @@ window.severeInjuries = {
       "name": "Arms",
       "type": "Severe Injury",
       "table": [
-        "1: **Dismembered Arm** You can no longer activate two-handed weapons. If this is your second dismembered arm, you cannot activate any weapons other than Fist & Tooth.",
+        "1: **Dismembered Arm** You can no longer activate two-handed weapons. If this is your second dismembered arm, you cannot activate any weapons other than **Fist & Tooth**.",
         "2: **Broken Arm** You cannot activate weapons with your broken arm. You cannot activate two-handed weapons.",
         "3: **Ruptured Muscle** Suffer -1 permanent strength.",
-        "4: **Sprial Fracture** Suffer -1 permanent accuracy.",
-        "5-6: **Dislocated Shoulder** Suffer -1 accuracy token.",
+        "4: **Spiral Fracture** Suffer -1 permanent accuracy.",
+        "5-6: **Dislocated Shoulder** Suffer a -1 accuracy token.",
         "7-10: **Minor Arm Injury** No effect."
       ]
     },
@@ -45,11 +45,11 @@ window.severeInjuries = {
       "name": "Body",
       "type": "Severe Injury",
       "table": [
-        "1: **Instant Death** You are dead.",
-        "2: **Gaping Chest Wound** Gain a bleeding token. Suffer -1 permanent strength.",
-        "3: **Broken Ribs** Suffer -1 permanent speed. All your gear is noisy.",
-        "4: **Intestinal Prolapse** Suffer -1 permanent movement. You are stinky.",
-        "5-6: **Busted Knee** Suffer -1 movement token.",
+        "1: **Eviscerated** You are dead.",
+        "2: **Gaping Chest Wound** Gain 3 bleeding tokens.",
+        "3: **Broken Ribs** Suffer -1 permanent speed. All your gear is **Noisy**.",
+        "4: **Intestinal Prolapse** Suffer -1 permanent movement. You are **Stinky**.",
+        "5-6: **Busted Knee** Suffer a -1 movement token.",
         "7-10: **Minor Body Injury** No effect."
       ]
     },
@@ -58,7 +58,7 @@ window.severeInjuries = {
       "type": "Severe Injury",
       "table": [
         "1: **Final Blow** You are dead. Your story ends in a gory spray.",
-        "2: **Destroyed Genitals** You can no longer Intimacy. If you are male, your testicles are destroyed. If you are female, your uterus is ripped out. You cannot give birth.",
+        "2: **Destroyed Genitals** You can no longer be nominated for **Intimacy**. If you are male, your testicles are destroyed. If you are female, your uterus is ripped out. You cannot give birth.",
         "3: **Broken Hip** Suffer -1 permanent movement and -1 permanent strength.",
         "4: **Slashed Back** Suffer -1 permanent strength.",
         "5-6: **Bruised Tailbone** You are knocked down.",
@@ -70,8 +70,8 @@ window.severeInjuries = {
       "type": "Severe Injury",
       "table": [
         "1: **Dismembered Leg** Suffer -1 permanent movement. If this is your second dismembered leg, your movement is 1.",
-        "2: **Broken Leg** Suffer -1 permanent movement. You cannot dash.",
-        "3: **Hamstrung** You cannot use fighting arts with \"dash\" or \"run\" in the name. Your move is reduced by 1 to a minimum of 1.",
+        "2: **Broken Leg** Suffer -1 permanent movement. You cannot **dash**.",
+        "3: **Hamstrung** You cannot use fighting arts with 'dash' or 'run' in the name. Your move is reduced by 1, to a minimum of 1.",
         "4: **Torn Achilles Tendon** Suffer -1 permanent movement.",
         "5-6: **Torn Muscle** You are knocked down.",
         "7-10: **Minor Leg Injury** No effect."

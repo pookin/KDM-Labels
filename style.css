@@ -625,6 +625,15 @@
       }
     }
 
+    @font-face {
+      font-family: 'kdm_font';
+      src: url('kdm_font.woff') format('woff');
+    }
+
+    .kdm_font {
+      font-family: 'kdm_font';
+    }
+
     /* Severe Injuries Modal */
     .tabs {
       display: flex;
