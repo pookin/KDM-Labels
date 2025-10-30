@@ -43,6 +43,8 @@
       width: calc(100% - 50px); 
       max-width: 320px; 
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      max-height: 80vh;
+      overflow-y: auto;
     }
     .menu-panel.hidden {
       display: none;
@@ -179,20 +181,35 @@
     .dialog-modal.hidden {
         display: none;
     }
+    .dialog-header-sticky {
+        position: sticky;
+        top: 0;
+        background-color: #34495e; /* Match modal background */
+        z-index: 10;
+        padding: 15px 20px;
+        border-bottom: 1px solid #4a6fa5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .dialog-title {
+        margin: 0;
+        font-size: 1.25em;
+        border-bottom: none;
+        padding-bottom: 0;
+        color: #ecf0f1;
+    }
+
     .dialog-content {
         padding: 20px;
-        /* overflow-y: auto; Replaced by individual dialog control */
+        overflow-y: auto;
         flex-grow: 1; 
     }
 
     /* Specific for Help Dialog */
-    #helpDialog {
-        overflow-y: auto; /* Allow help dialog to scroll if content overflows */
-    }
-
     #helpDialog .dialog-content {
-         /* Help dialog content itself should not have its own scrollbar if the dialog scrolls */
-        overflow-y: visible;
+         /* The dialog itself scrolls now, so this is not needed. */
     }
 
     #helpDialog .dialog-header {
@@ -217,9 +234,6 @@
     }
 
     .dialog-close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
         background: #5d8aa8;
         color: #ecf0f1;
         border: none;
@@ -230,6 +244,7 @@
         line-height: 30px; 
         text-align: center;
         cursor: pointer;
+        flex-shrink: 0; /* Prevent the button from shrinking */
     }
     .dialog-close-btn:hover {
         background: #4a6fa5;
@@ -675,7 +690,7 @@
 
     @font-face {
       font-family: 'kdm_font';
-      src: url('kdm_font.woff') format('woff');
+      src: url('kdm_icon.woff') format('woff');
     }
 
     .kdm_font {
@@ -706,9 +721,6 @@
     .tab-content.active {
       display: block;
     }
-    #severeInjuriesDialog {
-      overflow-y: auto;
-    }
     #severeInjuriesDialog .dialog-content {
-      overflow-y: visible;
+      overflow-y: auto;
     }
