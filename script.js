@@ -381,9 +381,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function search(query) {
     const trimmedQuery = query.trim().toLowerCase();
 
-    if (!window.dataset || typeof window.dataset !== 'object' || Array.isArray(window.dataset)) {
-        console.error("Dataset not loaded or is not a non-array object.");
-        return [];
+    if (!window.dataset || !Array.isArray(window.dataset)) {
+      console.error("Dataset not loaded or is not an array.");
+      return [];
     }
 
     const filterablePhilosophyNames = new Set();
@@ -392,15 +392,13 @@ document.addEventListener('DOMContentLoaded', function() {
         philosophyCheckboxes.forEach(cb => filterablePhilosophyNames.add(cb.value));
     }
 
-    const allItems = Object.values(window.dataset).flat();
-    return allItems.flatMap(originalItem => {
+    return window.dataset.flatMap(originalItem => {
       if (!originalItem || typeof originalItem.name !== 'string' || typeof originalItem.type !== 'string') {
         return []; // Skip invalid items
       }
 
-      const searchableText = (originalItem.searchableText || originalItem.name || '').toLowerCase();
-      const textMatches = !trimmedQuery || searchableText.includes(trimmedQuery);
-      if (!textMatches && trimmedQuery) {
+      const nameMatches = !trimmedQuery || originalItem.name.toLowerCase().includes(trimmedQuery);
+      if (!nameMatches && trimmedQuery) {
         return []; // Does not match search query
       }
 
@@ -469,13 +467,11 @@ document.addEventListener('DOMContentLoaded', function() {
       selectedIndex = -1;
 
       const queryIsEmpty = searchInput.value.trim() === '';
-      const totalItemsInDataset = window.dataset ? Object.values(window.dataset).flat().length : 0;
-
-      if (queryIsEmpty && (!filteredItems || filteredItems.length === totalItemsInDataset)) {
+      if (queryIsEmpty && (!filteredItems || filteredItems.length === (window.dataset ? window.dataset.length : 0))) {
           suggestionBox.style.display = 'none';
           return;
       }
-      if (queryIsEmpty && filteredItems && filteredItems.length > 0 && filteredItems.length < totalItemsInDataset ){
+      if (queryIsEmpty && filteredItems && filteredItems.length > 0 && filteredItems.length < (window.dataset ? window.dataset.length : 0) ){
          // Query is empty, but filters ARE active, so show the filtered list.
       } else if (queryIsEmpty){
           suggestionBox.style.display = 'none';
@@ -540,10 +536,8 @@ document.addEventListener('DOMContentLoaded', function() {
       // If it's a weapon variant from search, find the true original item from dataset
       // The itemFromSuggestion is a shallow copy with modified name and new displayType/originalName.
       // We need to send the *actual* full original item to the iframe.
-      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
-
-      if (itemFromSuggestion.displayType && itemFromSuggestion.originalName && allItems.length > 0) {
-        const foundOriginal = allItems.find(i => i.name === itemFromSuggestion.originalName && i.type === 'Weapon');
+      if (itemFromSuggestion.displayType && itemFromSuggestion.originalName && window.dataset) {
+        const foundOriginal = window.dataset.find(i => i.name === itemFromSuggestion.originalName && i.type === 'Weapon');
         if (foundOriginal) {
             originalItemData = foundOriginal;
         } else {
@@ -561,29 +555,29 @@ document.addEventListener('DOMContentLoaded', function() {
       // Use originalItemData for checks if it's a weapon variant, otherwise itemFromSuggestion
       const itemForLogic = (itemFromSuggestion.displayType && itemFromSuggestion.originalName) ? originalItemData : itemFromSuggestion;
 
-      if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && allItems.length > 0) {
+      if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && typeof window.dataset !== 'undefined') {
           const baseKnowledgeName = itemForLogic.tenetKnowledge; // Changed 'item' to 'itemForLogic'
           let knowledgeToFetchFullName = null;
           try {
               const lastPrintedFull = localStorage.getItem(`lastPrinted_${baseKnowledgeName}`);
               if (lastPrintedFull) {
-                  const lastPrintedItemExists = allItems.find(k => k.name === lastPrintedFull && k.type === 'Knowledge');
+                  const lastPrintedItemExists = window.dataset.find(k => k.name === lastPrintedFull && k.type === 'Knowledge');
                   if (lastPrintedItemExists) knowledgeToFetchFullName = lastPrintedFull;
               }
           } catch(e) { console.warn("LocalStorage access error for tenetKnowledge:", e); }
 
           if (!knowledgeToFetchFullName) {
               const defaultLevelName = `${baseKnowledgeName} I`;
-              const defaultLevelItem = allItems.find(k => k.name === defaultLevelName && k.type === 'Knowledge');
+              const defaultLevelItem = window.dataset.find(k => k.name === defaultLevelName && k.type === 'Knowledge');
               if (defaultLevelItem) {
                   knowledgeToFetchFullName = defaultLevelName;
               } else {
-                  const directMatchItem = allItems.find(k => k.name === baseKnowledgeName && k.type === 'Knowledge');
+                  const directMatchItem = window.dataset.find(k => k.name === baseKnowledgeName && k.type === 'Knowledge');
                   if (directMatchItem) knowledgeToFetchFullName = baseKnowledgeName;
               }
           }
           if (knowledgeToFetchFullName) {
-              const fetchedData = allItems.find(k => k.name === knowledgeToFetchFullName && k.type === 'Knowledge');
+              const fetchedData = window.dataset.find(k => k.name === knowledgeToFetchFullName && k.type === 'Knowledge');
               if (fetchedData) tenetKnowledgeItemData = JSON.parse(JSON.stringify(fetchedData));
           }
       }
@@ -648,10 +642,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       const labelTitle = searchInput.value;
-      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
-
-      if (labelTitle && allItems.length > 0) {
-          const currentItem = allItems.find(i => i.name === labelTitle);
+      if (labelTitle && window.dataset && Array.isArray(window.dataset)) {
+          const currentItem = window.dataset.find(i => i.name === labelTitle);
           if (currentItem && currentItem.type === 'Knowledge') {
               const baseNameRegex = /\s+(I|II|III)$/;
               let baseName = labelTitle;
@@ -682,10 +674,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function populateExpansionFilters() {
-      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
-      if (allItems.length === 0 || !expansionCheckboxesContainer) return;
+      if (!window.dataset || !expansionCheckboxesContainer) return; // expansionCheckboxesContainer is now global-like
       const expansionNames = new Set([CORE_GAME_EXPANSION_NAME]);
-      allItems.forEach(item => {
+      window.dataset.forEach(item => {
           if (item.expansion && typeof item.expansion === 'string' && item.expansion.trim() !== "") {
               expansionNames.add(item.expansion.trim());
           }
@@ -697,10 +688,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function populatePhilosophyFilters() {
-      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
-      if (allItems.length === 0 || !philosophyCheckboxesContainer) return;
+      if (!window.dataset || !philosophyCheckboxesContainer) return; // philosophyCheckboxesContainer is now global-like
       const philosophyNames = new Set();
-      allItems.forEach(item => {
+      window.dataset.forEach(item => {
           if (item.type === 'Philosophy' && item.name && typeof item.name === 'string' && item.name.trim() !== "") {
               philosophyNames.add(item.name.trim());
           }
@@ -926,8 +916,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentSelectedItemName === "--- PRINT CALIBRATION LABEL ---") {
              itemToReselect = { name: "--- PRINT CALIBRATION LABEL ---", type: "Calibration" };
         } else if (currentSelectedItemName && window.dataset) {
-            const allItems = Object.values(window.dataset).flat();
-            itemToReselect = allItems.find(i => i.name === currentSelectedItemName);
+            itemToReselect = window.dataset.find(i => i.name === currentSelectedItemName);
         }
         if (itemToReselect) { selectItem(itemToReselect); }
     });
