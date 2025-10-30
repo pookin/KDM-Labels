@@ -1,7 +1,7 @@
 // kdm-data.js
 console.log("kdm-data.js: Loading restructured dataset...");
 
-var dataset = {
+window.dataset = {
   "Philosophy": [
     {
       "name": "Ambitionism",
