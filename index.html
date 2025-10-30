@@ -17,9 +17,37 @@
     <ul class="menu-item-list">
       <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Label Settings</a></li>
       <li><a href="#" id="openContentFiltersBtn" class="menu-link-item">Content Filters</a></li>
-      <li><a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheet</a></li>
+      <li id="survivorSheetMenu" class="menu-item-has-submenu">
+        <a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheets</a>
+        <ul id="survivorSheetSubMenu" class="submenu">
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">Standard</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet.pdf" target="_blank">Standard</a></li>
+              <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet_OneSided.pdf" target="_blank">Standard (One Sided)</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">Arc</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet.pdf" target="_blank">Arc</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_OneSided.pdf" target="_blank">Arc (One Sided)</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor.pdf" target="_blank">Arc (With Armor)</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor_OneSided.pdf" target="_blank">Arc (With Armor, One Sided)</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">People of the Stars</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet.pdf" target="_blank">People of the Stars</a></li>
+              <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet_OneSided.pdf" target="_blank">People of the Stars (One Sided)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
       <li><a href="#" id="severeInjuriesBtn" class="menu-link-item">Severe Injuries</a></li>
       <li><a href="#" id="helpBtn" class="menu-link-item">Help</a></li>
+      <li><a href="#" id="patchNotesBtn" class="menu-link-item">Patch Notes</a></li>
     </ul>
   </div>
 
@@ -197,6 +225,27 @@
       <div id="body" class="tab-content"></div>
       <div id="waist" class="tab-content"></div>
       <div id="legs" class="tab-content"></div>
+    </div>
+  </div>
+
+  <div id="patchNotesDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Patch Notes</h3>
+        <button class="dialog-close-btn" data-dialog-id="patchNotesDialog">X</button>
+    </div>
+    <div class="dialog-content">
+      <h4>Version 1.1.0 (Current)</h4>
+      <ul>
+        <li>Added a bunch of new survivor sheets.</li>
+        <li>Added this patch notes window!</li>
+        <li>Added the ability to export labels as JPG. Check the settings menu to turn this on.</li>
+        <li>Added Dragon Constellations</li>
+        <li>Fixed a bunch of typos, hopefully got them all if not let me know!</li>
+      </ul>
+      <h4>Version 1.0.0</h4>
+      <ul>
+        <li>Initial release.</li>
+      </ul>
     </div>
   </div>
 
