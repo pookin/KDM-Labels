@@ -624,3 +624,34 @@
          max-width: 500px; 
       }
     }
+
+    /* Severe Injuries Modal */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #4a6fa5;
+      margin-bottom: 15px;
+    }
+    .tab-link {
+      background: none;
+      border: none;
+      color: #ecf0f1;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 1em;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-link.active {
+      border-bottom: 3px solid #87CEFA;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    #severeInjuriesDialog {
+      overflow-y: auto;
+    }
+    #severeInjuriesDialog .dialog-content {
+      overflow-y: visible;
+    }

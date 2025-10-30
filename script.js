@@ -451,6 +451,73 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Severe Injuries Modal
+  const severeInjuriesBtn = document.getElementById('severeInjuriesBtn');
+  const severeInjuriesDialog = document.getElementById('severeInjuriesDialog');
+
+  if (severeInjuriesBtn) {
+    severeInjuriesBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDialog(severeInjuriesDialog);
+      populateSevereInjuriesTabs();
+    });
+  }
+
+  function populateSevereInjuriesTabs() {
+    const injuries = window.severeInjuries['Severe Injury'];
+    const tabContainer = document.querySelector('#severeInjuriesDialog .dialog-content');
+
+    const brainTab = injuries.find(i => i.name === 'Brain Trauma');
+    if (brainTab) {
+      const brainContent = document.getElementById('brain');
+      brainContent.innerHTML = brainTab.table.map(row => `<p>${row}</p>`).join('');
+    }
+
+    const headTab = injuries.find(i => i.name === 'Head');
+    if (headTab) {
+      const headContent = document.getElementById('head');
+      headContent.innerHTML = headTab.table.map(row => `<p>${row}</p>`).join('');
+    }
+
+    const armsTab = injuries.find(i => i.name === 'Arms');
+    if (armsTab) {
+      const armsContent = document.getElementById('arms');
+      armsContent.innerHTML = armsTab.table.map(row => `<p>${row}</p>`).join('');
+    }
+
+    const bodyTab = injuries.find(i => i.name === 'Body');
+    if (bodyTab) {
+      const bodyContent = document.getElementById('body');
+      bodyContent.innerHTML = bodyTab.table.map(row => `<p>${row}</p>`).join('');
+    }
+
+    const waistTab = injuries.find(i => i.name === 'Waist');
+    if (waistTab) {
+      const waistContent = document.getElementById('waist');
+      waistContent.innerHTML = waistTab.table.map(row => `<p>${row}</p>`).join('');
+    }
+
+    const legsTab = injuries.find(i => i.name === 'Legs');
+    if (legsTab) {
+      const legsContent = document.getElementById('legs');
+      legsContent.innerHTML = legsTab.table.map(row => `<p>${row}</p>`).join('');
+    }
+  }
+
+  const tabs = document.querySelectorAll('.tab-link');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabName = tab.dataset.tab;
+      const tabContents = document.querySelectorAll('.tab-content');
+      tabContents.forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(tabName).classList.add('active');
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
   // Event listener for Survivor Sheet
   if (survivorSheetBtn) {
     survivorSheetBtn.addEventListener('click', (event) => {
@@ -979,4 +1046,5 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem(visitedFlag, 'true');
     }
   }
+
 });
