@@ -479,17 +479,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const injuryTypes = ['Brain Trauma', 'Head', 'Arms', 'Body', 'Waist', 'Legs'];
 
     injuryTypes.forEach(type => {
-      const injuryData = injuries.find(i => i.name === type);
-      if (injuryData) {
-        const contentId = (type === 'Brain Trauma') ? 'brain' : type.toLowerCase();
-        const contentElement = document.getElementById(contentId);
-        if (contentElement) {
-          contentElement.innerHTML = injuryData.table.map(row => {
-            const formattedRow = row.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            return `<p>${formattedRow}</p>`;
-          }).join('');
+        const injuryData = injuries.find(i => i.name === type);
+        if (injuryData) {
+            const contentId = (type === 'Brain Trauma') ? 'brain' : type.toLowerCase();
+            const contentElement = document.getElementById(contentId);
+            if (contentElement) {
+                const tableRows = injuryData.table.map(row => {
+                    const parts = row.split(/:(.*)/s); // Split only on the first colon
+                    const roll = parts[0];
+                    let description = parts[1] || '';
+
+                    // Format description for markdown-style bolding and trim whitespace
+                    description = description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').trim();
+
+                    return `<tr><td class="roll-cell">${roll}</td><td class="desc-cell">${description}</td></tr>`;
+                }).join('');
+
+                contentElement.innerHTML = `<table class="severe-injury-table"><tbody>${tableRows}</tbody></table>`;
+            }
         }
-      }
     });
   }
 
