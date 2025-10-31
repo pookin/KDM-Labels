@@ -15,6 +15,7 @@
 
   <div id="mainMenu" class="menu-panel hidden">
     <ul class="menu-item-list">
+      <li><a href="#" id="severeInjuriesBtn" class="menu-link-item">Severe Injuries</a></li>
       <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Label Settings</a></li>
       <li><a href="#" id="openContentFiltersBtn" class="menu-link-item">Content Filters</a></li>
       <li id="survivorSheetMenu" class="menu-item-has-submenu">
@@ -45,7 +46,6 @@
           </li>
         </ul>
       </li>
-      <li><a href="#" id="severeInjuriesBtn" class="menu-link-item">Severe Injuries</a></li>
       <li><a href="#" id="helpBtn" class="menu-link-item">Help</a></li>
       <li><a href="#" id="patchNotesBtn" class="menu-link-item">Patch Notes</a></li>
     </ul>
@@ -214,12 +214,14 @@
   </div>
 
   <div id="severeInjuriesDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Severe Injuries</h3>
+        <button class="dialog-close-btn" data-dialog-id="severeInjuriesDialog">X</button>
+    </div>
     <div class="dialog-content">
-      <button class="dialog-close-btn" data-dialog-id="severeInjuriesDialog">X</button>
-      <h3 class="dialog-header">Severe Injuries</h3>
       <div class="tabs">
         <button class="tab-link active" data-tab="brain">Brain Trauma</button>
-        <button class="tab-link" data-tab="head">Head <span class="kdm_font">_</span></button>
+        <button class="tab-link" data-tab="head">Head <span class="kdm_font">+</span></button>
         <button class="tab-link" data-tab="arms">Arms <span class="kdm_font">-</span></button>
         <button class="tab-link" data-tab="body">Body <span class="kdm_font">,</span></button>
         <button class="tab-link" data-tab="waist">Waist <span class="kdm_font">.</span></button>
