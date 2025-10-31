@@ -660,7 +660,14 @@
     }
     #severeInjuriesDialog {
       overflow-y: auto;
+      max-width: 800px;
     }
     #severeInjuriesDialog .dialog-content {
       overflow-y: visible;
+    }
+    .tab-content {
+      min-height: 300px;
+    }
+    .tab-content p:nth-child(odd) {
+      background-color: #2c3e50;
     }

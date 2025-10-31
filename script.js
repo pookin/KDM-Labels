@@ -471,8 +471,13 @@ document.addEventListener('DOMContentLoaded', function() {
     injuryTypes.forEach(type => {
       const injuryData = injuries.find(i => i.name === type);
       if (injuryData) {
-        const contentId = type.toLowerCase().replace(' ', ' ');
-        const contentElement = document.getElementById(contentId.replace(' ', ''));
+        let contentId;
+        if (type === 'Brain Trauma') {
+          contentId = 'brain';
+        } else {
+          contentId = type.toLowerCase();
+        }
+        const contentElement = document.getElementById(contentId);
         if (contentElement) {
           contentElement.innerHTML = injuryData.table.map(row => {
             const formattedRow = row.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
