@@ -451,6 +451,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Event listener for Patch Notes button
+  const patchNotesBtn = document.getElementById('patchNotesBtn');
+  const patchNotesDialog = document.getElementById('patchNotesDialog');
+  if (patchNotesBtn) {
+    patchNotesBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDialog(patchNotesDialog);
+    });
+  }
+
   // Severe Injuries Modal
   const severeInjuriesBtn = document.getElementById('severeInjuriesBtn');
   const severeInjuriesDialog = document.getElementById('severeInjuriesDialog');
@@ -502,16 +512,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Event listener for Survivor Sheet
+  // Event listener for Survivor Sheet menu toggle
   if (survivorSheetBtn) {
+    const survivorSheetMenu = document.getElementById('survivorSheetMenu');
+    const survivorSheetSubMenu = document.getElementById('survivorSheetSubMenu');
     survivorSheetBtn.addEventListener('click', (event) => {
       event.preventDefault();
-      window.open('KDM_ARC_Sheet.pdf', '_blank');
-      if (mainMenu && !mainMenu.classList.contains('hidden')) {
-        mainMenu.classList.add('hidden'); // Close menu
-      }
+      event.stopPropagation();
+      survivorSheetMenu.classList.toggle('open');
+      survivorSheetSubMenu.classList.toggle('open');
     });
   }
+
+  const submenuToggles = document.querySelectorAll('.submenu-toggle');
+  submenuToggles.forEach(toggle => {
+    toggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const parentLi = toggle.parentElement;
+      const submenu = toggle.nextElementSibling;
+
+      if (parentLi && submenu && submenu.classList.contains('submenu')) {
+        parentLi.classList.toggle('open');
+        submenu.classList.toggle('open');
+      }
+    });
+  });
 
   function renderSuggestions(filteredItems) {
       if (!suggestionBox || !searchInput) return;
@@ -846,6 +873,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const severeInjuriesDialog = document.getElementById('severeInjuriesDialog');
     if (severeInjuriesDialog && !severeInjuriesDialog.classList.contains('hidden')) {
         severeInjuriesDialog.classList.add('hidden');
+    }
+    const patchNotesDialog = document.getElementById('patchNotesDialog');
+    if (patchNotesDialog && !patchNotesDialog.classList.contains('hidden')) {
+        patchNotesDialog.classList.add('hidden');
     }
   }
 

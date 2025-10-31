@@ -15,11 +15,39 @@
 
   <div id="mainMenu" class="menu-panel hidden">
     <ul class="menu-item-list">
+      <li><a href="#" id="severeInjuriesBtn" class="menu-link-item">Severe Injuries</a></li>
       <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Label Settings</a></li>
       <li><a href="#" id="openContentFiltersBtn" class="menu-link-item">Content Filters</a></li>
-      <li><a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheet</a></li>
-      <li><a href="#" id="severeInjuriesBtn" class="menu-link-item">Severe Injuries</a></li>
+      <li id="survivorSheetMenu" class="menu-item-has-submenu">
+        <a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheets</a>
+        <ul id="survivorSheetSubMenu" class="submenu">
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">Standard</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet.pdf" target="_blank">Standard</a></li>
+              <li><a href="SurvivorSheets/Standard/KDMSurvivorSheet_OneSided.pdf" target="_blank">Standard (One Sided)</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">Arc</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet.pdf" target="_blank">Arc</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_OneSided.pdf" target="_blank">Arc (One Sided)</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor.pdf" target="_blank">Arc (With Armor)</a></li>
+              <li><a href="SurvivorSheets/Arc/ArcSurvivorSheet_WithArmor_OneSided.pdf" target="_blank">Arc (With Armor, One Sided)</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-submenu">
+            <a href="#" class="submenu-toggle menu-link-item">People of the Stars</a>
+            <ul class="submenu">
+              <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet.pdf" target="_blank">People of the Stars</a></li>
+              <li><a href="SurvivorSheets/PoS/PoSSurvivorSheet_OneSided.pdf" target="_blank">People of the Stars (One Sided)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
       <li><a href="#" id="helpBtn" class="menu-link-item">Help</a></li>
+      <li><a href="#" id="patchNotesBtn" class="menu-link-item">Patch Notes</a></li>
     </ul>
   </div>
 
@@ -45,9 +73,11 @@
   <div id="dialogOverlay" class="dialog-overlay hidden"></div>
 
   <div id="labelSettingsDialog" class="dialog-modal hidden">
-    <div class="dialog-content">
+    <div class="dialog-header-sticky">
+      <h3 class="dialog-title">Label Settings</h3>
       <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
-      <h3>Label Settings</h3>
+    </div>
+    <div class="dialog-content">
 
       <div class="settings-group">
         <label class="group-label">Unit:</label>
@@ -117,10 +147,12 @@
   </div>
 
   <div id="contentFiltersDialog" class="dialog-modal hidden">
-    <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
+    <div class="dialog-header-sticky">
+      <h3 class="dialog-title">Content Filters</h3>
+      <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
+    </div>
     <div class="dialog-content">
       <div class="settings-section" id="contentFiltersInDialog"> 
-        <h3>Content Filters</h3>
         <div class="filter-group" id="expansionFilters">
           <h4>Expansions</h4>
           <div class="filter-controls">
@@ -147,9 +179,11 @@
   </div>
 
   <div id="helpDialog" class="dialog-modal hidden">
-    <div class="dialog-content">
+    <div class="dialog-header-sticky">
+      <h3 class="dialog-title">Help</h3>
       <button class="dialog-close-btn" data-dialog-id="helpDialog">X</button>
-      <h3 class="dialog-header">Help</h3>
+    </div>
+    <div class="dialog-content">
       <p><strong>Search:</strong> Type in the search box to find KDM items like Fighting Arts, Philosophies, Disorders, etc.</p>
       <p>Note: For Knowlages a checkmark will apear next to the last level you printed. When priting Philosophies it will use the last printed level for the tenent knowlage.</p>
       <p><strong>Menu (☰):</strong></p>
@@ -180,12 +214,14 @@
   </div>
 
   <div id="severeInjuriesDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Severe Injuries</h3>
+        <button class="dialog-close-btn" data-dialog-id="severeInjuriesDialog">X</button>
+    </div>
     <div class="dialog-content">
-      <button class="dialog-close-btn" data-dialog-id="severeInjuriesDialog">X</button>
-      <h3 class="dialog-header">Severe Injuries</h3>
       <div class="tabs">
         <button class="tab-link active" data-tab="brain">Brain Trauma</button>
-        <button class="tab-link" data-tab="head">Head <span class="kdm_font">_</span></button>
+        <button class="tab-link" data-tab="head">Head <span class="kdm_font">+</span></button>
         <button class="tab-link" data-tab="arms">Arms <span class="kdm_font">-</span></button>
         <button class="tab-link" data-tab="body">Body <span class="kdm_font">,</span></button>
         <button class="tab-link" data-tab="waist">Waist <span class="kdm_font">.</span></button>
@@ -197,6 +233,27 @@
       <div id="body" class="tab-content"></div>
       <div id="waist" class="tab-content"></div>
       <div id="legs" class="tab-content"></div>
+    </div>
+  </div>
+
+  <div id="patchNotesDialog" class="dialog-modal hidden">
+    <div class="dialog-header-sticky">
+        <h3 class="dialog-title">Patch Notes</h3>
+        <button class="dialog-close-btn" data-dialog-id="patchNotesDialog">X</button>
+    </div>
+    <div class="dialog-content">
+      <h4>Version 1.1.0 (Current)</h4>
+      <ul>
+        <li>Added a bunch of new survivor sheets.</li>
+        <li>Added this patch notes window!</li>
+        <li>Added the ability to export labels as JPG. Check the settings menu to turn this on.</li>
+        <li>Added Dragon Constellations</li>
+        <li>Fixed a bunch of typos, hopefully got them all if not let me know!</li>
+      </ul>
+      <h4>Version 1.0.0</h4>
+      <ul>
+        <li>Initial release.</li>
+      </ul>
     </div>
   </div>
 

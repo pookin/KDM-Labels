@@ -75,6 +75,54 @@
     .menu-panel .menu-item-list .menu-link-item:hover {
       background-color: #4a6fa5; 
     }
+
+    .menu-panel .menu-item-list .menu-item-has-submenu > .menu-link-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-panel .menu-item-list .menu-item-has-submenu > .menu-link-item::after {
+      content: '▶';
+      font-size: 0.8em;
+      margin-left: 10px;
+      transition: transform 0.2s;
+    }
+
+    .menu-panel .menu-item-list .menu-item-has-submenu.open > .menu-link-item::after {
+      transform: rotate(90deg);
+    }
+
+    .menu-panel .submenu {
+      list-style: none;
+      padding-left: 0; /* Changed for nesting */
+      margin: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+    }
+
+    .menu-panel .submenu .submenu { /* Nested submenus */
+        padding-left: 15px;
+        background-color: #34495e;
+    }
+
+    .menu-panel .submenu.open {
+        max-height: 500px; /* Adjust as needed */
+    }
+
+    .menu-panel .submenu a {
+      display: block;
+      padding: 8px 5px;
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 0.9em;
+      border-radius: 3px;
+    }
+
+    .menu-panel .submenu a:hover {
+      background-color: #4a6fa5;
+    }
     /* End New Menu Item List Styles */
     
     .container { 
@@ -131,20 +179,35 @@
     .dialog-modal.hidden {
         display: none;
     }
+    .dialog-header-sticky {
+        position: sticky;
+        top: 0;
+        background-color: #34495e; /* Match modal background */
+        z-index: 10;
+        padding: 15px 20px;
+        border-bottom: 1px solid #4a6fa5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .dialog-title {
+        margin: 0;
+        font-size: 1.25em;
+        border-bottom: none;
+        padding-bottom: 0;
+        color: #ecf0f1;
+    }
+
     .dialog-content {
         padding: 20px;
-        /* overflow-y: auto; Replaced by individual dialog control */
+        overflow-y: auto;
         flex-grow: 1; 
     }
 
     /* Specific for Help Dialog */
-    #helpDialog {
-        overflow-y: auto; /* Allow help dialog to scroll if content overflows */
-    }
-
     #helpDialog .dialog-content {
-         /* Help dialog content itself should not have its own scrollbar if the dialog scrolls */
-        overflow-y: visible;
+         /* The dialog itself scrolls now, so this is not needed. */
     }
 
     #helpDialog .dialog-header {
@@ -169,9 +232,6 @@
     }
 
     .dialog-close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
         background: #5d8aa8;
         color: #ecf0f1;
         border: none;
@@ -182,6 +242,7 @@
         line-height: 30px; 
         text-align: center;
         cursor: pointer;
+        flex-shrink: 0; /* Prevent the button from shrinking */
     }
     .dialog-close-btn:hover {
         background: #4a6fa5;
@@ -627,7 +688,7 @@
 
     @font-face {
       font-family: 'kdm_font';
-      src: url('kdm_font.woff') format('woff');
+      src: url('kdm_icon.woff') format('woff');
     }
 
     .kdm_font {
@@ -635,6 +696,9 @@
     }
 
     /* Severe Injuries Modal */
+    #severeInjuriesDialog {
+      max-width: 800px; /* Make the modal wider */
+    }
     .tabs {
       display: flex;
       border-bottom: 1px solid #4a6fa5;
@@ -658,16 +722,10 @@
     .tab-content.active {
       display: block;
     }
-    #severeInjuriesDialog {
-      overflow-y: auto;
-      max-width: 800px;
-    }
     #severeInjuriesDialog .dialog-content {
-      overflow-y: visible;
+      min-height: 400px; /* Set a minimum height */
+      overflow-y: auto;
     }
-    .tab-content {
-      min-height: 300px;
-    }
-    .tab-content p:nth-child(odd) {
-      background-color: #2c3e50;
+    #severeInjuriesDialog .tab-content p:nth-child(odd) {
+      background-color: #3a5067;
     }
