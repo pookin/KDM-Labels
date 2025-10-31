@@ -6,7 +6,17 @@
   <title>KDM Label Printer</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G31CF8ZP7V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-G31CF8ZP7V');
+</script>
 <body>
   <header id="appHeader">
     <span id="appTitle">KDM Label Printer</span>
@@ -15,8 +25,7 @@
 
   <div id="mainMenu" class="menu-panel hidden">
     <ul class="menu-item-list">
-      <li><a href="#" id="severeInjuriesBtn" class="menu-link-item">Severe Injuries</a></li>
-      <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Label Settings</a></li>
+      <li><a href="#" id="openLabelSettingsBtn" class="menu-link-item">Settings</a></li>
       <li><a href="#" id="openContentFiltersBtn" class="menu-link-item">Content Filters</a></li>
       <li id="survivorSheetMenu" class="menu-item-has-submenu">
         <a href="#" id="survivorSheetBtn" class="menu-link-item">Survivor Sheets</a>
@@ -62,11 +71,13 @@
       <div class="preview-container">
         <h3>Label Preview</h3>
         <iframe id="preview" class="iframe-preview"></iframe>
+        <button id="printCalibrationLabelBtn" class="btn" style="margin-top: 10px;">Print Calibration Label</button>
       </div>
     </div>
   </div>
 
   <footer id="appFooter">
+    <button id="exportJpg" class="btn">Export as JPG</button>
     <button id="print" class="btn">Print</button>
   </footer>
 
@@ -74,11 +85,21 @@
 
   <div id="labelSettingsDialog" class="dialog-modal hidden">
     <div class="dialog-header-sticky">
-      <h3 class="dialog-title">Label Settings</h3>
-      <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
+        <h3 class="dialog-title">Settings</h3>
+        <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
     </div>
     <div class="dialog-content">
-
+      <div class="settings-group">
+        <label class="group-label">Preferences:</label>
+        <div class="input-pair">
+            <label for="autoPrint" style="flex-basis: auto;">Auto Print on Select:</label>
+            <input id="autoPrint" type="checkbox" title="Automatically print after a new label is selected and rendered.">
+        </div>
+        <div class="input-pair">
+            <label for="showExportJpg" style="flex-basis: auto;">Enable JPG Export:</label>
+            <input id="showExportJpg" type="checkbox" title="Show the 'Export as JPG' button in the footer.">
+        </div>
+      </div>
       <div class="settings-group">
         <label class="group-label">Unit:</label>
         <div class="radio-group">
@@ -138,18 +159,26 @@
           </div>
         </div>
       </div>
+
       <p>Tip: When printing, ensure your printer settings match the label size defined, that any "Scale to Fit" options are turned OFF, and margins are set to "default" for accurate sizing.</p>
+
+      <div class="settings-group">
+        <label class="group-label">Data Management:</label>
+        <div class="input-pair">
+            <button id="resetKnowledgeBtn" class="btn btn-warning">Reset Knowledge Levels</button>
+        </div>
+        <p style="font-size: 0.8em; color: #bdc3c7; margin-top: 5px;">This will clear all saved "last printed" knowledge levels, resetting them to Level I.</p>
+      </div>
+
       <div class="settings-actions">
-          <button id="save" class="btn">Save Settings</button>
-          <button id="printCalibrationLabelBtn" class="btn">Print Calibration Label</button>
       </div>
     </div>
   </div>
 
   <div id="contentFiltersDialog" class="dialog-modal hidden">
     <div class="dialog-header-sticky">
-      <h3 class="dialog-title">Content Filters</h3>
-      <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
+        <h3 class="dialog-title">Content Filters</h3>
+        <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
     </div>
     <div class="dialog-content">
       <div class="settings-section" id="contentFiltersInDialog"> 
@@ -180,12 +209,12 @@
 
   <div id="helpDialog" class="dialog-modal hidden">
     <div class="dialog-header-sticky">
-      <h3 class="dialog-title">Help</h3>
-      <button class="dialog-close-btn" data-dialog-id="helpDialog">X</button>
+        <h3 class="dialog-title">Help</h3>
+        <button class="dialog-close-btn" data-dialog-id="helpDialog">X</button>
     </div>
     <div class="dialog-content">
       <p><strong>Search:</strong> Type in the search box to find KDM items like Fighting Arts, Philosophies, Disorders, etc.</p>
-      <p>Note: For Knowlages a checkmark will apear next to the last level you printed. When priting Philosophies it will use the last printed level for the tenent knowlage.</p>
+      <p>Note: For knowledges a checkmark will appear next to the last level you printed. When printing Philosophies it will use the last printed level for the tenet knowledge.</p>
       <p><strong>Menu (☰):</strong></p>
       <ul>
         <li><strong>Label Settings:</strong> Adjust label dimensions and margins.</li>
@@ -213,41 +242,13 @@
     </div>
   </div>
 
-  <div id="severeInjuriesDialog" class="dialog-modal hidden">
-    <div class="dialog-header-sticky">
-        <h3 class="dialog-title">Severe Injuries</h3>
-        <button class="dialog-close-btn" data-dialog-id="severeInjuriesDialog">X</button>
-    </div>
-    <div class="dialog-content">
-      <div class="tabs">
-        <button class="tab-link active" data-tab="brain">Brain Trauma</button>
-        <button class="tab-link" data-tab="head">Head <span class="kdm_font">+</span></button>
-        <button class="tab-link" data-tab="arms">Arms <span class="kdm_font">-</span></button>
-        <button class="tab-link" data-tab="body">Body <span class="kdm_font">,</span></button>
-        <button class="tab-link" data-tab="waist">Waist <span class="kdm_font">.</span></button>
-        <button class="tab-link" data-tab="legs">Legs <span class="kdm_font">/</span></button>
-      </div>
-      <div id="brain" class="tab-content active"></div>
-      <div id="head" class="tab-content"></div>
-      <div id="arms" class="tab-content"></div>
-      <div id="body" class="tab-content"></div>
-      <div id="waist" class="tab-content"></div>
-      <div id="legs" class="tab-content"></div>
-    </div>
-  </div>
-
   <div id="patchNotesDialog" class="dialog-modal hidden">
     <div class="dialog-header-sticky">
         <h3 class="dialog-title">Patch Notes</h3>
         <button class="dialog-close-btn" data-dialog-id="patchNotesDialog">X</button>
     </div>
     <div class="dialog-content">
-      <h4>Version 1.2.0 (Current)</h4>
-      <ul>
-        <li>Added missing items.</li>
-        <li>Added the severe injury table.</li>
-      </ul>
-      <h4>Version 1.1.0</h4>
+      <h4>Version 1.1.0 (Current)</h4>
       <ul>
         <li>Added a bunch of new survivor sheets.</li>
         <li>Added this patch notes window!</li>
@@ -263,7 +264,6 @@
   </div>
 
 <script src="./kdm-data.js"></script>
-<script src="./severe-injuries.js"></script>
 <script src="./script.js"></script>
 
 </body>

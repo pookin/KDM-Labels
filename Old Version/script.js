@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const suggestionBox = document.getElementById('list');
   const previewFrame = document.getElementById('preview');
   const printBtn = document.getElementById('print');
+  const exportJpgBtn = document.getElementById('exportJpg');
 
   // Elements within Label Settings Dialog (even though dialogs aren't fully functional yet, IDs are there)
   const saveBtn = document.getElementById('save');
@@ -34,6 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const marginRightInput = document.getElementById('marginRight');
   const marginBottomInput = document.getElementById('marginBottom');
   const marginLeftInput = document.getElementById('marginLeft');
+  const autoPrintCheckbox = document.getElementById('autoPrint');
+  const showExportJpgCheckbox = document.getElementById('showExportJpg');
   const printCalibrationLabelBtn = document.getElementById('printCalibrationLabelBtn'); // Renamed from showCalibrationLabelBtn
 
   // Unit switching elements
@@ -60,10 +63,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const dialogOverlay = document.getElementById('dialogOverlay');
   const closeDialogBtns = document.querySelectorAll('.dialog-close-btn');
 
-  const survivorSheetBtn = document.getElementById('survivorSheetBtn'); // Added for Survivor Sheet
-  const helpBtn = document.getElementById('helpBtn'); // Added for Help
-  const helpDialog = document.getElementById('helpDialog'); // Added for Help Dialog
+  const survivorSheetBtn = document.getElementById('survivorSheetBtn');
+  const survivorSheetMenu = document.getElementById('survivorSheetMenu');
+  const survivorSheetSubMenu = document.getElementById('survivorSheetSubMenu');
+  const helpBtn = document.getElementById('helpBtn');
+  const helpDialog = document.getElementById('helpDialog');
+  const patchNotesBtn = document.getElementById('patchNotesBtn');
+  const patchNotesDialog = document.getElementById('patchNotesDialog');
   const filterSaveFeedback = document.getElementById('filterSaveFeedback'); // Added for filter save feedback
+  const resetKnowledgeBtn = document.getElementById('resetKnowledgeBtn');
 
   // Assign DOM elements for filter containers here (these are inside contentFiltersDialog)
   expansionCheckboxesContainer = document.getElementById('expansionCheckboxes');
@@ -89,7 +97,9 @@ document.addEventListener('DOMContentLoaded', function() {
       marginRight: 1, // mm - Standard default
       marginBottom: 1,// mm - Standard default
       marginLeft: 1,  // mm - Standard default
-      preferredUnit: 'mm'
+      preferredUnit: 'mm',
+      autoPrint: true,
+      showExportJpg: false
   };
   let settings = { ...defaultSettings }; // Initialize settings with defaults
 
@@ -146,8 +156,17 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         if (unitMMRadio) unitMMRadio.checked = true; // Default
     }
+    if (autoPrintCheckbox) autoPrintCheckbox.checked = settings.autoPrint;
+    if (showExportJpgCheckbox) showExportJpgCheckbox.checked = settings.showExportJpg;
     updateUnitDisplays(settings.preferredUnit);
     updatePreviewSize(); // Ensure preview uses correct unit if it depends on global settings object
+    updateExportJpgButtonVisibility();
+  }
+
+  function updateExportJpgButtonVisibility() {
+    if (exportJpgBtn) {
+      exportJpgBtn.style.display = settings.showExportJpg ? 'inline-block' : 'none';
+    }
   }
 
 
@@ -188,12 +207,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Update UI input fields with new converted values
       updateInputFieldsFromSettings();
-      // Note: Save button will persist these new settings.
+      saveSettings();
     }
   }
-
-  if (unitMMRadio) unitMMRadio.addEventListener('change', handleUnitChange);
-  if (unitInchesRadio) unitInchesRadio.addEventListener('change', handleUnitChange);
 
 
   // Initial load of settings
@@ -381,9 +397,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function search(query) {
     const trimmedQuery = query.trim().toLowerCase();
 
-    if (!window.dataset || typeof window.dataset !== 'object' || Array.isArray(window.dataset)) {
-        console.error("Dataset not loaded or is not a non-array object.");
-        return [];
+    if (!window.dataset || !Array.isArray(window.dataset)) {
+      console.error("Dataset not loaded or is not an array.");
+      return [];
     }
 
     const filterablePhilosophyNames = new Set();
@@ -392,8 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
         philosophyCheckboxes.forEach(cb => filterablePhilosophyNames.add(cb.value));
     }
 
-    const allItems = Object.values(window.dataset).flat();
-    return allItems.flatMap(originalItem => {
+    return window.dataset.flatMap(originalItem => {
       if (!originalItem || typeof originalItem.name !== 'string' || typeof originalItem.type !== 'string') {
         return []; // Skip invalid items
       }
@@ -451,74 +466,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Event listener for Patch Notes button
-  const patchNotesBtn = document.getElementById('patchNotesBtn');
-  const patchNotesDialog = document.getElementById('patchNotesDialog');
-  if (patchNotesBtn) {
-    patchNotesBtn.addEventListener('click', (event) => {
-      event.preventDefault();
-      openDialog(patchNotesDialog);
-    });
-  }
-
-  // Severe Injuries Modal
-  const severeInjuriesBtn = document.getElementById('severeInjuriesBtn');
-  const severeInjuriesDialog = document.getElementById('severeInjuriesDialog');
-
-  if (severeInjuriesBtn) {
-    severeInjuriesBtn.addEventListener('click', (event) => {
-      event.preventDefault();
-      openDialog(severeInjuriesDialog);
-      populateSevereInjuriesTabs();
-    });
-  }
-
-  function populateSevereInjuriesTabs() {
-    if (!window.severeInjuries) return;
-    const injuries = window.severeInjuries['Severe Injury'];
-    const injuryTypes = ['Brain Trauma', 'Head', 'Arms', 'Body', 'Waist', 'Legs'];
-
-    injuryTypes.forEach(type => {
-        const injuryData = injuries.find(i => i.name === type);
-        if (injuryData) {
-            const contentId = (type === 'Brain Trauma') ? 'brain' : type.toLowerCase();
-            const contentElement = document.getElementById(contentId);
-            if (contentElement) {
-                const tableRows = injuryData.table.map(row => {
-                    const parts = row.split(/:(.*)/s); // Split only on the first colon
-                    const roll = parts[0];
-                    let description = parts[1] || '';
-
-                    // Format description for markdown-style bolding and trim whitespace
-                    description = description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').trim();
-
-                    return `<tr><td class="roll-cell">${roll}</td><td class="desc-cell">${description}</td></tr>`;
-                }).join('');
-
-                contentElement.innerHTML = `<table class="severe-injury-table"><tbody>${tableRows}</tbody></table>`;
-            }
-        }
-    });
-  }
-
-  const tabs = document.querySelectorAll('.tab-link');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const tabName = tab.dataset.tab;
-      const tabContents = document.querySelectorAll('.tab-content');
-      tabContents.forEach(content => {
-        content.classList.remove('active');
-      });
-      document.getElementById(tabName).classList.add('active');
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-    });
-  });
-
   // Event listener for Survivor Sheet menu toggle
-  if (survivorSheetBtn) {
-    const survivorSheetMenu = document.getElementById('survivorSheetMenu');
-    const survivorSheetSubMenu = document.getElementById('survivorSheetSubMenu');
+  if (survivorSheetBtn && survivorSheetMenu && survivorSheetSubMenu) {
     survivorSheetBtn.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
@@ -549,13 +498,11 @@ document.addEventListener('DOMContentLoaded', function() {
       selectedIndex = -1;
 
       const queryIsEmpty = searchInput.value.trim() === '';
-      const totalItemsInDataset = window.dataset ? Object.values(window.dataset).flat().length : 0;
-
-      if (queryIsEmpty && (!filteredItems || filteredItems.length === totalItemsInDataset)) {
+      if (queryIsEmpty && (!filteredItems || filteredItems.length === (window.dataset ? window.dataset.length : 0))) {
           suggestionBox.style.display = 'none';
           return;
       }
-      if (queryIsEmpty && filteredItems && filteredItems.length > 0 && filteredItems.length < totalItemsInDataset ){
+      if (queryIsEmpty && filteredItems && filteredItems.length > 0 && filteredItems.length < (window.dataset ? window.dataset.length : 0) ){
          // Query is empty, but filters ARE active, so show the filtered list.
       } else if (queryIsEmpty){
           suggestionBox.style.display = 'none';
@@ -620,10 +567,8 @@ document.addEventListener('DOMContentLoaded', function() {
       // If it's a weapon variant from search, find the true original item from dataset
       // The itemFromSuggestion is a shallow copy with modified name and new displayType/originalName.
       // We need to send the *actual* full original item to the iframe.
-      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
-
-      if (itemFromSuggestion.displayType && itemFromSuggestion.originalName && allItems.length > 0) {
-        const foundOriginal = allItems.find(i => i.name === itemFromSuggestion.originalName && i.type === 'Weapon');
+      if (itemFromSuggestion.displayType && itemFromSuggestion.originalName && window.dataset) {
+        const foundOriginal = window.dataset.find(i => i.name === itemFromSuggestion.originalName && i.type === 'Weapon');
         if (foundOriginal) {
             originalItemData = foundOriginal;
         } else {
@@ -641,29 +586,29 @@ document.addEventListener('DOMContentLoaded', function() {
       // Use originalItemData for checks if it's a weapon variant, otherwise itemFromSuggestion
       const itemForLogic = (itemFromSuggestion.displayType && itemFromSuggestion.originalName) ? originalItemData : itemFromSuggestion;
 
-      if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && allItems.length > 0) {
+      if (itemForLogic.type === 'Philosophy' && itemForLogic.tenetKnowledge && typeof window.dataset !== 'undefined') {
           const baseKnowledgeName = itemForLogic.tenetKnowledge; // Changed 'item' to 'itemForLogic'
           let knowledgeToFetchFullName = null;
           try {
               const lastPrintedFull = localStorage.getItem(`lastPrinted_${baseKnowledgeName}`);
               if (lastPrintedFull) {
-                  const lastPrintedItemExists = allItems.find(k => k.name === lastPrintedFull && k.type === 'Knowledge');
+                  const lastPrintedItemExists = window.dataset.find(k => k.name === lastPrintedFull && k.type === 'Knowledge');
                   if (lastPrintedItemExists) knowledgeToFetchFullName = lastPrintedFull;
               }
           } catch(e) { console.warn("LocalStorage access error for tenetKnowledge:", e); }
 
           if (!knowledgeToFetchFullName) {
               const defaultLevelName = `${baseKnowledgeName} I`;
-              const defaultLevelItem = allItems.find(k => k.name === defaultLevelName && k.type === 'Knowledge');
+              const defaultLevelItem = window.dataset.find(k => k.name === defaultLevelName && k.type === 'Knowledge');
               if (defaultLevelItem) {
                   knowledgeToFetchFullName = defaultLevelName;
               } else {
-                  const directMatchItem = allItems.find(k => k.name === baseKnowledgeName && k.type === 'Knowledge');
+                  const directMatchItem = window.dataset.find(k => k.name === baseKnowledgeName && k.type === 'Knowledge');
                   if (directMatchItem) knowledgeToFetchFullName = baseKnowledgeName;
               }
           }
           if (knowledgeToFetchFullName) {
-              const fetchedData = allItems.find(k => k.name === knowledgeToFetchFullName && k.type === 'Knowledge');
+              const fetchedData = window.dataset.find(k => k.name === knowledgeToFetchFullName && k.type === 'Knowledge');
               if (fetchedData) tenetKnowledgeItemData = JSON.parse(JSON.stringify(fetchedData));
           }
       }
@@ -728,10 +673,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       const labelTitle = searchInput.value;
-      const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
-
-      if (labelTitle && allItems.length > 0) {
-          const currentItem = allItems.find(i => i.name === labelTitle);
+      if (labelTitle && window.dataset && Array.isArray(window.dataset)) {
+          const currentItem = window.dataset.find(i => i.name === labelTitle);
           if (currentItem && currentItem.type === 'Knowledge') {
               const baseNameRegex = /\s+(I|II|III)$/;
               let baseName = labelTitle;
@@ -762,33 +705,31 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function populateExpansionFilters() {
-    const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
-    if (allItems.length === 0 || !expansionCheckboxesContainer) return;
-    const expansionNames = new Set([CORE_GAME_EXPANSION_NAME]);
-    allItems.forEach(item => {
-        if (item.expansion && typeof item.expansion === 'string' && item.expansion.trim() !== "") {
-            expansionNames.add(item.expansion.trim());
-        }
-    });
-    expansionCheckboxesContainer.innerHTML = '';
-    expansionNames.forEach(name => {
-        createFilterCheckbox(name, expansionCheckboxesContainer, 'expansion', `filter_expansion_${name.replace(/\s+/g, '_')}`);
-    });
+      if (!window.dataset || !expansionCheckboxesContainer) return; // expansionCheckboxesContainer is now global-like
+      const expansionNames = new Set([CORE_GAME_EXPANSION_NAME]);
+      window.dataset.forEach(item => {
+          if (item.expansion && typeof item.expansion === 'string' && item.expansion.trim() !== "") {
+              expansionNames.add(item.expansion.trim());
+          }
+      });
+      expansionCheckboxesContainer.innerHTML = '';
+      expansionNames.forEach(name => {
+          createFilterCheckbox(name, expansionCheckboxesContainer, 'expansion', `filter_expansion_${name.replace(/\s+/g, '_')}`);
+      });
   }
 
   function populatePhilosophyFilters() {
-    const allItems = window.dataset ? Object.values(window.dataset).flat() : [];
-    if (allItems.length === 0 || !philosophyCheckboxesContainer) return;
-    const philosophyNames = new Set();
-    allItems.forEach(item => {
-        if (item.type === 'Philosophy' && item.name && typeof item.name === 'string' && item.name.trim() !== "") {
-            philosophyNames.add(item.name.trim());
-        }
-    });
-    philosophyCheckboxesContainer.innerHTML = '';
-    philosophyNames.forEach(name => {
-        createFilterCheckbox(name, philosophyCheckboxesContainer, 'philosophy', `filter_philosophy_${name.replace(/\s+/g, '_')}`);
-    });
+      if (!window.dataset || !philosophyCheckboxesContainer) return; // philosophyCheckboxesContainer is now global-like
+      const philosophyNames = new Set();
+      window.dataset.forEach(item => {
+          if (item.type === 'Philosophy' && item.name && typeof item.name === 'string' && item.name.trim() !== "") {
+              philosophyNames.add(item.name.trim());
+          }
+      });
+      philosophyCheckboxesContainer.innerHTML = '';
+      philosophyNames.forEach(name => {
+          createFilterCheckbox(name, philosophyCheckboxesContainer, 'philosophy', `filter_philosophy_${name.replace(/\s+/g, '_')}`);
+      });
   }
 
   function createFilterCheckbox(name, container, type, storageKey) {
@@ -848,6 +789,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // --- Event Listeners ---
 
+  window.addEventListener('message', function(event) {
+    // IMPORTANT: Check the origin of the message for security
+    const targetOrigin = window.location.origin === 'null' || window.location.protocol === 'file:' ? '*' : window.location.origin;
+    if (targetOrigin !== '*' && event.origin !== targetOrigin) {
+        console.warn(`[script.js] Discarding message from unexpected origin: ${event.origin}`);
+        return;
+    }
+
+    if (event.source === previewFrame.contentWindow && event.data.action === 'labelRendered') {
+        if (settings.autoPrint) {
+            printLabel();
+        }
+    }
+  });
+
   // Function to open a dialog
   function openDialog(dialogElement) {
     if (dialogElement && dialogOverlay) {
@@ -868,16 +824,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (contentFiltersDialog && !contentFiltersDialog.classList.contains('hidden')) {
       contentFiltersDialog.classList.add('hidden');
     }
-    // Add future dialogs here for closing, e.g., helpDialog
-    const helpDialog = document.getElementById('helpDialog'); // Get it here as it might not exist when script first runs
     if (helpDialog && !helpDialog.classList.contains('hidden')) {
         helpDialog.classList.add('hidden');
     }
-    const severeInjuriesDialog = document.getElementById('severeInjuriesDialog');
-    if (severeInjuriesDialog && !severeInjuriesDialog.classList.contains('hidden')) {
-        severeInjuriesDialog.classList.add('hidden');
-    }
-    const patchNotesDialog = document.getElementById('patchNotesDialog');
     if (patchNotesDialog && !patchNotesDialog.classList.contains('hidden')) {
         patchNotesDialog.classList.add('hidden');
     }
@@ -978,6 +927,83 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (printBtn) { printBtn.addEventListener('click', printLabel); }
 
+  if (exportJpgBtn) {
+    exportJpgBtn.addEventListener('click', exportLabelAsJpg);
+  }
+
+  async function exportLabelAsJpg() {
+    if (!previewFrame || !previewFrame.contentWindow) {
+      console.error("[EXPORT] Aborting: previewFrame or contentWindow missing.");
+      alert("Please select a label to export first.");
+      return;
+    }
+
+    const iframeDoc = previewFrame.contentWindow.document;
+    const labelPages = iframeDoc.querySelectorAll('.label-page');
+    const selectedItemName = searchInput.value || 'label';
+    const safeFilename = selectedItemName.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+
+    if (labelPages.length === 0) {
+      alert("No label content found to export.");
+      return;
+    }
+
+    const canvasOptions = {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    };
+
+    if (labelPages.length === 1) {
+      // Single page export
+      try {
+        const canvas = await html2canvas(labelPages[0], canvasOptions);
+        const jpgUrl = canvas.toDataURL('image/jpeg', 0.9);
+        const link = document.createElement('a');
+        link.href = jpgUrl;
+        link.download = `${safeFilename}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (err) {
+        console.error("[EXPORT] html2canvas error:", err);
+        alert("An error occurred while exporting the label.");
+      }
+    } else {
+      // Multi-page export to Zip
+      try {
+        const zip = new JSZip();
+
+        const promises = Array.from(labelPages).map((page, index) => {
+          return html2canvas(page, canvasOptions).then(canvas => {
+            return new Promise(resolve => {
+              canvas.toBlob(blob => {
+                zip.file(`${safeFilename}_${index + 1}.jpg`, blob);
+                resolve();
+              }, 'image/jpeg', 0.9);
+            });
+          });
+        });
+
+        await Promise.all(promises);
+
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(zipBlob);
+        link.download = `${safeFilename}.zip`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+
+      } catch (err) {
+        console.error("[EXPORT] ZIP export error:", err);
+        alert("An error occurred while creating the ZIP file.");
+      }
+    }
+  }
+
   // This is the main menu toggle
   if (menuBtn && mainMenu) {
     menuBtn.addEventListener('click', (event) => {
@@ -986,40 +1012,51 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Event listeners for Label Settings save and calibration (ensure these elements exist)
-  if (saveBtn) {
-    saveBtn.addEventListener('click', () => {
-        // Values in input fields are already in settings.preferredUnit due to handleUnitChange
-        // Update the global settings object directly from input fields
-        settings.width = parseFloat(widthInput.value);
-        settings.height = parseFloat(heightInput.value);
-        settings.marginTop = parseFloat(marginTopInput.value);
-        settings.marginRight = parseFloat(marginRightInput.value);
-        settings.marginBottom = parseFloat(marginBottomInput.value);
-        settings.marginLeft = parseFloat(marginLeftInput.value);
-        // settings.preferredUnit is already up-to-date via handleUnitChange
-
-        localStorage.setItem('labelSettings', JSON.stringify(settings));
-        updatePreviewSize(); // This will now use settings.preferredUnit correctly
-
-        // Provide some visual feedback for saving (optional, can be enhanced later)
-        const originalText = saveBtn.textContent;
-        saveBtn.textContent = 'Saved!';
-        setTimeout(() => {
-            saveBtn.textContent = originalText;
-        }, 1500);
-
-        const currentSelectedItemName = searchInput ? searchInput.value : "";
-        let itemToReselect = null;
-        if (currentSelectedItemName === "--- PRINT CALIBRATION LABEL ---") {
-             itemToReselect = { name: "--- PRINT CALIBRATION LABEL ---", type: "Calibration" };
-        } else if (currentSelectedItemName && window.dataset) {
-            const allItems = Object.values(window.dataset).flat();
-            itemToReselect = allItems.find(i => i.name === currentSelectedItemName);
-        }
-        if (itemToReselect) { selectItem(itemToReselect); }
-    });
+  // --- Auto-saving Settings Logic ---
+  function saveSettings() {
+    localStorage.setItem('labelSettings', JSON.stringify(settings));
+    // Provide some visual feedback for saving (optional, can be enhanced later)
+    if (filterSaveFeedback) { // Re-using the filter save feedback element
+      showFilterSaveFeedback();
+    }
   }
+
+  function setupAutoSavingListeners() {
+    const inputsToWatch = [
+      { el: widthInput, key: 'width', isFloat: true },
+      { el: heightInput, key: 'height', isFloat: true },
+      { el: marginTopInput, key: 'marginTop', isFloat: true },
+      { el: marginRightInput, key: 'marginRight', isFloat: true },
+      { el: marginBottomInput, key: 'marginBottom', isFloat: true },
+      { el: marginLeftInput, key: 'marginLeft', isFloat: true },
+      { el: autoPrintCheckbox, key: 'autoPrint', isCheckbox: true },
+      { el: showExportJpgCheckbox, key: 'showExportJpg', isCheckbox: true }
+    ];
+
+    inputsToWatch.forEach(({ el, key, isCheckbox, isFloat }) => {
+      if (el) {
+        el.addEventListener('change', () => {
+          settings[key] = isCheckbox ? el.checked : (isFloat ? parseFloat(el.value) : el.value);
+          saveSettings();
+
+          // Trigger relevant UI updates
+          if (['width', 'height', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft'].includes(key)) {
+            updatePreviewSize();
+            updateEmbeddedCalibrationPreview();
+          } else if (key === 'showExportJpg') {
+            updateExportJpgButtonVisibility();
+          }
+        });
+      }
+    });
+
+    // Unit change is handled separately due to value conversions
+    if (unitMMRadio) unitMMRadio.addEventListener('change', handleUnitChange);
+    if (unitInchesRadio) unitInchesRadio.addEventListener('change', handleUnitChange);
+  }
+
+  // Call this function to attach all listeners
+  setupAutoSavingListeners();
 
   if (printCalibrationLabelBtn) {
       printCalibrationLabelBtn.addEventListener('click', function() {
@@ -1041,6 +1078,30 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
+  if (resetKnowledgeBtn) {
+    resetKnowledgeBtn.addEventListener('click', () => {
+      const confirmation = confirm("Are you sure you want to reset all saved knowledge levels? This action cannot be undone.");
+      if (confirmation) {
+        let itemsRemoved = 0;
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key.startsWith('lastPrinted_')) {
+            localStorage.removeItem(key);
+            itemsRemoved++;
+            // Since removeItem can affect the key index, it's safer to re-iterate or go backwards
+            i--;
+          }
+        }
+        alert(`${itemsRemoved} knowledge level entries have been reset.`);
+        // Optionally, re-render suggestions if the current view might be affected
+        if (searchInput) {
+            const currentQuery = searchInput.value;
+            renderSuggestions(search(currentQuery));
+        }
+      }
+    });
+  }
+
   // Initial Population and Setup for filters
   // Ensure these containers are valid before calling population functions
   if (expansionCheckboxesContainer && philosophyCheckboxesContainer) {
@@ -1060,12 +1121,30 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSuggestions(initialResults);
   }
 
+  // Event listener for Patch Notes button
+  if (patchNotesBtn) {
+    patchNotesBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDialog(patchNotesDialog);
+    });
+  }
+
   // Show help modal on first visit
   const visitedFlag = 'kdmLabelPrinter_hasVisited';
   if (!localStorage.getItem(visitedFlag)) {
     if (helpDialog && typeof openDialog === 'function') { // Ensure elements and function are available
         openDialog(helpDialog);
         localStorage.setItem(visitedFlag, 'true');
+    }
+  }
+
+  // Show patch notes on first visit after an update
+  const currentVersion = '1.1.0';
+  const lastVersionSeen = localStorage.getItem('kdmLabelPrinter_lastVersion');
+  if (lastVersionSeen !== currentVersion) {
+    if (patchNotesDialog && typeof openDialog === 'function') {
+      openDialog(patchNotesDialog);
+      localStorage.setItem('kdmLabelPrinter_lastVersion', currentVersion);
     }
   }
 });
