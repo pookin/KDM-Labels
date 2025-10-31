@@ -62,7 +62,7 @@
     }
     .menu-panel .menu-item-list .menu-link-item {
       display: block;
-      padding: 10px 5px; 
+      padding: 10px 15px;
       color: #ecf0f1; 
       text-decoration: none;
       background-color: transparent; 
@@ -696,6 +696,9 @@
     }
 
     /* Severe Injuries Modal */
+    #severeInjuriesDialog {
+      max-width: 800px;
+    }
     .tabs {
       display: flex;
       border-bottom: 1px solid #4a6fa5;
@@ -721,4 +724,8 @@
     }
     #severeInjuriesDialog .dialog-content {
       overflow-y: auto;
+      min-height: 300px;
+    }
+    #severeInjuriesDialog .tab-content p:nth-child(even) {
+      background-color: #2c3e50;
     }

@@ -481,8 +481,8 @@ document.addEventListener('DOMContentLoaded', function() {
     injuryTypes.forEach(type => {
       const injuryData = injuries.find(i => i.name === type);
       if (injuryData) {
-        const contentId = type.toLowerCase().replace(' ', ' ');
-        const contentElement = document.getElementById(contentId.replace(' ', ''));
+        const contentId = (type === 'Brain Trauma') ? 'brain' : type.toLowerCase();
+        const contentElement = document.getElementById(contentId);
         if (contentElement) {
           contentElement.innerHTML = injuryData.table.map(row => {
             const formattedRow = row.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
