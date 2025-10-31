@@ -73,9 +73,11 @@
   <div id="dialogOverlay" class="dialog-overlay hidden"></div>
 
   <div id="labelSettingsDialog" class="dialog-modal hidden">
-    <div class="dialog-content">
+    <div class="dialog-header-sticky">
+      <h3 class="dialog-title">Label Settings</h3>
       <button class="dialog-close-btn" data-dialog-id="labelSettingsDialog">X</button>
-      <h3>Label Settings</h3>
+    </div>
+    <div class="dialog-content">
 
       <div class="settings-group">
         <label class="group-label">Unit:</label>
@@ -145,10 +147,12 @@
   </div>
 
   <div id="contentFiltersDialog" class="dialog-modal hidden">
-    <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
+    <div class="dialog-header-sticky">
+      <h3 class="dialog-title">Content Filters</h3>
+      <button class="dialog-close-btn" data-dialog-id="contentFiltersDialog">X</button>
+    </div>
     <div class="dialog-content">
       <div class="settings-section" id="contentFiltersInDialog"> 
-        <h3>Content Filters</h3>
         <div class="filter-group" id="expansionFilters">
           <h4>Expansions</h4>
           <div class="filter-controls">
@@ -175,9 +179,11 @@
   </div>
 
   <div id="helpDialog" class="dialog-modal hidden">
-    <div class="dialog-content">
+    <div class="dialog-header-sticky">
+      <h3 class="dialog-title">Help</h3>
       <button class="dialog-close-btn" data-dialog-id="helpDialog">X</button>
-      <h3 class="dialog-header">Help</h3>
+    </div>
+    <div class="dialog-content">
       <p><strong>Search:</strong> Type in the search box to find KDM items like Fighting Arts, Philosophies, Disorders, etc.</p>
       <p>Note: For Knowlages a checkmark will apear next to the last level you printed. When priting Philosophies it will use the last printed level for the tenent knowlage.</p>
       <p><strong>Menu (☰):</strong></p>
