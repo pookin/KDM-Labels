@@ -806,6 +806,12 @@ window.dataset = {
     },
     */
    {
+      "name": "Thermoregulator",
+      "type": "Fighting Art",
+      "description": "During the hunt phase, after you spend or lose survival, gain +2 survival.",
+      "expansion": "SG"
+    },
+   {
       "name": "Parkour",
       "type": "Fighting Art",
       "description": "When you spend {m}, you may move though spaces occupied by the monster, *Impassable* terrain, and *Monster-Impassable* terrain without causing",
