@@ -266,6 +266,8 @@
                     typeIndicatorText = 'SF'; itemSpecificHTML = formatNameExpansionDesc(item); break;
                 case 'Ability':
                     typeIndicatorText = 'A'; itemSpecificHTML = formatNameExpansionDesc(item); break;
+                case 'Impairment':
+                    typeIndicatorText = 'I'; itemSpecificHTML = formatNameExpansionDesc(item); break;
                 case 'Calibration': 
                     return `<div id="calibration-pattern"><div class="info" style="font-weight: bold; font-size: 6pt;">PRINT CALIBRATION LABEL</div><div class="info settings-info">Label (WxH): ${settings.width}${unit} x ${settings.height}${unit}</div><div class="info settings-info" style="margin-top: 0.25mm;">Margins (T|R|B|L):</div><div class="info settings-info" style="font-weight:bold;">${settings.marginTop}${unit}|${settings.marginRight}${unit}|${settings.marginBottom}${unit}|${settings.marginLeft}${unit}</div><div class="info" style="margin-top:0.5mm;">The <strong>BLACK DASHED BORDER</strong> is content area.</div><div class="info">The <strong>BLACK AREA</strong> around this is your margin.</div><div class="info" style="margin-top:0.5mm; font-weight:bold;">Print & measure. Adjust in Settings.</div><div class="corner-marker" style="top: 0; left: 0;">TL</div><div class="corner-marker" style="top: 0; right: 0;">TR</div><div class="corner-marker" style="bottom: 0; left: 0;">BL</div><div class="corner-marker" style="bottom: 0; right: 0;">BR</div></div>`;
                 default: 

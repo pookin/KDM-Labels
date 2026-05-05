@@ -1,6 +1,13 @@
 // kdm-data.js
 console.log("kdm-data.js: Loading restructured dataset...");
 
+/* Text Codes
+{q} Activate icon   {m} Move Icon   {M} Armor     {!} 1 Armor
+{l} Monster Level   {r} Reaction    {O} AI Card   {N} HL Card
+{s} Story Icon      {v} Endeavor
+*bold*    \n New Line
+*/
+
 window.dataset = {
   "Philosophy": [
     {
@@ -790,7 +797,27 @@ window.dataset = {
     }
   ],
   "Fighting Art": [
+    /* Fighting Art Template
     {
+      "name": "",
+      "type": "Fighting Art",
+      "description": "",
+      "expansion": ""
+    },
+    */
+   {
+      "name": "Parkour",
+      "type": "Fighting Art",
+      "description": "When you spend {m}, you may move though spaces occupied by the monster, *Impassable* terrain, and *Monster-Impassable* terrain without causing",
+      "expansion": "SG"
+    },
+   {
+      "name": "Drifting Turn",
+      "type": "Fighting Art",
+      "description": "During a maneuver where you spend {m} or {m}{q} to move in a straight line, you may change direction of your movement mid-maneuver by 90 degrees.\nLimit once per round.",
+      "expansion": "SG"
+    },
+   {
       "name": "Abyssal Sadist",
       "type": "Fighting Art",
       "description": "The first time you wound the monster each attack, gain +1 survival and insanity. \nIgnore the effects of the *Fear of the Dark* and *Prey* disorders.",
@@ -1206,6 +1233,14 @@ window.dataset = {
     }
   ],
   "Disorder": [
+    /* Disorder Template
+    {
+      "name": "",
+      "type": "Disorder",
+      "description": "",
+      "expansion": null
+    },
+    */
     {
       "name": "Absent Seizures",
       "type": "Disorder",
@@ -1643,6 +1678,30 @@ window.dataset = {
       "type": "Disorder",
       "description": "You cannot gain understanding, except from the Parish settlement events, rulebook, etc.",
       "expansion": null
+    },
+    {
+      "name": "Xenomelia",
+      "type": "Disorder",
+      "description": "You cannot spend survival \n{q}: Suffer the *dismembered arm* or *leg* severe injury to remove this disorder.",
+      "expansion": "PQ"
+    },
+    {
+      "name": "Dystychiphobia",
+      "type": "Disorder",
+      "description": "When you suffer *collision*, also suffer 2 damage to a random hit location",
+      "expansion": "SG"
+    },
+    {
+      "name": "Gerascophobia",
+      "type": "Disorder",
+      "description": "During the *Aftermath* gain 1 additional Hunt XP. \nAfter gaining the benefits of a Hunt XP milestone, suffer -1 permanent strength.",
+      "expansion": "SG"
+    },
+    {
+      "name": "Runner's Dystonia",
+      "type": "Disorder",
+      "description": "When you *dash*, roll 1d10. On a 7+, you do not dash and are knocked down instead. Keep your survival. You cannoty dash again this round.",
+      "expansion": "SG"
     }
   ],
   "Knowledge": [
@@ -3848,6 +3907,20 @@ window.dataset = {
     }
   ],
   "Secret Fighting Art": [
+    /*
+    {
+      "name": "",
+      "type": "Secret Fighting Art",
+      "description": "",
+      "expansion": ""
+    },
+    */
+    {
+      "name": "Terminal Velocity",
+      "type": "Secret Fighting Art",
+      "description": "When you spend {m}, gain +1 movement token. \nWhile you have 10+ movement, change all {r} *Reflex* to {r} *Failure* before you make a wound attempt. \nWhen you are knocked down, archive all your +1 movement tokens.",
+      "expansion": "SG"
+    },
     {
       "name": "Actualize",
       "type": "Secret Fighting Art",
@@ -4060,6 +4133,74 @@ window.dataset = {
     }
   ],
   "Ability": [
+    /*
+    {
+      "name": "",
+      "type": "Ability",
+      "description": "",
+      "expansion": null
+    },
+    */
+   {
+      "name": "Aprimavista",
+      "type": "Ability",
+      "description": "At the start of your act, you may reveal the top 2 Horizon cards and put them back in any order.",
+      "expansion": "SG"
+    },
+    {
+      "name": "Explosive Bite",
+      "type": "Ability",
+      "description": "Your F&T gains Devastating 1. After each successful wound attempt using F&T, suffer 1 damage to the head hit location.",
+      "expansion": "SG"
+    },
+    {
+      "name": "Grizzled Core",
+      "type": "Ability",
+      "description": "Ignore the negative effects of all permanent injuries you have at the body hit location. You have +1 speed for each perrmanent injury you have.",
+      "expansion": "SG"
+    },
+    {
+      "name": "Grizzled Gait",
+      "type": "Ability",
+      "description": "Ignore the negative effects of all permanent injuries you have at the legs hit location (including hamstrung permanent Injury). You have +1 movement for each permanent injury you have",
+      "expansion": "SG"
+    },
+    {
+      "name": "Grizzled Might",
+      "type": "Ability",
+      "description": "Ignore the negative effects of all permanent injuries you have at the arms hit location. You have +2 strength for each permanent injury you have.",
+      "expansion": "SG"
+    },
+    {
+      "name": "Recon Genius",
+      "type": "Ability",
+      "description": "When you roll on an investigation table, you may choose the roll result.",
+      "expansion": "SG"
+    },
+    {
+      "name": "Improbable Survivor",
+      "type": "Ability",
+      "description": "Whenever you suffer a severe injury, gain a +1 luck token.",
+      "expansion": "SG"
+    },
+   {
+      "name": "Olthawartta",
+      "type": "Ability",
+      "description": "At the start of your act, you may declare *Olthawartta X*. If you do, ignore the effects of X special rules until the end of your act. *Cumbersome, Early Iron, Frail, Sentient, Slow, Unwieldy* X cannot be greater than your total pairs of red and blue affinities. When your act ends, gain +X Hunt XP. When you trigger your 2nd Hunt XP milestone, gain the Heart of Olthawartta secret fighting art.",
+      "expansion": null
+    },
+   {
+      "name": "Story of the Young Hero",
+      "type": "Ability",
+      "description": "At the start of each of your acts, you may choose to gain +1 survival and 2 bleeding tokens.",
+      "expansion": null
+    },
+   {
+      "name": "Peerless",
+      "type": "Ability",
+      "description": "When you gain insanity, you may also gain an equal amount of survival.",
+      "expansion": null
+    },
     {
       "name": "Feinting Shot",
       "type": "Ability",
@@ -4584,7 +4725,39 @@ window.dataset = {
     }
   ],
   "Impairment": [
+    /*
     {
+      "name": "",
+      "type": "Impairment",
+      "description": "",
+      "expansion": null
+    },
+    */
+   {
+      "name": "Blood Donor",
+      "type": "Impairment",
+      "description": "When you depart, gain 2 bleeding tokes and 1 Fresh Acanthus",
+      "expansion": null
+    },
+   {
+      "name": "Illuminated Host",
+      "type": "Impairment",
+      "description": "When you encourage, roar, scream, or preform audible effects, suffer the collapsed lung severe injury. +2 to all brain trauma rolls.",
+      "expansion": "SG"
+    },
+    {
+      "name": "Camptocormia",
+      "type": "Impairment",
+      "description": "At the start of your act, you are knocked down unless you suffer the destroyed back severe body injury.",
+      "expansion": null
+    },
+    {
+      "name": "Leprosy",
+      "type": "Impairment",
+      "description": "A survivor impairment. Reduce all damage suffered by 1 to a minimum of 1. Suffer -2 to severe injury rolls.",
+      "expansion": null
+    },
+   {
       "name": "Anemic",
       "type": "Impairment",
       "description": "It takes one fewer bleeding token to kill you. This impairment can be gained multiple times. If you gain Anemic enough times that it takes 0 bleeding tokens to kill you, you instantly die.",
