@@ -1711,6 +1711,48 @@ window.dataset = {
     }
   ],
   "Knowledge": [
+    /* Knowledge Template
+    {
+      "name": "",
+      "type": "Knowledge",
+      "philosophyLinked": "",
+      "mainDesc": "",
+      "observationText": "",
+      "toRankCount": 0,
+      "rankUpText": "",
+      "expansion": null
+    },
+    */
+   {
+      "name": "Packleader I",
+      "type": "Knowledge",
+      "philosophyLinked": "Monster",
+      "mainDesc": "You cannot *depart* with any other survivors with Packleader. \n After you spend {m} during your act, you may choose another survivor to gain {m} which must be spent immediately. Limit once per showdown.",
+      "observationText": "When you use this",
+      "toRankCount": 2,
+      "rankUpText": "",
+      "expansion": "SG"
+    },
+    {
+      "name": "Packleader II",
+      "type": "Knowledge",
+      "philosophyLinked": "Monster",
+      "mainDesc": "You cannot *depart* with any other survivors with Packleader. \n After you spend {m} during your act, you may choose another survivor to gain {m} which must be spent immediately. Limit once per round.",
+      "observationText": "If you move 12+ spaces during your act",
+      "toRankCount": 8,
+      "rankUpText": "",
+      "expansion": "SG"
+    },
+    {
+      "name": "Packleader III",
+      "type": "Knowledge",
+      "philosophyLinked": "Monster",
+      "mainDesc": "You cannot *depart* with any other survivors with Packleader. \n After you spend {m} during your act, you may choose another survivor to gain {m} which must be spent immediately.",
+      "observationText": "",
+      "toRankCount": 0,
+      "rankUpText": "",
+      "expansion": "SG"
+    },
     {
       "name": "Aspirational Ethos",
       "type": "Knowledge",
@@ -4739,6 +4781,12 @@ window.dataset = {
       "expansion": null
     },
     */
+    {
+      "name": "Possessed",
+      "type": "Impairment",
+      "description": "The Survivor cannot use weapon specializations, weapon mastery, or fighting arts.",
+      "expansion": "PQ"
+    },
    {
       "name": "Blood Donor",
       "type": "Impairment",
